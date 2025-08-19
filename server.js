@@ -33,7 +33,7 @@ function simulateEngineAnswer(engine, prompt) {
 
 // POST /api/scan  { name, keywords[], competitors[], engines[] }
 app.post('/api/scan', async (req, res) => {
-  const { name, keywords = [], competitors = [], engines = ['perplexity','chatgpt','gemini'] } = req.body;
+  const { name, keywords = [], competitors = [], engines = ['perplexity','chatgpt','gemini','google-ai'] } = req.body;
   const prompts = DEFAULT_PROMPTS(keywords);
 
   const matrix = [];
