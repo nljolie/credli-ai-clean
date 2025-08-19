@@ -26,19 +26,136 @@ function simulateEngineAnswer(engine, prompt, name) {
   const competitors = ['McKinsey Digital', 'Accenture AI', 'Jane Doe', 'TechCorp Solutions'];
   const randomCompetitors = competitors.sort(() => 0.5 - Math.random()).slice(0, 2);
   
+  // Simulate imposters (fake accounts using similar names)
+  const potentialImposters = [
+    `${name} Consulting`, 
+    `Dr. ${name}`, 
+    `${name.split(' ')[0]} ${name.split(' ')[1]} AI`,
+    `The Real ${name}`
+  ];
+  
+  const hasImposters = Math.random() > 0.7; // 30% chance of imposters appearing
+  const imposters = hasImposters ? potentialImposters.slice(0, Math.floor(Math.random() * 2) + 1) : [];
+  
   if (shouldAppear) {
-    // User appears along with some competitors
+    // User appears - determine position (authority)
+    const position = Math.random() > 0.6 ? 1 : Math.random() > 0.3 ? 2 : 3;
+    
+    // Create full result list with user, competitors, and imposters
+    let allMentions = [name, ...randomCompetitors, ...imposters];
+    
+    // Shuffle but ensure user is at determined position
+    allMentions = allMentions.filter(mention => mention !== name);
+    allMentions.splice(position - 1, 0, name);
+    
     return { 
-      names: [name, ...randomCompetitors].slice(0, 3), 
-      sources: [`${engine}.com`, 'industry-report.pdf'] 
+      names: allMentions.slice(0, 4), 
+      sources: [`${engine}.com`, 'industry-report.pdf'],
+      userPosition: position,
+      imposters: imposters,
+      authority: position <= 2 ? 'high' : position === 3 ? 'medium' : 'low'
     };
   } else {
-    // User doesn't appear, but competitors might
+    // User doesn't appear, but competitors and imposters might
+    const mentions = [...randomCompetitors, ...imposters].slice(0, 3);
+    
     return { 
-      names: randomCompetitors.slice(0, Math.random() > 0.5 ? 2 : 1), 
-      sources: [`${engine}.com`] 
+      names: mentions, 
+      sources: [`${engine}.com`],
+      userPosition: null,
+      imposters: imposters,
+      authority: null
     };
   }
+}
+
+// Calculate sophisticated Trust Factor
+function calculateTrustFactor(matrix, name) {
+  const totalQueries = matrix.length;
+  const appearances = matrix.filter(r => r.youAppear);
+  const appearanceCount = appearances.length;
+  
+  // 1. Visibility Score (40%)
+  const visibilityScore = (appearanceCount / totalQueries) * 100;
+  
+  // 2. Authority Score (25%) - based on position when appearing
+  let authorityScore = 0;
+  if (appearanceCount > 0) {
+    const avgPosition = appearances.reduce((sum, r) => {
+      return sum + (r.userPosition || 4);
+    }, 0) / appearanceCount;
+    
+    // Convert position to score (position 1 = 100, position 2 = 80, position 3 = 60, position 4+ = 40)
+    authorityScore = Math.max(0, (5 - avgPosition) / 4 * 100);
+  }
+  
+  // 3. Consistency Score (20%) - performance across engines
+  const engines = [...new Set(matrix.map(r => r.engine))];
+  let consistencyScore = 0;
+  if (engines.length > 0) {
+    const enginePerformance = engines.map(engine => {
+      const engineResults = matrix.filter(r => r.engine === engine);
+      const engineAppearances = engineResults.filter(r => r.youAppear).length;
+      return (engineAppearances / engineResults.length) * 100;
+    });
+    
+    // Consistency is measured by how close all engines perform to each other
+    const avgPerformance = enginePerformance.reduce((a, b) => a + b, 0) / enginePerformance.length;
+    const variance = enginePerformance.reduce((sum, perf) => sum + Math.pow(perf - avgPerformance, 2), 0) / enginePerformance.length;
+    const standardDeviation = Math.sqrt(variance);
+    
+    // Lower standard deviation = higher consistency
+    consistencyScore = Math.max(0, 100 - (standardDeviation * 2));
+  }
+  
+  // 4. Competitive Context (15%) - how you perform vs competitors
+  let competitiveScore = 70; // Default moderate score
+  if (appearanceCount > 0) {
+    const userMentions = appearanceCount;
+    const competitorMentions = matrix.reduce((sum, result) => {
+      const competitors = (result.mentioned || []).filter(mention => 
+        mention.toLowerCase() !== name.toLowerCase() && 
+        !result.imposters.some(imp => imp.toLowerCase() === mention.toLowerCase())
+      );
+      return sum + competitors.length;
+    }, 0);
+    
+    if (competitorMentions > 0) {
+      const marketShare = userMentions / (userMentions + competitorMentions) * 100;
+      competitiveScore = Math.min(100, marketShare * 1.5); // Boost market share for competitive score
+    }
+  }
+  
+  // 5. Imposter Impact (Penalty)
+  const totalImposters = matrix.reduce((sum, result) => sum + (result.imposters?.length || 0), 0);
+  const imposterPenalty = Math.min(15, totalImposters * 2); // Max 15 point penalty
+  
+  // Calculate weighted Trust Factor
+  const trustFactor = Math.round(
+    (visibilityScore * 0.40) + 
+    (authorityScore * 0.25) + 
+    (consistencyScore * 0.20) + 
+    (competitiveScore * 0.15) - 
+    imposterPenalty
+  );
+  
+  return {
+    trustFactor: Math.max(0, Math.min(100, trustFactor)),
+    breakdown: {
+      visibility: Math.round(visibilityScore),
+      authority: Math.round(authorityScore), 
+      consistency: Math.round(consistencyScore),
+      competitive: Math.round(competitiveScore),
+      imposterPenalty: Math.round(imposterPenalty),
+      totalImposters: totalImposters
+    },
+    rawScores: {
+      visibilityWeight: Math.round(visibilityScore * 0.40),
+      authorityWeight: Math.round(authorityScore * 0.25),
+      consistencyWeight: Math.round(consistencyScore * 0.20),
+      competitiveWeight: Math.round(competitiveScore * 0.15)
+    }
+  };
 }
 
 // ——— Routes ———
@@ -58,14 +175,24 @@ app.post('/api/scan', async (req, res) => {
       matrix.push({
         engine, prompt, youAppear,
         mentioned,
-        sources: ans.sources || []
+        sources: ans.sources || [],
+        userPosition: ans.userPosition,
+        imposters: ans.imposters || [],
+        authority: ans.authority
       });
     }
   }
 
   const gaps = matrix.filter(r => !r.youAppear).map(r => ({ engine: r.engine, prompt: r.prompt }));
+  const trustFactorData = calculateTrustFactor(matrix, name);
 
-  res.json({ matrix, gaps });
+  res.json({ 
+    matrix, 
+    gaps, 
+    trustFactor: trustFactorData.trustFactor,
+    trustBreakdown: trustFactorData.breakdown,
+    trustWeights: trustFactorData.rawScores
+  });
 });
 
 // POST /api/ideas  { gaps:[{engine,prompt}...] }

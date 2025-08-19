@@ -149,6 +149,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const appearanceRate = Math.round((appearances / totalQueries) * 100);
         const gaps = data.gaps.length;
         
+        // Use Trust Factor from server or fallback to simple calculation
+        const trustFactor = data.trustFactor || appearanceRate;
+        const breakdown = data.trustBreakdown || {};
+        const weights = data.trustWeights || {};
+        
         // Group results by engine
         const byEngine = {};
         data.matrix.forEach(result => {
@@ -158,43 +163,112 @@ document.addEventListener('DOMContentLoaded', function() {
             byEngine[result.engine].push(result);
         });
         
-        // Get status message and color
+        // Get status message and color based on Trust Factor
         let statusMessage, statusClass, nextSteps;
-        if (appearanceRate >= 80) {
-            statusMessage = "Excellent AI Search Visibility!";
+        if (trustFactor >= 80) {
+            statusMessage = "Elite AI Authority!";
             statusClass = "status-excellent";
-            nextSteps = "You're dominating AI search results. Focus on maintaining and expanding your presence.";
-        } else if (appearanceRate >= 60) {
-            statusMessage = "Strong AI Search Presence";
+            nextSteps = "You dominate AI search in your field. Focus on maintaining your elite status and expanding into new areas.";
+        } else if (trustFactor >= 60) {
+            statusMessage = "Strong AI Trust Factor";
             statusClass = "status-good";
-            nextSteps = "You're well-positioned in AI search. A few strategic improvements will boost you to excellent.";
-        } else if (appearanceRate >= 40) {
-            statusMessage = "Moderate AI Search Visibility";
+            nextSteps = "AI engines recognize your expertise. Strategic improvements will elevate you to elite authority status.";
+        } else if (trustFactor >= 40) {
+            statusMessage = "Building AI Authority";
             statusClass = "status-moderate";
-            nextSteps = "Good foundation with room for improvement. Focus on the content opportunities below.";
+            nextSteps = "Good foundation with clear opportunities. Focus on the recommendations below to boost your Trust Factor.";
         } else {
-            statusMessage = "Growing Your AI Search Presence";
+            statusMessage = "Growing AI Presence";
             statusClass = "status-building";
-            nextSteps = "Great starting point! The opportunities below will significantly boost your visibility.";
+            nextSteps = "Significant opportunity to establish AI authority. The action items below will dramatically improve your visibility.";
         }
         
         resultsDiv.innerHTML = `
             <div class="scan-results">
                 <div class="results-hero ${statusClass}">
                     <div class="score-circle">
-                        <div class="score-number">${appearanceRate}</div>
-                        <div class="score-label">AI Visibility Score</div>
+                        <div class="score-number">${trustFactor}</div>
+                        <div class="score-label">Trust Factor™</div>
                     </div>
                     <div class="status-content">
                         <h2>${statusMessage}</h2>
                         <p>${nextSteps}</p>
                         <div class="quick-stats">
                             <span><strong>${appearances}</strong> mentions found</span>
-                            <span><strong>${gaps}</strong> growth opportunities</span>
-                            <span><strong>${Object.keys(byEngine).length}</strong> engines scanned</span>
+                            <span><strong>${gaps}</strong> opportunities</span>
+                            <span><strong>${breakdown.totalImposters || 0}</strong> imposters detected</span>
                         </div>
                     </div>
                 </div>
+                
+                ${breakdown.visibility ? `
+                <div class="trust-breakdown">
+                    <h3>🔬 Trust Factor™ Analysis</h3>
+                    <div class="breakdown-grid">
+                        <div class="breakdown-item">
+                            <div class="breakdown-header">
+                                <span class="breakdown-label">Visibility</span>
+                                <span class="breakdown-score">${breakdown.visibility}%</span>
+                                <span class="breakdown-weight">(${weights.visibilityWeight} pts)</span>
+                            </div>
+                            <div class="breakdown-description">How often you appear in AI search results</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${breakdown.visibility}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-item">
+                            <div class="breakdown-header">
+                                <span class="breakdown-label">Authority</span>
+                                <span class="breakdown-score">${breakdown.authority}%</span>
+                                <span class="breakdown-weight">(${weights.authorityWeight} pts)</span>
+                            </div>
+                            <div class="breakdown-description">Your ranking position when mentioned</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${breakdown.authority}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-item">
+                            <div class="breakdown-header">
+                                <span class="breakdown-label">Consistency</span>
+                                <span class="breakdown-score">${breakdown.consistency}%</span>
+                                <span class="breakdown-weight">(${weights.consistencyWeight} pts)</span>
+                            </div>
+                            <div class="breakdown-description">Performance across all AI engines</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${breakdown.consistency}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="breakdown-item">
+                            <div class="breakdown-header">
+                                <span class="breakdown-label">Competitive</span>
+                                <span class="breakdown-score">${breakdown.competitive}%</span>
+                                <span class="breakdown-weight">(${weights.competitiveWeight} pts)</span>
+                            </div>
+                            <div class="breakdown-description">Market share vs competitors</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${breakdown.competitive}%"></div>
+                            </div>
+                        </div>
+                        
+                        ${breakdown.imposterPenalty > 0 ? `
+                        <div class="breakdown-item penalty">
+                            <div class="breakdown-header">
+                                <span class="breakdown-label">Imposter Penalty</span>
+                                <span class="breakdown-score">-${breakdown.imposterPenalty}</span>
+                                <span class="breakdown-weight">(${breakdown.totalImposters} detected)</span>
+                            </div>
+                            <div class="breakdown-description">Fake accounts diluting your authority</div>
+                            <div class="penalty-bar">
+                                <div class="penalty-fill" style="width: ${Math.min(100, breakdown.imposterPenalty * 6.67)}%"></div>
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+                ` : ''}
                 
                 <div class="engine-overview">
                     <h3>🚀 Engine Performance</h3>
