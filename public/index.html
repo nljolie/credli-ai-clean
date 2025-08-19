@@ -1,150 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credli.ai — Ask-Engine Optimization</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Credli.ai — Ask-Engine Optimization</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <div class="container">
-    <h1>Credli.ai — Ask-Engine Optimization</h1>
-<p>Track where you (and competitors) show up in ChatGPT, Perplexity, and Gemini.</p>
-    <section class="card">
-      <h2>Scan</h2>
-      <form id="scanForm">
-        <label>
-          Your Name / Brand
-          <input name="name" required placeholder="e.g., Nicole Jolie" />
-        </label>
-        <label>
-          Keywords (comma-separated)
-          <input name="keywords" required placeholder="e.g., AI consultant, executive leadership coach" />
-        </label>
-        <label>
-          Competitors (optional, comma-separated)
-          <input name="competitors" placeholder="e.g., Jane Doe, Acme AI" />
-        </label>
-        <label>
-          Compare Against (single competitor)
-          <input name="competitor" placeholder="e.g., Jane Doe" />
-        </label>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">Credli.ai</div>
+      <nav class="nav">
+        <button class="nav-link active" data-target="section-scan">Scan</button>
+        <button class="nav-link" data-target="section-results">Results</button>
+        <button class="nav-link" data-target="section-fakes">Stop Fakes</button>
+        <button class="nav-link" data-target="section-phishing">Phishing Check</button>
+        <button class="nav-link" data-target="section-settings">Settings</button>
+      </nav>
+    </aside>
 
-        <fieldset class="engines">
-          <legend>Engines</legend>
-          <label><input type="checkbox" name="engines" value="perplexity" checked> Perplexity</label>
-          <label><input type="checkbox" name="engines" value="chatgpt" checked> ChatGPT</label>
-          <label><input type="checkbox" name="engines" value="gemini" checked> Gemini</label>
-        </fieldset>
+    <main class="main">
+      <!-- Scan -->
+      <section id="section-scan" class="panel active">
+        <h1>Scan</h1>
+        <p class="subtle">Track where you (and competitors) show up in ChatGPT, Perplexity, and Gemini.</p>
+        <form id="scan-form" class="card form-grid">
+          <label>
+            Your Name
+            <input name="name" placeholder="e.g., Jane Smith" required />
+          </label>
 
-        <button type="submit">Run scan</button>
-      </form>
-    </section>
+          <label>
+            Your Brand or Company
+            <input name="brand" placeholder="e.g., Acme Consulting" />
+          </label>
 
-    <section id="results" class="card" style="display:none">
-      <h2>Coverage Matrix</h2>
-      <div id="matrix"></div>
+          <label>
+            Your Keywords
+            <textarea name="keywords" placeholder="e.g., AI consultant, executive leadership coach" required></textarea>
+          </label>
 
-      <h3>Gaps (where you don't appear)</h3>
-      <ul id="gaps"></ul>
+          <label>
+            Your Competitors
+            <textarea name="competitors" placeholder="e.g., Jane Doe, Acme AI"></textarea>
+          </label>
 
-      <button id="genIdeasBtn">Generate targeted post ideas for gaps</button>
-      <div id="ideas" class="ideas"></div>
-    </section>
+          <fieldset class="fieldset">
+            <legend>Engines</legend>
+            <label><input type="checkbox" name="engines" value="chatgpt" checked /> ChatGPT</label>
+            <label><input type="checkbox" name="engines" value="perplexity" checked /> Perplexity</label>
+            <label><input type="checkbox" name="engines" value="gemini" checked /> Gemini</label>
+            <label><input type="checkbox" name="engines" value="google-ai" checked /> Google AI Overviews</label>
+            <p class="test-mode-note">Test mode — external APIs not connected yet</p>
+          </fieldset>
 
-    <section class="card">
-      <h2>Impersonator check</h2>
-      <form id="impForm">
-        <label>
-          Official handles (comma-separated, e.g., instagram.com/you, x.com/you)
-          <input name="handles" placeholder="x.com/credli, instagram.com/credli.ai" />
-        </label>
-        <button type="submit">Scan for fakes (preview)</button>
-      </form>
-      <div id="impersonators"></div>
-    </section>
+          <button class="btn primary" type="submit">Run Scan</button>
+        </form>
+      </section>
+
+      <!-- Results -->
+      <section id="section-results" class="panel">
+        <h1>Results</h1>
+        <div id="results" class="card">
+          <p class="subtle">Run a scan to see results here.</p>
+        </div>
+      </section>
+
+      <!-- Stop Fakes -->
+      <section id="section-fakes" class="panel">
+        <h1>Stop Fakes</h1>
+        <p class="subtle">TikTok intake to help detect impersonators using your name/likeness.</p>
+        <form id="fakes-form" class="card form-grid" enctype="multipart/form-data">
+          <label>
+            Your TikTok @handle
+            <input name="handle" placeholder="@yourhandle" required />
+          </label>
+
+          <label>
+            Hashtags you use
+            <input name="hashtags" placeholder="#ai, #consulting, #brand (comma-delimited)" />
+          </label>
+
+          <label>
+            Link in bio (URL)
+            <input name="bioLink" placeholder="https://your-site.com" type="url" />
+          </label>
+
+          <label>
+            Public-facing email (optional)
+            <input name="publicEmail" placeholder="you@your-site.com" type="email" />
+          </label>
+
+          <label>
+            Upload a screenshot of your real TikTok profile (optional)
+            <input name="profileImage" type="file" accept="image/*" />
+          </label>
+
+          <button class="btn primary" type="submit">Submit TikTok Intake</button>
+        </form>
+      </section>
+
+      <!-- Phishing Check -->
+      <section id="section-phishing" class="panel">
+        <h1>Phishing Check</h1>
+        <p class="subtle">Paste a suspicious email or headers. We’ll do an initial static risk screen.</p>
+        <form id="phishing-form" class="card form-grid">
+          <label>
+            Sender email / domain (if known)
+            <input name="sender" placeholder="e.g., jessica-zarada@amazonjobsteam.com" />
+          </label>
+
+          <label>
+            Email content / headers
+            <textarea name="content" rows="8" placeholder="Paste the full message or headers here"></textarea>
+          </label>
+
+          <button class="btn primary" type="submit">Analyze Email</button>
+        </form>
+
+        <div id="phishing-result" class="card"></div>
+      </section>
+
+      <!-- Settings -->
+      <section id="section-settings" class="panel">
+        <h1>Settings</h1>
+        <p class="subtle">Coming soon: connect API keys, set org defaults, and manage plan.</p>
+      </section>
+    </main>
   </div>
 
-  <script>
-    const form = document.getElementById('scanForm');
-    const results = document.getElementById('results');
-    const matrixDiv = document.getElementById('matrix');
-    const gapsUl = document.getElementById('gaps');
-    const ideasBtn = document.getElementById('genIdeasBtn');
-    const ideasDiv = document.getElementById('ideas');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const fd = new FormData(form);
-      const engines = [...document.querySelectorAll('input[name="engines"]:checked')].map(i=>i.value);
-      const payload = {
-        name: fd.get('name').trim(),
-        keywords: fd.get('keywords').split(',').map(s=>s.trim()).filter(Boolean),
-        competitors: (fd.get('competitors')||'').split(',').map(s=>s.trim()).filter(Boolean),
-        competitor: fd.get('competitor')?.trim() || '',
-        engines
-      };
-      const endpoint = payload.competitor ? '/api/compare' : '/api/scan';
-      const res = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-      const data = await res.json();
-
-      // render matrix
-      const rows = data.matrix.map(row => `
-        <tr>
-          <td>${row.engine}</td>
-          <td>${row.prompt}</td>
-          <td>${row.youAppear ? '✅' : '❌'}</td>
-          <td>${row.mentioned?.join(', ') || '-'}</td>
-          <td>${row.sources?.map(s=>`<a href="${s}" target="_blank">link</a>`).join(' ') || '-'}</td>
-        </tr>
-      `).join('');
-
-      matrixDiv.innerHTML = `
-        <table>
-          <thead><tr><th>Engine</th><th>Prompt</th><th>You</th><th>Others Mentioned</th><th>Sources</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      `;
-
-      gapsUl.innerHTML = data.gaps.map(g => `<li><strong>${g.engine}</strong> — ${g.prompt}</li>`).join('');
-      results.style.display = 'block';
-
-      // store last scan for ideas
-      window.__lastScan = data;
-    });
-
-    ideasBtn.addEventListener('click', async () => {
-      if (!window.__lastScan) return;
-      const res = await fetch('/api/ideas', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ gaps: window.__lastScan.gaps }) });
-      const data = await res.json();
-      ideasDiv.innerHTML = data.ideas.map(i => `<div class="idea"><h4>${i.title}</h4><p>${i.body}</p></div>`).join('');
-    });
-
-    // Impersonator preview (placeholder)
-    const impForm = document.getElementById('impForm');
-    impForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const fd = new FormData(impForm);
-      const handles = (fd.get('handles')||'').split(',').map(s=>s.trim()).filter(Boolean);
-      const res = await fetch('/api/impersonators', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ handles }) });
-      const data = await res.json();
-      document.getElementById('impersonators').innerHTML = data.results.map(r => `
-        <div class="idea"><strong>${r.platform}</strong> — suspected: ${r.suspected.length}</div>
-      `).join('');
-    });
-  </script>
-
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0b0c10; color:#e5e7eb; }
-    .container { max-width: 1000px; margin: 40px auto; padding: 0 16px; }
-    h1 { margin-bottom: 16px; }
-    .card { background:#111; border:1px solid #222; border-radius:14px; padding:16px; margin:16px 0; }
-    label { display:block; margin:10px 0; }
-    input { width:100%; padding:10px; border-radius:10px; border:1px solid #333; background:#0e0e0e; color:#e5e7eb; }
-    button { margin-top:12px; padding:10px 16px; border:0; border-radius:10px; background:#2563eb; color:white; cursor:pointer; }
-    table { width:100%; border-collapse:collapse; }
-    th, td { padding:8px; border-bottom:1px solid #222; vertical-align:top; }
-    .engines label { display:inline-block; margin-right:14px; }
-    .idea { background:#0e0e0e; border:1px solid #222; border-radius:10px; padding:10px; margin:8px 0; }
-  </style>
+  <script src="main.js" defer></script>
 </body>
+</html>
