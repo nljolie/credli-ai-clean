@@ -19,14 +19,26 @@ const DEFAULT_PROMPTS = (keywords) => {
 };
 
 // For v0 we simulate engine responses (no API keys yet)
-function simulateEngineAnswer(engine, prompt) {
-  // Pretend the engine returns some names; replace with API calls later
-  const canned = [
-    { names: ['Jane Doe', 'Acme AI'], sources: [] },
-    { names: ['Acme AI'], sources: [] },
-    { names: [], sources: [] }
-  ];
-  return canned[Math.floor(Math.random()*canned.length)];
+function simulateEngineAnswer(engine, prompt, name) {
+  // Create more balanced results - mix of appearing and not appearing
+  const shouldAppear = Math.random() > 0.35; // 65% chance of appearing
+  
+  const competitors = ['McKinsey Digital', 'Accenture AI', 'Jane Doe', 'TechCorp Solutions'];
+  const randomCompetitors = competitors.sort(() => 0.5 - Math.random()).slice(0, 2);
+  
+  if (shouldAppear) {
+    // User appears along with some competitors
+    return { 
+      names: [name, ...randomCompetitors].slice(0, 3), 
+      sources: [`${engine}.com`, 'industry-report.pdf'] 
+    };
+  } else {
+    // User doesn't appear, but competitors might
+    return { 
+      names: randomCompetitors.slice(0, Math.random() > 0.5 ? 2 : 1), 
+      sources: [`${engine}.com`] 
+    };
+  }
 }
 
 // ——— Routes ———
@@ -40,7 +52,7 @@ app.post('/api/scan', async (req, res) => {
   for (const engine of engines) {
     for (const prompt of prompts) {
       // Replace with engine-specific modules (perplexity/openai/gemini)
-      const ans = simulateEngineAnswer(engine, prompt);
+      const ans = simulateEngineAnswer(engine, prompt, name);
       const mentioned = ans.names || [];
       const youAppear = mentioned.map(s => s.toLowerCase()).includes((name||'').toLowerCase());
       matrix.push({

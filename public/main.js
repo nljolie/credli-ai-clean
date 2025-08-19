@@ -158,74 +158,99 @@ document.addEventListener('DOMContentLoaded', function() {
             byEngine[result.engine].push(result);
         });
         
+        // Get status message and color
+        let statusMessage, statusClass, nextSteps;
+        if (appearanceRate >= 80) {
+            statusMessage = "Excellent AI Search Visibility!";
+            statusClass = "status-excellent";
+            nextSteps = "You're dominating AI search results. Focus on maintaining and expanding your presence.";
+        } else if (appearanceRate >= 60) {
+            statusMessage = "Strong AI Search Presence";
+            statusClass = "status-good";
+            nextSteps = "You're well-positioned in AI search. A few strategic improvements will boost you to excellent.";
+        } else if (appearanceRate >= 40) {
+            statusMessage = "Moderate AI Search Visibility";
+            statusClass = "status-moderate";
+            nextSteps = "Good foundation with room for improvement. Focus on the content opportunities below.";
+        } else {
+            statusMessage = "Growing Your AI Search Presence";
+            statusClass = "status-building";
+            nextSteps = "Great starting point! The opportunities below will significantly boost your visibility.";
+        }
+        
         resultsDiv.innerHTML = `
             <div class="scan-results">
-                <div class="results-summary">
-                    <h3>📊 Scan Results</h3>
-                    <div class="summary-stats">
-                        <div class="stat">
-                            <span class="stat-number">${appearances}/${totalQueries}</span>
-                            <span class="stat-label">Appearances</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">${appearanceRate}%</span>
-                            <span class="stat-label">Visibility Rate</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">${gaps}</span>
-                            <span class="stat-label">Opportunities</span>
+                <div class="results-hero ${statusClass}">
+                    <div class="score-circle">
+                        <div class="score-number">${appearanceRate}</div>
+                        <div class="score-label">AI Visibility Score</div>
+                    </div>
+                    <div class="status-content">
+                        <h2>${statusMessage}</h2>
+                        <p>${nextSteps}</p>
+                        <div class="quick-stats">
+                            <span><strong>${appearances}</strong> mentions found</span>
+                            <span><strong>${gaps}</strong> growth opportunities</span>
+                            <span><strong>${Object.keys(byEngine).length}</strong> engines scanned</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="engine-results">
-                    ${Object.keys(byEngine).map(engine => {
-                        const engineResults = byEngine[engine];
-                        const engineAppearances = engineResults.filter(r => r.youAppear).length;
-                        const engineRate = Math.round((engineAppearances / engineResults.length) * 100);
-                        
-                        return `
-                            <div class="engine-section">
-                                <h4>${engine.toUpperCase()}</h4>
-                                <div class="engine-stats">
-                                    <span class="engine-rate">${engineRate}% visibility</span>
-                                    <span class="engine-count">${engineAppearances}/${engineResults.length} queries</span>
-                                </div>
-                                <div class="query-results">
-                                    ${engineResults.map(result => `
-                                        <div class="query-result ${result.youAppear ? 'appears' : 'gap'}">
-                                            <div class="query-text">${result.prompt}</div>
-                                            <div class="result-status">
-                                                ${result.youAppear ? 
-                                                    '✅ You appear' : 
-                                                    '❌ Opportunity to improve'
-                                                }
-                                            </div>
-                                            ${result.mentioned && result.mentioned.length > 0 ? 
-                                                `<div class="mentioned">Mentioned: ${result.mentioned.join(', ')}</div>` : 
-                                                ''
-                                            }
+                <div class="engine-overview">
+                    <h3>🚀 Engine Performance</h3>
+                    <div class="engine-grid">
+                        ${Object.keys(byEngine).map(engine => {
+                            const engineResults = byEngine[engine];
+                            const engineAppearances = engineResults.filter(r => r.youAppear).length;
+                            const engineRate = Math.round((engineAppearances / engineResults.length) * 100);
+                            
+                            return `
+                                <div class="engine-card">
+                                    <div class="engine-header">
+                                        <h4>${engine.toUpperCase()}</h4>
+                                        <div class="engine-score ${engineRate >= 70 ? 'good' : engineRate >= 40 ? 'moderate' : 'needs-work'}">${engineRate}%</div>
+                                    </div>
+                                    <div class="engine-details">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: ${engineRate}%"></div>
                                         </div>
-                                    `).join('')}
+                                        <p>${engineAppearances} of ${engineResults.length} queries</p>
+                                        ${engineRate < 70 ? `<span class="improvement-note">💡 Room for growth</span>` : `<span class="success-note">✅ Strong presence</span>`}
+                                    </div>
                                 </div>
-                            </div>
-                        `;
-                    }).join('')}
+                            `;
+                        }).join('')}
+                    </div>
                 </div>
                 
                 ${gaps > 0 ? `
                     <div class="opportunities-section">
-                        <h3>🎯 Content Opportunities</h3>
-                        <p>You have ${gaps} opportunities to improve your visibility. Consider creating content that addresses these queries:</p>
-                        <div class="opportunity-list">
-                            ${data.gaps.slice(0, 5).map(gap => `
-                                <div class="opportunity">
-                                    <strong>${gap.engine.toUpperCase()}:</strong> ${gap.prompt}
+                        <h3>🎯 Top Content Opportunities</h3>
+                        <p class="opportunities-intro">Focus on these high-impact content areas to boost your AI search visibility:</p>
+                        <div class="opportunity-grid">
+                            ${data.gaps.slice(0, 6).map((gap, index) => `
+                                <div class="opportunity-card">
+                                    <div class="opportunity-header">
+                                        <span class="opportunity-number">${index + 1}</span>
+                                        <span class="opportunity-engine">${gap.engine.toUpperCase()}</span>
+                                    </div>
+                                    <div class="opportunity-content">
+                                        <p>${gap.prompt}</p>
+                                    </div>
                                 </div>
                             `).join('')}
                         </div>
+                        <div class="cta-section">
+                            <p><strong>Ready to improve your AI search presence?</strong></p>
+                            <button class="btn secondary">Get Content Strategy</button>
+                        </div>
                     </div>
-                ` : ''}
+                ` : `
+                    <div class="celebration-section">
+                        <h3>🎉 Outstanding Results!</h3>
+                        <p>You're appearing in nearly all relevant AI search results. Keep up the excellent work!</p>
+                    </div>
+                `}
             </div>
         `;
     }
