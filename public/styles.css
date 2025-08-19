@@ -124,6 +124,16 @@ h1,h2,h3{
   color: var(--header);
   letter-spacing:.2px;
 }
+
+/* Section headers with cobalt background */
+.panel h1 {
+  background: var(--cobalt);
+  color: white;
+  padding: 1rem 2rem;
+  margin: -2rem -2rem 2rem -2rem;
+  border-radius: 16px 16px 0 0;
+  font-weight: 700;
+}
 .subtitle, .subtle{
   margin: 4px 0 28px;
   color: rgba(7,7,7,.75);
@@ -373,3 +383,26 @@ button:hover { background:#A9D6B9 !important; border-color:#A9D6B9 !important; }
   .container, section, .section, .panel, .card, .box, .results, .scan, .content,
   fieldset, form { background:#FFFFFF !important; }
 }
+/* FORCE RELOAD - Form fields should be large with cobalt borders */
+#scan-form input[name="name"], 
+#scan-form input[name="brand"], 
+#scan-form textarea[name="keywords"], 
+#scan-form textarea[name="competitors"],
+#fakes-form input,
+#phishing-form input,
+#phishing-form textarea {
+  background: white !important;
+  border: 5px solid #3454D1 !important;
+  border-radius: 16px !important;
+  padding: 18px 20px !important;
+  font-family: 'Roboto', system-ui, sans-serif !important;
+  font-size: 17px !important;
+  min-height: 56px !important;
+}
+
+#scan-form textarea[name="keywords"], 
+#scan-form textarea[name="competitors"] {
+  min-height: 120px !important;
+}
+
+/* Cache-busting comment Tue Aug 19 10:51:21 CST 2025 */

@@ -1,4 +1,4 @@
-# TrustSource
+# Credli.ai Ask Engine Optimization
 
 Minimal digital reputation analyzer MVP that generates trust scores based on public mentions.
 

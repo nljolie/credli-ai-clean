@@ -1,91 +1,79 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('analyzeForm');
-    const loading = document.getElementById('loading');
-    const results = document.getElementById('results');
-    const error = document.getElementById('error');
-    const scoreValue = document.getElementById('scoreValue');
-    const mentionsTable = document.getElementById('mentionsTable');
+    // Navigation functionality
+    const navLinks = document.querySelectorAll('.nav-link');
+    const panels = document.querySelectorAll('.panel');
 
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('name').value.trim();
-        const keyword = document.getElementById('keyword').value.trim();
-        
-        if (!name || !keyword) {
-            showError('Please enter both name and keyword');
-            return;
-        }
-        
-        hideAll();
-        loading.classList.remove('hidden');
-        
-        try {
-            const response = await fetch('/api/analyze', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name, keyword })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            
-            const data = await response.json();
-            displayResults(data);
-            
-        } catch (err) {
-            showError(`Analysis failed: ${err.message}`);
-        } finally {
-            loading.classList.add('hidden');
-        }
+    // Initialize navigation
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            showPanel(targetId);
+            setActiveNav(this);
+        });
     });
 
-    function hideAll() {
-        results.classList.add('hidden');
-        error.classList.add('hidden');
-        loading.classList.add('hidden');
-    }
-
-    function showError(message) {
-        hideAll();
-        error.textContent = message;
-        error.classList.remove('hidden');
-    }
-
-    function displayResults(data) {
-        hideAll();
+    function showPanel(targetId) {
+        panels.forEach(panel => {
+            panel.classList.remove('active');
+        });
         
-        scoreValue.textContent = data.trustScore;
-        
-        if (data.mentions && data.mentions.length > 0) {
-            mentionsTable.innerHTML = data.mentions.map(mention => `
-                <div class="mention-item">
-                    <div class="mention-header">
-                        <a href="${mention.url}" class="mention-title" target="_blank" rel="noopener noreferrer">
-                            ${escapeHtml(mention.title)}
-                        </a>
-                        <div class="mention-badges">
-                            <span class="badge source">${mention.source}</span>
-                            <span class="badge authority-${mention.authority}">${mention.authority}</span>
-                            ${mention.matchesKeyword ? '<span class="badge keyword-match">keyword match</span>' : ''}
-                        </div>
-                    </div>
-                    <div class="mention-type">${mention.type}</div>
-                </div>
-            `).join('');
-        } else {
-            mentionsTable.innerHTML = '<p>No mentions found</p>';
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+            targetPanel.classList.add('active');
         }
-        
-        results.classList.remove('hidden');
     }
 
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    function setActiveNav(activeLink) {
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+        activeLink.classList.add('active');
     }
+
+    // Form submission handlers (placeholder - no API calls yet)
+    const scanForm = document.getElementById('scan-form');
+    const fakesForm = document.getElementById('fakes-form');
+    const phishingForm = document.getElementById('phishing-form');
+
+    if (scanForm) {
+        scanForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Scan form submitted - API not connected yet');
+            // TODO: Connect to /api/scan endpoint
+        });
+    }
+
+    if (fakesForm) {
+        fakesForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Stop Fakes form submitted - API not connected yet');
+            // TODO: Connect to /api/stop-fakes endpoint
+        });
+    }
+
+    if (phishingForm) {
+        phishingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Phishing Check form submitted - API not connected yet');
+            // TODO: Connect to /api/phishing-check endpoint
+        });
+    }
+
+    // Optional: Auto-grow textarea functionality
+    function autoGrowTextarea(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.max(textarea.scrollHeight, 180) + 'px';
+    }
+
+    // Apply auto-grow to all textareas
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(textarea => {
+        // Auto-grow on input
+        textarea.addEventListener('input', function() {
+            autoGrowTextarea(this);
+        });
+
+        // Initialize proper height
+        autoGrowTextarea(textarea);
+    });
 });
