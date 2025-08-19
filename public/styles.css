@@ -140,7 +140,6 @@ label{
 input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="file"], textarea, select{
   width: 100%;
   max-width: 800px;
-  min-height: 64px;
   padding: 18px 20px;
   border: 5px solid var(--cobalt);
   border-radius: 16px;
@@ -154,6 +153,12 @@ input[type="text"], input[type="search"], input[type="email"], input[type="url"]
   transition: box-shadow .3s ease;
 }
 
+/* Single-line inputs (Name, Brand) */
+input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="file"], select {
+  min-height: 56px;
+}
+
+/* Multi-line textareas (Keywords, Competitors) */
 textarea {
   min-height: 120px;
   height: auto;
@@ -322,12 +327,17 @@ input[type="text"], input[type="search"], input[type="email"], input[type="url"]
   caret-color: var(--text) !important;
   border: 5px solid var(--cobalt) !important;
   border-radius: 16px !important;
-  min-height: 64px !important;
   padding: 18px 20px !important;
   font-family: 'Roboto', system-ui, sans-serif !important;
   font-size: 17px !important;
 }
 
+/* Single-line inputs */
+input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="file"], select {
+  min-height: 56px !important;
+}
+
+/* Multi-line textareas */
 textarea {
   min-height: 120px !important;
 }
