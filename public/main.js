@@ -71,6 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 const data = await response.json();
+                
+                // Store scan data for content strategy
+                window.storeScanData({
+                    keywords: keywords,
+                    competitors: competitors,
+                    gaps: data.gaps
+                });
+                
                 displayScanResults(data);
                 
                 // Switch to Results panel
@@ -316,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="cta-section">
                             <p><strong>Ready to improve your AI search presence?</strong></p>
-                            <button class="btn secondary">Get Content Strategy</button>
+                            <button class="btn secondary" onclick="getContentStrategy()">Get Content Strategy</button>
                         </div>
                     </div>
                 ` : `
@@ -328,4 +336,112 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
     }
+
+    // Global function for content strategy button
+    window.getContentStrategy = async function() {
+        try {
+            // Get the last scan data (you might want to store this globally)
+            const scanData = window.lastScanData || {};
+            
+            const response = await fetch('/api/content-strategy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    keywords: scanData.keywords || ['AI consultant', 'executive coach', 'tech leadership'],
+                    competitors: scanData.competitors || ['McKinsey Digital', 'Accenture AI'],
+                    gaps: scanData.gaps || []
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const strategy = await response.json();
+            displayContentStrategy(strategy);
+
+        } catch (err) {
+            alert(`Failed to get content strategy: ${err.message}`);
+        }
+    };
+
+    function displayContentStrategy(strategy) {
+        const resultsDiv = document.getElementById('results');
+        
+        resultsDiv.innerHTML = `
+            <div class="content-strategy">
+                <div class="strategy-header">
+                    <h2>🚀 AI Content Strategy</h2>
+                    <p>Specific actions to dominate AI search in your field</p>
+                </div>
+
+                <div class="strategy-summary">
+                    <div class="summary-card">
+                        <h3>${strategy.summary.primaryFocus}</h3>
+                        <p><strong>Key Advantage:</strong> ${strategy.summary.keyAdvantage}</p>
+                        <div class="summary-stats">
+                            <span><strong>${strategy.summary.totalOpportunities}</strong> total opportunities</span>
+                            <span><strong>${strategy.summary.highPriority}</strong> high-priority actions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opportunities-detailed">
+                    <h3>🎯 Priority Action Items</h3>
+                    <div class="opportunities-list">
+                        ${strategy.opportunities.map(opp => `
+                            <div class="opportunity-detailed ${opp.priority.toLowerCase()}">
+                                <div class="opportunity-meta">
+                                    <span class="priority-badge ${opp.priority.toLowerCase()}">${opp.priority} Priority</span>
+                                    <span class="engine-badge">${opp.engine}</span>
+                                </div>
+                                <h4>${opp.opportunity}</h4>
+                                <p class="reason"><strong>Why:</strong> ${opp.reason}</p>
+                                <p class="action"><strong>Action:</strong> ${opp.action}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="trending-queries">
+                    <h3>📈 What People Are Asking AI Engines</h3>
+                    <div class="queries-grid">
+                        ${Object.entries(strategy.trending).map(([engine, queries]) => `
+                            <div class="engine-queries">
+                                <h4>${engine.toUpperCase()}</h4>
+                                <ul>
+                                    ${queries.slice(0, 3).map(query => `<li>"${query}"</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="competitor-intel">
+                    <h3>🕵️ Competitive Intelligence</h3>
+                    <div class="competitors-grid">
+                        ${strategy.competitors.map(comp => `
+                            <div class="competitor-card">
+                                <h4>${comp.name}</h4>
+                                <p><strong>Strong on:</strong> ${comp.strongEngines.join(', ')}</p>
+                                <p><strong>Weak on:</strong> ${comp.weakEngines.join(', ')}</p>
+                                <p><strong>Top topics:</strong> ${comp.topTopics.join(', ')}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="strategy-cta">
+                    <button class="btn" onclick="showPanel('section-scan')">Run Another Scan</button>
+                </div>
+            </div>
+        `;
+    }
+
+    // Store scan data globally for strategy function
+    window.storeScanData = function(data) {
+        window.lastScanData = data;
+    };
 });

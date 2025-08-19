@@ -21,7 +21,7 @@ const DEFAULT_PROMPTS = (keywords) => {
 // For v0 we simulate engine responses (no API keys yet)
 function simulateEngineAnswer(engine, prompt, name) {
   // Create more balanced results - mix of appearing and not appearing
-  const shouldAppear = Math.random() > 0.35; // 65% chance of appearing
+  const shouldAppear = Math.random() > 0.25; // 75% chance of appearing
   
   const competitors = ['McKinsey Digital', 'Accenture AI', 'Jane Doe', 'TechCorp Solutions'];
   const randomCompetitors = competitors.sort(() => 0.5 - Math.random()).slice(0, 2);
@@ -34,8 +34,8 @@ function simulateEngineAnswer(engine, prompt, name) {
     `The Real ${name}`
   ];
   
-  const hasImposters = Math.random() > 0.7; // 30% chance of imposters appearing
-  const imposters = hasImposters ? potentialImposters.slice(0, Math.floor(Math.random() * 2) + 1) : [];
+  const hasImposters = Math.random() > 0.85; // 15% chance of imposters appearing
+  const imposters = hasImposters ? potentialImposters.slice(0, Math.floor(Math.random() * 1) + 1) : []; // Fewer imposters
   
   if (shouldAppear) {
     // User appears - determine position (authority)
@@ -236,6 +236,107 @@ app.post('/api/compare', async (req, res) => {
   };
   
   res.json(comparison);
+});
+
+// POST /api/content-strategy - AI-specific content recommendations
+app.post('/api/content-strategy', (req, res) => {
+  const { keywords = [], competitors = [], gaps = [] } = req.body;
+  
+  // AI-specific trending topics and queries by engine
+  const aiQueries = {
+    chatgpt: [
+      "How to implement AI in business operations?",
+      "What are the best AI consulting frameworks?",
+      "How to lead AI transformation projects?",
+      "AI ethics and governance best practices",
+      "Building AI-ready teams and culture"
+    ],
+    perplexity: [
+      "Top AI consultants for enterprise transformation",
+      "AI leadership strategies for executives",
+      "How to evaluate AI consulting services", 
+      "AI implementation case studies and results",
+      "Executive guide to AI technology adoption"
+    ],
+    gemini: [
+      "AI consultant vs AI strategist differences",
+      "How to choose the right AI advisor",
+      "AI leadership coaching for executives",
+      "Enterprise AI transformation roadmap",
+      "AI consulting ROI and business impact"
+    ],
+    "google-ai": [
+      "Best AI consultants for Fortune 500 companies",
+      "AI executive coaching and leadership development", 
+      "How to become a trusted AI advisor",
+      "AI transformation success stories",
+      "Enterprise AI strategy consulting services"
+    ]
+  };
+
+  // Competitor insights
+  const competitorAnalysis = competitors.map(comp => ({
+    name: comp,
+    strongEngines: ['ChatGPT', 'Perplexity'].sort(() => 0.5 - Math.random()).slice(0, 2),
+    weakEngines: ['Gemini', 'Google AI Overviews'].sort(() => 0.5 - Math.random()).slice(0, 1),
+    topTopics: [
+      'AI strategy consulting',
+      'Digital transformation',
+      'Executive coaching',
+      'Technology leadership'
+    ].sort(() => 0.5 - Math.random()).slice(0, 2)
+  }));
+
+  // Growth opportunities based on gaps
+  const growthOpportunities = [
+    {
+      priority: "High",
+      engine: "ChatGPT", 
+      opportunity: "Create comprehensive guides answering 'How to implement AI in business operations'",
+      reason: "This query gets 15K+ monthly searches and you're not appearing",
+      action: "Write a detailed implementation framework with case studies"
+    },
+    {
+      priority: "High",
+      engine: "Perplexity",
+      opportunity: "Establish authority on 'Enterprise AI transformation roadmaps'",
+      reason: "Perplexity users are decision-makers looking for strategic guidance",
+      action: "Publish thought leadership on AI transformation methodologies"
+    },
+    {
+      priority: "Medium",
+      engine: "Google AI Overviews",
+      opportunity: "Capture 'AI consulting ROI' searches",
+      reason: "CFOs and executives need ROI justification for AI investments", 
+      action: "Create ROI calculator and success metrics content"
+    },
+    {
+      priority: "Medium", 
+      engine: "Gemini",
+      opportunity: "Own the 'AI ethics and governance' conversation",
+      reason: "Growing concern among enterprises, low competition",
+      action: "Develop comprehensive AI ethics framework and guidelines"
+    },
+    {
+      priority: "Low",
+      engine: "ChatGPT",
+      opportunity: "Target 'Building AI-ready teams' queries",
+      reason: "HR and talent leaders are searching for team development strategies",
+      action: "Create team readiness assessments and training programs"
+    }
+  ];
+
+  res.json({
+    trending: aiQueries,
+    competitors: competitorAnalysis,
+    opportunities: growthOpportunities,
+    summary: {
+      totalOpportunities: growthOpportunities.length,
+      highPriority: growthOpportunities.filter(o => o.priority === 'High').length,
+      primaryFocus: "Enterprise AI implementation and transformation leadership",
+      keyAdvantage: "Executive-level AI strategy and governance expertise"
+    }
+  });
 });
 
 const PORT = process.env.PORT || 5050;
