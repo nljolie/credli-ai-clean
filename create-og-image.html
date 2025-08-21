@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #3454D1 0%, #5B73E8 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+        }
+        .logo h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .logo .tagline {
+            font-size: 14px;
+            margin-top: 5px;
+            color: rgba(255,255,255,0.9);
+        }
+        .main-content {
+            text-align: center;
+            max-width: 800px;
+        }
+        .headline {
+            font-size: 52px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .accent-line {
+            width: 100px;
+            height: 4px;
+            background: white;
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+        .subheadline {
+            font-size: 22px;
+            font-weight: 400;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+        .badge {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            background: rgba(255,255,255,0.2);
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 60px 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pattern"></div>
+        <div class="logo">
+            <h1>Credli.ai</h1>
+            <div class="tagline">AI Trust Consultant</div>
+        </div>
+        <div class="main-content">
+            <div class="headline">Get Your AI Trust Score</div>
+            <div class="accent-line"></div>
+            <div class="subheadline">Discover how AI engines rank your expertise<br>and protect your authority from imposters</div>
+        </div>
+        <div class="badge">Free Cred Score Analysis</div>
+    </div>
+</body>
+</html>

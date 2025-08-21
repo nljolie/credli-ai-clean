@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Graph Image Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .og-container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #3454D1 0%, #5B73E8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 60px 60px, 40px 40px;
+        }
+        
+        .content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 3;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .logo .tagline {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.9);
+            margin-top: 4px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .main-text {
+            max-width: 800px;
+            padding: 0 40px;
+        }
+        
+        .headline {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .subheadline {
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 1.4;
+            opacity: 0.95;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+        
+        .accent-line {
+            width: 100px;
+            height: 4px;
+            background: white;
+            margin: 2rem auto;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .bottom-badge {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="og-container">
+        <div class="bg-pattern"></div>
+        
+        <div class="logo">
+            <h1>Credli.ai</h1>
+            <div class="tagline">AI Trust Consultant</div>
+        </div>
+        
+        <div class="content">
+            <div class="main-text">
+                <h1 class="headline">Get Your AI Trust Score</h1>
+                <div class="accent-line"></div>
+                <p class="subheadline">Discover how AI engines rank your expertise and protect your authority from imposters</p>
+            </div>
+        </div>
+        
+        <div class="bottom-badge">
+            Free Cred Score Analysis
+        </div>
+    </div>
+</body>
+</html>
