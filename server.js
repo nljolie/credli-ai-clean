@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Test endpoint
 app.get('/test', (req, res) => {
-  res.json({ message: 'Server is working!', timestamp: new Date() });
+  res.json({ message: 'Server is working! Homepage updated.', timestamp: new Date() });
 });
 
 // Serve main homepage at root BEFORE static middleware
