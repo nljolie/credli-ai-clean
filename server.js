@@ -1,7 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+// Initialize Stripe only if key is available
+let stripe;
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+  console.log('✅ Stripe initialized');
+} else {
+  console.log('⚠️  Stripe disabled - no secret key found');
+}
 
 const app = express();
 app.use(express.json());
@@ -343,6 +351,10 @@ app.post('/api/content-strategy', (req, res) => {
 
 // Stripe Integration Routes
 app.post('/api/create-subscription', async (req, res) => {
+  if (!stripe) {
+    return res.status(503).json({ error: 'Payment processing temporarily unavailable. Please try again later.' });
+  }
+  
   try {
     const { email, name, company, role, plan, paymentMethodId } = req.body;
     
@@ -571,6 +583,10 @@ app.post('/api/free-cred-score', async (req, res) => {
 
 // Webhook to handle subscription events
 app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
+  if (!stripe) {
+    return res.status(503).json({ error: 'Webhook processing unavailable' });
+  }
+  
   const sig = req.headers['stripe-signature'];
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
