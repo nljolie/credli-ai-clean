@@ -13,12 +13,13 @@ if (process.env.STRIPE_SECRET_KEY) {
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve main homepage at root
+// Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // —— Helpers ——
 const DEFAULT_PROMPTS = (keywords) => {
