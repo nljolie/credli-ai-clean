@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BZTV4645ZT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BZTV4645ZT');
+  </script>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credli.ai - Get Your Cred Score | The AI Trust Consultant</title>
+  <meta name="description" content="Get your free AI Trust Score and see how you rank in AI search results. The only AI Trust Consultant specializing in Ask Engine Optimization (AEO) and Generative Engine Optimization (GEO).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/landing-styles.css?v=60">
+  <style>
+    /* Additional styles for score display */
+    .hero {
+      padding: 120px 0 80px;
+      background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+    }
+    
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #666;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    
+    .trust-score-demo {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border: 1px solid #e3e6ec;
+      margin: 0 auto;
+      max-width: 400px;
+    }
+    
+    .demo-header {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brand);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .score-circle {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .score-number {
+      font-size: 4rem;
+      font-weight: 700;
+      color: var(--header);
+      line-height: 1;
+    }
+    
+    .score-label {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+    
+    .breakdown {
+      space-y: 1rem;
+    }
+    
+    .breakdown-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    
+    .breakdown-item span:first-child {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    .breakdown-item span:last-child {
+      font-weight: 600;
+      color: var(--header);
+    }
+    
+    .bar {
+      flex: 1;
+      height: 8px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      margin: 0 1rem;
+      overflow: hidden;
+    }
+    
+    .fill {
+      height: 100%;
+      background: linear-gradient(135deg, #3454D1 0%, #5B73E8 100%);
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+    
+    .warning {
+      color: var(--warning);
+      font-weight: 600;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f0f0f0;
+    }
+    
+    .warning-text {
+      color: var(--warning);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .demo-cta {
+      text-align: center;
+      margin-top: 3rem;
+    }
+    
+    .btn-demo {
+      display: inline-block;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: var(--shadow-medium);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-demo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(52, 84, 209, 0.3);
+    }
+    
+    .micro-promise {
+      font-size: 0.95rem;
+      color: var(--header);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    
+    @media (max-width: 968px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+      
+      .trust-score-demo {
+        margin-bottom: 2rem;
+        max-width: 350px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero {
+        padding: 100px 0 60px;
+      }
+      
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+        padding: 0 1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.2rem;
+        line-height: 1.3;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .trust-score-demo {
+        margin-bottom: 2rem;
+        max-width: 320px;
+        padding: 1.5rem;
+      }
+      
+      .score-number {
+        font-size: 3.5rem;
+      }
+      
+      .breakdown-item {
+        margin-bottom: 0.8rem;
+      }
+      
+      .breakdown-item span:first-child {
+        font-size: 0.8rem;
+      }
+      
+      .btn-demo {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+      
+      .micro-promise {
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      
+      .trust-score-demo {
+        padding: 1.2rem;
+        max-width: 280px;
+      }
+      
+      .score-number {
+        font-size: 3rem;
+      }
+      
+      .demo-header {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/index.html" class="nav-link active">Home</a>
+        <a href="/public/landing.html#who-this-is-for" class="nav-link">Who This Is For</a>
+        <a href="/public/landing.html#timeline" class="nav-link">Timeline</a>
+        <a href="/public/landing.html#pricing" class="nav-link">Pricing</a>
+        <a href="/public/free-cred-score.html" class="nav-link cta-nav">Get Your Cred Score</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Score Display -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>78% of High-Trust Industries Use AI Daily. You Can't Afford to Be Invisible in AI Search.</h1>
+        <p class="hero-subtitle">What's your AEO and GEO discovery strategy? Financial leaders, sustainable entrepreneurs, healthcare executives, law firms, and C-suite thought leaders are already being surfaced in AI answers. The question is — will your name be recognized as the authority?</p>
+        
+        <div class="demo-cta">
+          <p class="micro-promise">⚡ Test Drive Credli.ai: See Where You Rank in AI Search vs. Competitors (Takes 2 Minutes)</p>
+          <a href="/public/free-cred-score.html" class="btn-demo">Get Your Cred Score</a>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="trust-score-demo">
+          <div class="demo-header">Your AI Trust Analysis</div>
+          <div class="score-circle">
+            <div class="score-number">67</div>
+            <div class="score-label">Cred Score</div>
+          </div>
+          <div class="breakdown">
+            <div class="breakdown-item">
+              <span>Visibility</span>
+              <div class="bar"><div class="fill" style="width: 60%"></div></div>
+              <span>60%</span>
+            </div>
+            <div class="breakdown-item">
+              <span>Authority</span>
+              <div class="bar"><div class="fill" style="width: 75%"></div></div>
+              <span>75%</span>
+            </div>
+            <div class="breakdown-item">
+              <span>Consistency</span>
+              <div class="bar"><div class="fill" style="width: 45%"></div></div>
+              <span>45%</span>
+            </div>
+            <div class="breakdown-item warning">
+              <span>Imposters Detected</span>
+              <div class="warning-text">3 fake profiles found</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Citations -->
+  <section class="citations">
+    <div class="container">
+      <h3>Citations</h3>
+      <ol>
+        <li>McKinsey & Company. "The state of AI: How organizations are rewiring to capture value." 2024. <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">Source</a></li>
+        <li>Bartlett, Steven. "AI AGENTS EMERGENCY DEBATE: These Jobs Won't Exist In 24 Months!" The Diary Of A CEO. 2024. <a href="https://podcasts.apple.com/us/podcast/ai-agents-emergency-debate-these-jobs-wont-exist-in/id1291423644" target="_blank">Source</a></li>
+        <li>McKinsey & Company. "AI in the workplace: A report for 2025." 2024. <a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/superagency-in-the-workplace-empowering-people-to-unlock-ais-full-potential-at-work" target="_blank">Source</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Credli.ai</h3>
+          <p>The AI Trust Consultant</p>
+        </div>
+        <div class="footer-links">
+          <a href="/public/landing.html">Home</a>
+          <a href="/public/landing.html#who-this-is-for">Who This Is For</a>
+          <a href="/public/landing.html#timeline">Timeline</a>
+          <a href="/public/landing.html#pricing">Pricing</a>
+          <a href="/public/free-cred-score.html">Get Cred Score</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <div class="legal-links">
+          <a href="/public/privacy-policy.html" class="legal-link">Privacy Policy</a>
+          <a href="/public/terms-of-service.html" class="legal-link">Terms of Service</a>
+          <a href="/public/gdpr-ccpa-policy.html" class="legal-link">GDPR & CCPA Policy</a>
+          <a href="/public/affiliate-disclaimer.html" class="legal-link">Affiliate Disclaimer</a>
+          <a href="/public/anti-class-action-provision.html" class="legal-link">Anti-Class Action Provision</a>
+          <a href="/public/dmca-policy.html" class="legal-link">DMCA Policy</a>
+          <a href="/public/earnings-results-disclaimer.html" class="legal-link">Earnings & Results Disclaimer</a>
+          <a href="/public/legal-disclaimer.html" class="legal-link">Legal Disclaimer</a>
+          <a href="/public/optin-agreement.html" class="legal-link">Optin Agreement</a>
+          <a href="/public/refund-policy.html" class="legal-link">Refund Policy</a>
+          <a href="/public/testimonialist-disclaimer.html" class="legal-link">Testimonialist Disclaimer</a>
+        </div>
+      </div>
+      <div class="footer-legal-disclaimer">
+        <p>LEGAL DISCLAIMER: Credli.ai provides collaborative consulting services with NO GUARANTEES of results, earnings, or Cred Score improvements. All results are the user's responsibility. This information is for educational purposes only. You are responsible for all content creation, posting, and implementation. We are NOT a posting service or social media management company. Individual success depends entirely on your own efforts, consistency, and market factors beyond our control.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025-2026 Credli.ai. All rights reserved.</p>
+        <p>Worthy of Success, LLC</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add active class to nav links on scroll
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const sections = document.querySelectorAll('section[id]');
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= (sectionTop - 200)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+  
+  <!-- Ask Credli Chatbot -->
+  <script src="/public/chatbot.js"></script>
+</body>
+</html>

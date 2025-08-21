@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Waitlist - Credli.ai Beta Full</title>
+  <link rel="stylesheet" href="landing-styles.css?v=25">
+  <style>
+    .waitlist-hero {
+      background: linear-gradient(135deg, #3454D1, #2d4db3);
+      color: white;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .waitlist-badge {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      display: inline-block;
+    }
+    
+    .waitlist-hero h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    
+    .waitlist-subtitle {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.9);
+      margin: 0 auto 3rem;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+    
+    .waitlist-form-container {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      margin: -8rem auto 4rem;
+      box-shadow: 0 20px 40px rgba(52, 84, 209, 0.2);
+      position: relative;
+      z-index: 10;
+      max-width: 500px;
+    }
+    
+    .waitlist-form h2 {
+      color: #3454D1;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #3454D1;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    
+    .form-group input:focus {
+      border-color: #3454D1;
+      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
+      outline: none;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #BBE1C3, #A9D6B9);
+      color: #070707;
+      border: none;
+      padding: 1.2rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #A9D6B9, #98CBA5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(52, 84, 209, 0.2);
+    }
+    
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: #f0fdf4;
+      border: 2px solid #10b981;
+      border-radius: 12px;
+      margin-top: 2rem;
+    }
+    
+    .success-message h3 {
+      color: #10b981;
+      margin-bottom: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .waitlist-hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .waitlist-form-container {
+        margin: -6rem 1rem 3rem;
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/landing.html" class="nav-link">Back to Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="waitlist-hero">
+    <div class="waitlist-badge">🔥 BETA IS FULL</div>
+    <h1>We Hit Our 20-Person Limit!</h1>
+    <p class="waitlist-subtitle">Our exclusive beta filled up faster than expected. Join the waitlist to be first in line when we open the next cohort.</p>
+  </section>
+
+  <!-- Waitlist Form -->
+  <div class="waitlist-form-container">
+    <form id="waitlist-form" class="waitlist-form">
+      <h2>Join the Waitlist</h2>
+      
+      <div class="form-group">
+        <label for="fullName">Full Name *</label>
+        <input type="text" id="fullName" name="fullName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number (Optional)</label>
+        <input type="tel" id="phone" name="phone">
+      </div>
+      
+      <div class="form-group">
+        <label for="expertise">Your Area of Expertise *</label>
+        <input type="text" id="expertise" name="expertise" placeholder="e.g., Executive Coaching, AI Consulting" required>
+      </div>
+      
+      <button type="submit" class="submit-btn">Join Waitlist</button>
+    </form>
+    
+    <div class="success-message" id="success-message">
+      <h3>✅ You're on the list!</h3>
+      <p>We'll email you within 24 hours when a spot opens up. Check your inbox for confirmation.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Credli.ai</h3>
+          <p>The AI Trust Consultant</p>
+        </div>
+        <div class="footer-links">
+          <a href="/landing.html">Home</a>
+          <a href="/landing.html#pricing">Pricing</a>
+          <a href="/free-cred-score.html">Free Cred Score</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = {
+        fullName: formData.get('fullName'),
+        email: formData.get('email'),
+        phone: formData.get('phone') || 'Not provided',
+        expertise: formData.get('expertise'),
+        timestamp: new Date().toISOString(),
+        position: 'TBD' // You'll update this manually
+      };
+      
+      // Send email notification
+      sendWaitlistNotification(data);
+      
+      // Show success message
+      document.getElementById('waitlist-form').style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+    });
+    
+    async function sendWaitlistNotification(data) {
+      // This sends the waitlist signup to your email
+      const emailBody = `
+        New Waitlist Signup for Credli.ai Beta:
+        
+        Name: ${data.fullName}
+        Email: ${data.email}
+        Phone: ${data.phone}
+        Expertise: ${data.expertise}
+        Time: ${data.timestamp}
+        
+        Please add them to your waitlist tracking.
+      `;
+      
+      // For now, this logs to console. 
+      // When hosted, you'll connect this to an email service
+      console.log('Waitlist signup:', data);
+      
+      // Optional: Store in Google Sheets or simple database
+      // await fetch('/api/waitlist', { method: 'POST', body: JSON.stringify(data) });
+    }
+  </script>
+</body>
+</html>

@@ -1,5 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 app.use(express.json());
@@ -337,6 +339,267 @@ app.post('/api/content-strategy', (req, res) => {
       keyAdvantage: "Executive-level AI strategy and governance expertise"
     }
   });
+});
+
+// Stripe Integration Routes
+app.post('/api/create-subscription', async (req, res) => {
+  try {
+    const { email, name, company, role, plan, paymentMethodId } = req.body;
+    
+    // Create customer
+    const customer = await stripe.customers.create({
+      email: email,
+      name: name,
+      metadata: {
+        company: company,
+        role: role,
+        plan: plan
+      }
+    });
+
+    // Attach payment method to customer
+    await stripe.paymentMethods.attach(paymentMethodId, {
+      customer: customer.id,
+    });
+
+    // Set as default payment method
+    await stripe.customers.update(customer.id, {
+      invoice_settings: {
+        default_payment_method: paymentMethodId,
+      },
+    });
+
+    // Define price IDs (you'll need to create these in your Stripe dashboard)
+    const priceIds = {
+      professional: 'price_professional_497', // Replace with your actual price ID
+      executive: 'price_executive_997',       // Replace with your actual price ID  
+      enterprise: 'price_enterprise_1997'    // Replace with your actual price ID
+    };
+
+    // Create subscription
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{
+        price: priceIds[plan],
+      }],
+      expand: ['latest_invoice.payment_intent'],
+      metadata: {
+        plan: plan,
+        company: company,
+        role: role
+      }
+    });
+
+    res.json({
+      subscriptionId: subscription.id,
+      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+      customer: customer.id
+    });
+
+  } catch (error) {
+    console.error('Stripe error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// —— Server-Side Bot Protection ——
+const submissions = new Map(); // In-memory store (use Redis in production)
+const rateLimits = new Map(); // Rate limiting tracker
+
+function serverSideProtection(req, res, next) {
+  const clientIP = req.ip || req.connection.remoteAddress || req.headers['x-forwarded-for'];
+  const userAgent = req.headers['user-agent'] || '';
+  const now = Date.now();
+  
+  // 1. Rate Limiting (stricter than client-side)
+  const rateLimitKey = `rate_${clientIP}`;
+  const ipRateData = rateLimits.get(rateLimitKey) || { count: 0, lastReset: now, dailyCount: 0, dailyReset: now };
+  
+  // Reset counters if needed
+  if (now - ipRateData.lastReset > 60000) { // 1 minute window
+    ipRateData.count = 0;
+    ipRateData.lastReset = now;
+  }
+  if (now - ipRateData.dailyReset > 86400000) { // 24 hour window
+    ipRateData.dailyCount = 0;
+    ipRateData.dailyReset = now;
+  }
+  
+  // Check limits (stricter than client-side)
+  if (ipRateData.count > 3 || ipRateData.dailyCount > 2) {
+    return res.status(429).json({ 
+      error: 'Rate limit exceeded. Please try again later.',
+      retryAfter: Math.ceil((60000 - (now - ipRateData.lastReset)) / 1000)
+    });
+  }
+  
+  // 2. Request Pattern Analysis
+  const requestPattern = {
+    method: req.method,
+    contentLength: req.get('content-length') || 0,
+    acceptHeader: req.get('accept') || '',
+    referer: req.get('referer') || '',
+    userAgent: userAgent.substring(0, 100)
+  };
+  
+  // Detect suspicious patterns
+  if (requestPattern.contentLength > 10000) {
+    return res.status(400).json({ error: 'Request too large' });
+  }
+  
+  if (!requestPattern.referer.includes('credli.ai') && !requestPattern.referer.includes('localhost')) {
+    return res.status(403).json({ error: 'Invalid referer' });
+  }
+  
+  // 3. Bot Detection via User Agent
+  const botPatterns = [
+    'bot', 'crawler', 'spider', 'scraper', 'curl', 'wget', 'python-requests',
+    'node-fetch', 'axios', 'httpie', 'postman', 'insomnia'
+  ];
+  
+  const suspiciousUA = botPatterns.some(pattern => 
+    userAgent.toLowerCase().includes(pattern)
+  );
+  
+  if (suspiciousUA) {
+    return res.status(403).json({ error: 'Automated requests not allowed' });
+  }
+  
+  // 4. Update rate limits
+  ipRateData.count++;
+  ipRateData.dailyCount++;
+  rateLimits.set(rateLimitKey, ipRateData);
+  
+  // Add protection data to request for endpoint use
+  req.protection = {
+    clientIP,
+    userAgent: userAgent.substring(0, 100),
+    timestamp: now,
+    dailyCount: ipRateData.dailyCount
+  };
+  
+  next();
+}
+
+// Apply protection to sensitive endpoints
+app.use('/api/free-cred-score', serverSideProtection);
+
+// Free Cred Score endpoint with comprehensive protection
+app.post('/api/free-cred-score', async (req, res) => {
+  try {
+    const { name, email, company, askphrases, fingerprint, trustScore, sessionData } = req.body;
+    
+    // 1. Validate required fields
+    if (!name || !email || !company || !askphrases || !Array.isArray(askphrases) || askphrases.length !== 3) {
+      return res.status(400).json({ 
+        error: 'Invalid request data. Missing required fields.' 
+      });
+    }
+    
+    // 2. Validate data lengths and content
+    if (name.length > 100 || email.length > 200 || company.length > 200) {
+      return res.status(400).json({ 
+        error: 'Field length exceeds maximum allowed.' 
+      });
+    }
+    
+    // 3. Email validation (server-side)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        error: 'Invalid email format.' 
+      });
+    }
+    
+    // 4. Cost Protection - simulate expensive API call
+    const submissionKey = `submission_${req.protection.clientIP}_${email}`;
+    const existingSubmission = submissions.get(submissionKey);
+    
+    if (existingSubmission && Date.now() - existingSubmission.timestamp < 300000) { // 5 minute cooldown
+      return res.status(429).json({ 
+        error: 'Submission too recent. Please wait before submitting again.',
+        retryAfter: Math.ceil((300000 - (Date.now() - existingSubmission.timestamp)) / 1000)
+      });
+    }
+    
+    // 5. Log submission for monitoring
+    console.log(`✅ Free Cred Score request:`, {
+      ip: req.protection.clientIP,
+      email: email.substring(0, 20) + '...',
+      company: company.substring(0, 30),
+      userAgent: req.protection.userAgent,
+      dailyCount: req.protection.dailyCount,
+      trustScore: trustScore || 'unknown'
+    });
+    
+    // 6. Store submission to prevent duplicates
+    submissions.set(submissionKey, {
+      timestamp: Date.now(),
+      email,
+      company,
+      name: name.substring(0, 50)
+    });
+    
+    // 7. Simulate Cred Score analysis (replace with real API in production)
+    const mockResults = {
+      name: name,
+      credScore: Math.floor(Math.random() * 40) + 40, // 40-80 range for free version
+      mentions: Math.floor(Math.random() * 6) + 1,
+      queries: askphrases,
+      askphraseResults: askphrases.map((askphrase, index) => ({
+        askphrase: askphrase,
+        mentions: Math.floor(Math.random() * 3),
+        performance: ['needs-work', 'moderate', 'good'][Math.floor(Math.random() * 3)]
+      })),
+      engine: 'ChatGPT (Free Analysis)',
+      analysisLimited: true,
+      upgradeMessage: 'This free analysis covers one AI engine. Get complete analysis across all major engines with our Beta Concierge Program.'
+    };
+    
+    // 8. Add small delay to prevent rapid-fire requests
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    res.json(mockResults);
+    
+  } catch (error) {
+    console.error('Free Cred Score API error:', error);
+    res.status(500).json({ 
+      error: 'Analysis temporarily unavailable. Please try again later.' 
+    });
+  }
+});
+
+// Webhook to handle subscription events
+app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    console.log('Webhook signature verification failed.', err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'invoice.payment_succeeded':
+      const invoice = event.data.object;
+      console.log('Payment succeeded for customer:', invoice.customer);
+      // Here you would update your database, send welcome email, etc.
+      break;
+    case 'invoice.payment_failed':
+      const failedInvoice = event.data.object;
+      console.log('Payment failed for customer:', failedInvoice.customer);
+      // Handle failed payment
+      break;
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  res.json({received: true});
 });
 
 const PORT = process.env.PORT || 5050;
