@@ -22,7 +22,7 @@ app.get('/test', (req, res) => {
 // Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
   console.log('Root route hit - serving homepage');
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'landing.html'));
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
