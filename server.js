@@ -14,8 +14,14 @@ if (process.env.STRIPE_SECRET_KEY) {
 const app = express();
 app.use(express.json());
 
+// Test endpoint
+app.get('/test', (req, res) => {
+  res.json({ message: 'Server is working!', timestamp: new Date() });
+});
+
 // Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
+  console.log('Root route hit - serving homepage');
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
