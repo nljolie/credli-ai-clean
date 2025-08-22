@@ -25,7 +25,7 @@ class CredliChatbot {
                             <span class="logo-text">Credli</span>
                             <span class="logo-ai">.ai</span>
                         </div>
-                        <div class="bubble-text">Ask Credli</div>
+                        <div class="bubble-text">Ask Credli.ai</div>
                     </div>
                 </div>
                 

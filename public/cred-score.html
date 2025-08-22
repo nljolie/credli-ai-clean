@@ -449,7 +449,6 @@
         <a href="/landing.html#who-this-is-for" class="nav-link">Who This Is For</a>
         <a href="/landing.html#timeline" class="nav-link">Timeline</a>
         <a href="/landing.html#pricing" class="nav-link">Pricing</a>
-        <a href="cred-score.html" class="nav-link cta-nav active">Get Your Cred Score</a>
       </div>
     </div>
   </nav>
@@ -462,79 +461,127 @@
     </div>
   </section>
 
-  <!-- Form Section -->
-  <section class="form-section">
+  <!-- Results Container - Moved to Top -->
+  <section class="results-section" style="padding: 2rem 0 4rem; background: #f8fafc;">
     <div class="container">
-      <div class="cred-form-container">
-        <div class="form-header">
-          <h2>🔍 Free AI Authority Check</h2>
-          <p>Enter your details and 3 Ask Phrases that represent your expertise</p>
+      <div class="results-container" style="display: block; background: white; margin: -3rem auto 0; max-width: 900px; border-radius: 20px; box-shadow: 0 20px 40px rgba(52, 84, 209, 0.15); overflow: hidden;">
+        <!-- Score Header -->
+        <div style="background: linear-gradient(135deg, #BBE1C3, #A9D6B9); padding: 3rem; text-align: center;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+          <h2 style="color: #070707; font-size: 2rem; margin-bottom: 1rem;">Good AI Presence - Strong Potential!</h2>
+          <div style="background: rgba(255,255,255,0.9); border-radius: 50%; width: 150px; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 2rem auto; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+            <div style="font-size: 3rem; font-weight: 700; color: #3454D1; line-height: 1;">71</div>
+            <div style="font-size: 0.9rem; color: #666; font-weight: 600;">Cred Score</div>
+          </div>
+          <p style="color: #070707; font-size: 1.1rem; max-width: 500px; margin: 0 auto;">
+            You have good AI visibility with clear opportunities to dominate your field.
+          </p>
         </div>
-    
-        <form id="cred-score-form" class="cred-form">
-          <div class="form-input">
-            <label for="name">Your Name</label>
-            <input type="text" id="name" name="name" placeholder="e.g., Jane Smith" required>
-          </div>
-          
-          <div class="form-input">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="e.g., jane@company.com" required>
-          </div>
-          
-          <div class="form-input">
-            <label for="company">Company/Brand</label>
-            <input type="text" id="company" name="company" placeholder="e.g., Smith Consulting" required>
-          </div>
-          
-          <div class="form-input">
-            <label for="askphrase1">Ask Phrase #1</label>
-            <input type="text" id="askphrase1" name="askphrase1" placeholder="e.g., Who is the best AI consultant?" required>
-          </div>
-          
-          <div class="form-input">
-            <label for="askphrase2">Ask Phrase #2</label>
-            <input type="text" id="askphrase2" name="askphrase2" placeholder="e.g., Top executive coaching expert?" required>
-          </div>
-          
-          <div class="form-input">
-            <label for="askphrase3">Ask Phrase #3</label>
-            <input type="text" id="askphrase3" name="askphrase3" placeholder="e.g., Best digital transformation leader?" required>
+
+        <div class="detailed-results">
+          <!-- Key Metrics -->
+          <div class="breakdown-section">
+            <h3>📊 Your AI Authority Breakdown</h3>
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-icon">👁️</div>
+                <h4>AI Visibility</h4>
+                <div class="metric-value">50%</div>
+                <p class="metric-description">How often AI engines surface your name when asked about your expertise area</p>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">⭐</div>
+                <h4>Authority Signal</h4>
+                <div class="metric-value">53%</div>
+                <p class="metric-description">Strength of trust signals AI engines associate with your expertise</p>
+              </div>
+              <div class="metric-card">
+                <div class="metric-icon">🎯</div>
+                <h4>Consistency</h4>
+                <div class="metric-value">50%</div>
+                <p class="metric-description">How reliably AI engines mention you across different queries</p>
+              </div>
+            </div>
           </div>
 
-          <!-- Simple Verification -->
-          <div class="verification-section">
-            <label class="verify-label">
-              <input type="checkbox" id="human-verify" required>
-              <span>I'm not a robot</span>
-            </label>
+          <!-- Cross-Platform Analysis -->
+          <div class="detailed-breakdown">
+            <h4>🔍 Cross-Platform Analysis</h4>
+            <div class="breakdown-item-detailed">
+              <div class="breakdown-label">
+                🤖 ChatGPT Recognition
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill" style="width: 56%"></div>
+              </div>
+              <div class="breakdown-score">56%</div>
+            </div>
+            <div class="breakdown-item-detailed">
+              <div class="breakdown-label">
+                🔮 Perplexity Authority <span style="font-size: 0.8rem; color: #666; font-weight: normal;">(Beta - expanding access)</span>
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill" style="width: 52%"></div>
+              </div>
+              <div class="breakdown-score">52%</div>
+            </div>
+            <div class="breakdown-item-detailed">
+              <div class="breakdown-label">
+                💎 Gemini Visibility
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill" style="width: 43%"></div>
+              </div>
+              <div class="breakdown-score">43%</div>
+            </div>
+            <div class="breakdown-item-detailed">
+              <div class="breakdown-label">
+                🌐 Google AI Overviews <span style="font-size: 0.8rem; color: #666; font-weight: normal;">(API integration planned)</span>
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill" style="width: 59%"></div>
+              </div>
+              <div class="breakdown-score">59%</div>
+            </div>
           </div>
-          
-          <div class="privacy-notice">
-            <p style="font-size: 0.9rem; color: rgba(7,7,7,0.6); text-align: center; margin-top: 1rem;">
-              By submitting this form, you agree to our <a href="/privacy-policy.html" style="color: #3454D1; text-decoration: underline;" target="_blank">Privacy Policy</a>
-            </p>
-          </div>
-          
-          <button type="submit" class="submit-btn" id="submit-btn">
-            🚀 Get My Free Cred Score
-          </button>
-        </form>
-        
-        <div class="loading-state" id="loading-state">
-          <h3>🔍 Analyzing Your AI Authority...</h3>
-          <p>Checking AI engines for your expertise mentions...</p>
-          <div class="loading-spinner"></div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Results Container -->
-  <section class="results-section">
-    <div class="container">
-      <div class="results-container" id="results-container">
-        <!-- Results will be populated here via JavaScript -->
+          <!-- Risk Alert -->
+          <div class="insights-section risk-section">
+            <h4>⚠️ Authority Risk Detected</h4>
+            <div class="insight-item risk-item">
+              <strong style="color: #dc2626;">3 Potential Imposters Found:</strong> We detected profiles using similar names and expertise claims that could dilute your AI authority. This is common but needs immediate attention.
+            </div>
+            <div class="insight-item risk-item">
+              <strong style="color: #dc2626;">Competitor Gap:</strong> Key competitors are currently outranking you in AI search results for your primary expertise area.
+            </div>
+          </div>
+
+          <!-- Quick Wins -->
+          <div class="insights-section">
+            <h4>💡 Immediate Opportunities</h4>
+            <div class="insight-item">
+              <strong>Content Strategy:</strong> Create content that directly answers the top 5 questions prospects ask AI about your field. This could boost your score by 15-20 points.
+            </div>
+            <div class="insight-item">
+              <strong>Authority Building:</strong> Your strongest performance comes from Google AI Overviews. Double down on structured content and consistent messaging.
+            </div>
+            <div class="insight-item">
+              <strong>Consistency Win:</strong> Publishing regular thought leadership content could increase AI recognition by 25%.
+            </div>
+          </div>
+        </div>
+
+        <!-- Final CTA -->
+        <div class="final-cta">
+          <div class="cta-badge">🔥 Limited Beta - Professional Access</div>
+          <h3 style="color: #070707; margin-bottom: 1rem;">Ready to Dominate AI Search?</h3>
+          <p style="color: #070707; margin-bottom: 2rem;">
+            Your score of 71 puts you in the perfect position to achieve AI authority dominance. Join our exclusive Beta Concierge Program and become the go-to expert AI engines recommend first.
+          </p>
+          <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s ease;">
+            Get Your Full Credli Analysis
+          </a>
+        </div>
       </div>
     </div>
   </section>
