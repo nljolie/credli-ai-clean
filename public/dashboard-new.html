@@ -473,6 +473,41 @@
   </footer>
 
   <script>
+    // Navigation functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const navBtns = document.querySelectorAll('.nav-btn');
+      const sections = document.querySelectorAll('.dashboard-section');
+      
+      navBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          showSection(targetId);
+          setActiveNav(this);
+        });
+      });
+      
+      function showSection(targetId) {
+        sections.forEach(section => {
+          section.style.display = 'none';
+        });
+        
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.style.display = 'block';
+        }
+      }
+      
+      function setActiveNav(activeBtn) {
+        navBtns.forEach(btn => {
+          btn.classList.remove('active');
+        });
+        activeBtn.classList.add('active');
+      }
+      
+      // Show scan section by default
+      showSection('scan-section');
+    });
+    
     document.getElementById('scanForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
