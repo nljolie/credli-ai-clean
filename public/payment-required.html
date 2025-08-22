@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Required - Credli.ai</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .access-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .lock-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .access-card h1 {
+            color: #3454D1;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .access-card p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #3454D1, #5B73E8);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+        }
+
+        .benefits-list {
+            text-align: left;
+            margin: 1rem 0;
+        }
+
+        .benefits-list li {
+            margin-bottom: 0.5rem;
+            list-style: none;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .benefits-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #F77F00, #FF8C42);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #3454D1;
+            border: 2px solid #3454D1;
+        }
+
+        .btn-secondary:hover {
+            background: #3454D1;
+            color: white;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .comparison-item {
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .free-version {
+            background: #f8f9fa;
+        }
+
+        .paid-version {
+            background: linear-gradient(135deg, #e8f4fd, #f0f8ff);
+            border-color: #3454D1;
+        }
+
+        .version-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .version-features {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="access-card">
+            <div class="lock-icon">🔒</div>
+            <h1>Full Analysis Requires Access</h1>
+            <p>You're trying to access the complete Cred Score dashboard with detailed AI search analysis.</p>
+            
+            <div class="highlight-box">
+                <h3>🚀 Unlock Your Complete AI Authority Report</h3>
+                <ul class="benefits-list">
+                    <li>See exactly WHERE you're mentioned in AI search results</li>
+                    <li>Get specific content opportunities to boost your rankings</li>
+                    <li>Identify WHO is impersonating your authority</li>
+                    <li>Analysis across ChatGPT, Gemini, Perplexity & Google AI</li>
+                    <li>Detailed competitor comparison</li>
+                    <li>Actionable content strategy recommendations</li>
+                </ul>
+            </div>
+
+            <div class="comparison">
+                <div class="comparison-item free-version">
+                    <div class="version-title">🆓 Free Scan</div>
+                    <div class="version-features">
+                        • Basic Cred Score only<br>
+                        • ChatGPT analysis only<br>
+                        • No detailed breakdown<br>
+                        • No specific opportunities<br>
+                        • No imposter detection
+                    </div>
+                </div>
+                <div class="comparison-item paid-version">
+                    <div class="version-title">💎 Full Analysis</div>
+                    <div class="version-features">
+                        • Complete Cred Score breakdown<br>
+                        • All 4 AI engines analyzed<br>
+                        • Detailed mention locations<br>
+                        • Specific content opportunities<br>
+                        • Imposter identification<br>
+                        • Competitor intelligence
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="/free-scan.html" class="btn btn-secondary">Try Free Scan First</a>
+                <a href="#" class="btn btn-primary" id="upgradeBtn">Get Full Analysis Now</a>
+            </div>
+
+            <div class="footer-note">
+                <p><strong>Why the paywall?</strong> Running AI analysis across multiple engines costs us real money in API calls. The free scan gives you a taste, and the full analysis pays for comprehensive AI engine queries to give you actionable insights.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Temporarily redirect to free scan until payment is integrated
+        document.getElementById('upgradeBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Payment integration coming soon! For now, try the free scan to see how it works.');
+            window.location.href = '/free-scan.html';
+        });
+    </script>
+</body>
+</html>

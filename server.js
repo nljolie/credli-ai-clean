@@ -29,6 +29,12 @@ if (OPENAI_API_KEY) {
 const app = express();
 app.use(express.json());
 
+// Simple session middleware (in production, use express-session with secure store)
+app.use((req, res, next) => {
+  req.session = req.session || {};
+  next();
+});
+
 // Test endpoint
 app.get('/test', (req, res) => {
   res.json({ message: 'Server is working! Homepage updated.', timestamp: new Date() });
@@ -38,6 +44,31 @@ app.get('/test', (req, res) => {
 app.get('/', (req, res) => {
   console.log('Root route hit - serving homepage');
   res.sendFile(path.join(__dirname, 'public', 'landing.html'));
+});
+
+// Payment gate for dashboard access
+app.get('/dashboard-complete.html', (req, res) => {
+  // Check if user has valid payment session
+  const hasAccess = req.session?.paid || req.query.access_token; // Temporary access via URL param
+  
+  if (!hasAccess) {
+    console.log('Unauthorized dashboard access attempt - redirecting to payment');
+    return res.redirect('/payment-required.html');
+  }
+  
+  // If authorized, serve the dashboard
+  res.sendFile(path.join(__dirname, 'public', 'dashboard-complete.html'));
+});
+
+// Other protected dashboard pages
+app.get('/dashboard-new.html', (req, res) => {
+  const hasAccess = req.session?.paid || req.query.access_token;
+  
+  if (!hasAccess) {
+    return res.redirect('/payment-required.html');
+  }
+  
+  res.sendFile(path.join(__dirname, 'public', 'dashboard-new.html'));
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -402,6 +433,12 @@ app.post('/api/free-scan', async (req, res) => {
     consistency,
     message: "This is a limited free scan. Upgrade for full analysis across all AI engines."
   });
+});
+
+// Temporary access endpoint for testing (remove when PayPal is integrated)
+app.get('/grant-access', (req, res) => {
+  req.session.paid = true;
+  res.redirect('/dashboard-complete.html?access_granted=true');
 });
 
 // POST /api/ideas  { gaps:[{engine,prompt}...] }
