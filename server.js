@@ -45,6 +45,14 @@ if (OPENAI_API_KEY) {
 const app = express();
 app.use(express.json());
 
+// AGGRESSIVE CACHE CONTROL - Force browser refresh
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.header('Pragma', 'no-cache');
+  res.header('Expires', '0');
+  next();
+});
+
 // Simple session middleware (in production, use express-session with secure store)
 app.use((req, res, next) => {
   req.session = req.session || {};
