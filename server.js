@@ -711,7 +711,7 @@ app.post('/api/paypal/create-order', async (req, res) => {
       }],
       application_context: {
         return_url: `${req.protocol}://${req.get('host')}/success.html`,
-        cancel_url: `${req.protocol}://${req.get('host')}/free-cred-score.html`
+        cancel_url: `${req.protocol}://${req.get('host')}/cred-score.html`
       }
     });
 
