@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT API Setup - Credli.ai</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            line-height: 1.6;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #3454D1;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3454D1;
+        }
+        .step h3 {
+            color: #3454D1;
+            margin-top: 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        .success {
+            background: #d1edff;
+            border-left-color: #0066cc;
+            color: #004085;
+        }
+        .code {
+            background: #f1f3f4;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        .btn {
+            background: linear-gradient(135deg, #3454D1, #5B73E8);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .pricing-note {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 ChatGPT API Setup Guide</h1>
+        
+        <div class="step warning">
+            <h3>⚠️ Important: This Requires Payment</h3>
+            <p><strong>ChatGPT API is NOT free.</strong> You need to add billing information to your OpenAI account before you can use the API. However, costs are very low for typical usage.</p>
+            <div class="pricing-note">
+                <strong>Typical costs:</strong>
+                <ul>
+                    <li>~$0.01 per scan (10 queries)</li>
+                    <li>~$1.00 for 100 scans</li>
+                    <li>~$10.00 for 1,000 scans</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>1. Create OpenAI Account</h3>
+            <p>Go to <strong>platform.openai.com</strong> and create an account if you don't have one.</p>
+            <a href="https://platform.openai.com/signup" class="btn" target="_blank">Create Account</a>
+        </div>
+
+        <div class="step">
+            <h3>2. Add Billing Information</h3>
+            <p>In your OpenAI dashboard, go to <strong>Settings → Billing</strong> and add a payment method. You can set usage limits to control costs.</p>
+            <p><strong>Recommended:</strong> Set a monthly limit of $20 to start.</p>
+        </div>
+
+        <div class="step">
+            <h3>3. Generate API Key</h3>
+            <p>Go to <strong>API Keys</strong> section and create a new secret key:</p>
+            <ol>
+                <li>Click "Create new secret key"</li>
+                <li>Name it "Credli-ChatGPT" or similar</li>
+                <li>Copy the key immediately (you won't see it again)</li>
+                <li>It should start with "sk-proj-" or "sk-"</li>
+            </ol>
+            <a href="https://platform.openai.com/api-keys" class="btn" target="_blank">Get API Key</a>
+        </div>
+
+        <div class="step">
+            <h3>4. Test Your API Key</h3>
+            <p>You can test if your API key works by running this command in terminal:</p>
+            <div class="code">
+curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY_HERE" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [{"role": "user", "content": "Hello!"}],
+    "max_tokens": 10
+  }'
+            </div>
+            <p>Replace <code>YOUR_API_KEY_HERE</code> with your actual API key.</p>
+        </div>
+
+        <div class="step success">
+            <h3>5. Ready to Use!</h3>
+            <p>Once you have your API key, you can:</p>
+            <ul>
+                <li>Add it to your environment variables as <code>OPENAI_API_KEY</code></li>
+                <li>Test it with the Credli.ai ChatGPT integration</li>
+                <li>Monitor usage and costs in your OpenAI dashboard</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>💡 Cost Management Tips</h3>
+            <ul>
+                <li>Use <strong>gpt-4o-mini</strong> model (cheaper than GPT-4)</li>
+                <li>Set monthly usage limits in OpenAI dashboard</li>
+                <li>Monitor costs regularly</li>
+                <li>Each Credli scan uses ~5-10 API calls</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <p><strong>Questions?</strong> Check the <a href="https://platform.openai.com/docs" target="_blank">OpenAI API Documentation</a></p>
+        </div>
+    </div>
+</body>
+</html>

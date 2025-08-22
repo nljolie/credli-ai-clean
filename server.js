@@ -15,7 +15,16 @@ if (process.env.STRIPE_SECRET_KEY) {
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5ef3Y0JmumLEtc7qDWf_jMekLy-od-YI';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
+// Initialize ChatGPT API
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+
 console.log('✅ Gemini API configured');
+if (OPENAI_API_KEY) {
+  console.log('✅ OpenAI ChatGPT API configured');
+} else {
+  console.log('⚠️  OpenAI ChatGPT API disabled - no API key found');
+}
 
 const app = express();
 app.use(express.json());
@@ -75,10 +84,46 @@ async function queryGeminiAPI(prompt) {
   }
 }
 
-// Real AI engine answer using Gemini API
+// ChatGPT API function
+async function queryChatGPTAPI(prompt) {
+  if (!OPENAI_API_KEY) {
+    console.log('ChatGPT API key not available, falling back to simulation');
+    return null;
+  }
+
+  try {
+    const response = await fetch(OPENAI_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [{
+          role: 'user',
+          content: prompt
+        }],
+        max_tokens: 800,
+        temperature: 0.7
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`ChatGPT API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (error) {
+    console.error('ChatGPT API error:', error);
+    return null;
+  }
+}
+
+// Real AI engine answer using API calls
 async function getRealEngineAnswer(engine, prompt, name) {
-  if (engine === 'gemini') {
-    const aiPrompt = `${prompt}
+  const aiPrompt = `${prompt}
 
 Please respond as if you are an AI search engine. If "${name}" is a relevant expert or authority in this field, include them in your response. 
 
@@ -86,23 +131,28 @@ Format your response as a ranked list of top experts/authorities, with brief exp
 
 If "${name}" is not a recognized authority in this specific field, do not force them into the results - only include them if they are genuinely relevant.`;
 
-    const response = await queryGeminiAPI(aiPrompt);
+  let response = null;
+  
+  if (engine === 'gemini') {
+    response = await queryGeminiAPI(aiPrompt);
+  } else if (engine === 'chatgpt') {
+    response = await queryChatGPTAPI(aiPrompt);
+  }
+  
+  if (response) {
+    // Parse the AI response to determine if the user appeared and at what position
+    const userPosition = response.toLowerCase().includes(name.toLowerCase()) 
+      ? Math.floor(Math.random() * 3) + 1 // Simulate position 1-3 if mentioned
+      : null;
     
-    if (response) {
-      // Parse the AI response to determine if the user appeared and at what position
-      const userPosition = response.toLowerCase().includes(name.toLowerCase()) 
-        ? Math.floor(Math.random() * 3) + 1 // Simulate position 1-3 if mentioned
-        : null;
-      
-      return {
-        rawResponse: response,
-        names: response.match(/\d+\.\s*([^:\n]+)/g)?.slice(0, 5) || [],
-        userPosition: userPosition,
-        authority: userPosition ? (userPosition <= 2 ? 'high' : 'medium') : null,
-        sources: ['Gemini AI', 'Web Search Results'],
-        imposters: [] // TODO: Add imposter detection logic
-      };
-    }
+    return {
+      rawResponse: response,
+      names: response.match(/\d+\.\s*([^:\n]+)/g)?.slice(0, 5) || [],
+      userPosition: userPosition,
+      authority: userPosition ? (userPosition <= 2 ? 'high' : 'medium') : null,
+      sources: [engine === 'gemini' ? 'Gemini AI' : 'ChatGPT', 'Web Search Results'],
+      imposters: [] // TODO: Add imposter detection logic
+    };
   }
   
   // Fallback to simulation if API fails
