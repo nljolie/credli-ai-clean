@@ -2367,68 +2367,77 @@ h2 {
 /* ===== ROI Comparison Section ===== */
 .roi-comparison {
   padding: 4rem 0;
-  background: var(--paper);
-  position: relative;
+  background: var(--bg);
 }
 
 .roi-content-block {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 3rem;
-  margin: 2rem auto;
-  max-width: 900px;
+  margin: 0 auto;
+  max-width: 1000px;
   box-shadow: var(--shadow-medium);
   position: relative;
-  transform: translateY(-10px);
 }
 
 .roi-content-block h2 {
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--brand);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: center;
 }
 
 .roi-content-block h3 {
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 500;
   color: var(--text);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   text-align: center;
+  opacity: 0.8;
 }
 
 .roi-intro {
   font-size: 1.1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.7;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cost-breakdown {
-  margin: 2rem 0;
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 2rem;
+  background: var(--paper);
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  border-left: 4px solid var(--brand);
 }
 
 .cost-item {
-  display: flex;
-  align-items: flex-start;
-  margin: 1rem 0;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.cost-item:last-child {
+  border-bottom: none;
 }
 
 .cost-bullet {
   color: var(--brand);
-  font-weight: bold;
-  font-size: 1.2rem;
-  min-width: 15px;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .cost-description {
-  flex: 1;
   color: var(--text);
+  font-weight: 500;
   line-height: 1.5;
 }
 
@@ -2436,88 +2445,97 @@ h2 {
   font-weight: 700;
   color: var(--header);
   font-size: 1.1rem;
-  min-width: 150px;
   text-align: right;
+  white-space: nowrap;
 }
 
 .diy-total {
-  background: var(--brand);
+  background: var(--gradient-primary);
   color: white;
-  padding: 1.5rem;
-  border-radius: 8px;
+  padding: 2rem;
+  border-radius: 12px;
   text-align: center;
-  font-size: 1.3rem;
-  margin: 2rem 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 3rem 0;
+  box-shadow: var(--shadow-light);
 }
 
 .comparison-section {
-  margin: 2rem 0;
+  margin: 3rem 0;
 }
 
 .comparison-section h4 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: var(--text);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   font-weight: 600;
+  text-align: center;
 }
 
 .credli-comparison {
-  background: #e8f5e8;
-  border-radius: 8px;
-  padding: 1.5rem;
+  background: #f0f8f0;
+  border-radius: 12px;
+  padding: 2rem;
+  border-left: 4px solid var(--success);
 }
 
 .comparison-item {
-  display: flex;
-  align-items: flex-start;
-  margin: 1rem 0;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 1rem 0;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.comparison-item:last-child {
+  border-bottom: none;
 }
 
 .comparison-bullet {
   color: var(--success);
-  font-weight: bold;
-  font-size: 1.2rem;
-  min-width: 15px;
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
 .comparison-description {
-  flex: 1;
-  min-width: 200px;
+  font-weight: 500;
+  color: var(--text);
 }
 
 .comparison-note {
   color: #666;
   font-style: italic;
+  font-size: 0.95rem;
+  text-align: right;
 }
 
 .value-proposition {
-  background: linear-gradient(135deg, #f77f00 0%, #ff8c42 100%);
+  background: var(--gradient-accent);
   color: white;
-  padding: 2rem;
-  border-radius: 8px;
+  padding: 2.5rem;
+  border-radius: 12px;
   text-align: center;
-  margin-top: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  margin-top: 3rem;
+  box-shadow: var(--shadow-medium);
 }
 
 .value-icon {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-right: 1rem;
 }
 
 .value-text {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
+  line-height: 1.4;
 }
 
 @media (max-width: 768px) {
   .roi-content-block {
     padding: 2rem;
-    margin: 1rem;
+    margin: 0 1rem;
   }
   
   .roi-content-block h2 {
@@ -2525,23 +2543,25 @@ h2 {
   }
   
   .roi-content-block h3 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+  }
+  
+  .cost-breakdown, .credli-comparison {
+    padding: 1.5rem;
   }
   
   .cost-item, .comparison-item {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 0.5rem;
+    text-align: left;
   }
   
-  .cost-amount {
+  .cost-amount, .comparison-note {
     text-align: left;
-    min-width: auto;
   }
   
   .value-proposition {
-    flex-direction: column;
-    text-align: center;
-    padding: 1.5rem;
+    padding: 2rem;
   }
   
   .value-text {
