@@ -11,6 +11,22 @@ if (process.env.STRIPE_SECRET_KEY) {
   console.log('⚠️  Stripe disabled - no secret key found');
 }
 
+// Initialize PayPal SDK
+let paypal;
+if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {
+  const paypalCheckoutNodeJSSdk = require('@paypal/checkout-server-sdk');
+  
+  // Configure environment (sandbox for testing, live for production)
+  const environment = process.env.PAYPAL_ENVIRONMENT === 'live' 
+    ? new paypalCheckoutNodeJSSdk.core.LiveEnvironment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_CLIENT_SECRET)
+    : new paypalCheckoutNodeJSSdk.core.SandboxEnvironment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_CLIENT_SECRET);
+  
+  paypal = new paypalCheckoutNodeJSSdk.core.PayPalHttpClient(environment);
+  console.log('✅ PayPal SDK initialized');
+} else {
+  console.log('⚠️  PayPal disabled - no API credentials found');
+}
+
 // Initialize Gemini API
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5ef3Y0JmumLEtc7qDWf_jMekLy-od-YI';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
@@ -647,6 +663,104 @@ app.post('/api/create-subscription', async (req, res) => {
   } catch (error) {
     console.error('Stripe error:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// PayPal Integration Routes
+app.post('/api/paypal/create-order', async (req, res) => {
+  if (!paypal) {
+    return res.status(503).json({ error: 'PayPal payment processing temporarily unavailable. Please try again later.' });
+  }
+
+  try {
+    const { plan, email, name, company } = req.body;
+    
+    // Define pricing for different plans
+    const planPricing = {
+      professional: { amount: '4.97', description: 'Professional Cred Score Analysis' },
+      executive: { amount: '9.97', description: 'Executive Cred Score Analysis' },
+      enterprise: { amount: '19.97', description: 'Enterprise Cred Score Analysis' }
+    };
+
+    const selectedPlan = planPricing[plan];
+    if (!selectedPlan) {
+      return res.status(400).json({ error: 'Invalid plan selected' });
+    }
+
+    const paypalCheckoutNodeJSSdk = require('@paypal/checkout-server-sdk');
+    const request = new paypalCheckoutNodeJSSdk.orders.OrdersCreateRequest();
+    
+    request.prefer("return=representation");
+    request.requestBody({
+      intent: 'CAPTURE',
+      purchase_units: [{
+        amount: {
+          currency_code: 'USD',
+          value: selectedPlan.amount
+        },
+        description: selectedPlan.description,
+        custom_id: JSON.stringify({ email, name, company, plan })
+      }],
+      application_context: {
+        return_url: `${req.protocol}://${req.get('host')}/success.html`,
+        cancel_url: `${req.protocol}://${req.get('host')}/free-cred-score.html`
+      }
+    });
+
+    const order = await paypal.execute(request);
+    
+    res.json({
+      orderID: order.result.id,
+      status: order.result.status
+    });
+
+  } catch (error) {
+    console.error('PayPal create order error:', error);
+    res.status(500).json({ error: 'Failed to create PayPal order' });
+  }
+});
+
+app.post('/api/paypal/capture-order', async (req, res) => {
+  if (!paypal) {
+    return res.status(503).json({ error: 'PayPal payment processing temporarily unavailable. Please try again later.' });
+  }
+
+  try {
+    const { orderID } = req.body;
+    
+    const paypalCheckoutNodeJSSdk = require('@paypal/checkout-server-sdk');
+    const request = new paypalCheckoutNodeJSSdk.orders.OrdersCaptureRequest(orderID);
+    
+    const capture = await paypal.execute(request);
+    
+    if (capture.result.status === 'COMPLETED') {
+      // Extract user data from custom_id
+      const customData = JSON.parse(capture.result.purchase_units[0].payments.captures[0].custom_id || '{}');
+      
+      // Create user session for dashboard access
+      req.session.user = {
+        email: customData.email,
+        name: customData.name,
+        company: customData.company,
+        plan: customData.plan,
+        paymentStatus: 'completed',
+        paymentProvider: 'paypal',
+        paymentId: capture.result.id,
+        createdAt: new Date()
+      };
+
+      res.json({
+        status: 'COMPLETED',
+        captureID: capture.result.id,
+        redirectUrl: '/dashboard-complete.html'
+      });
+    } else {
+      res.status(400).json({ error: 'Payment not completed' });
+    }
+
+  } catch (error) {
+    console.error('PayPal capture order error:', error);
+    res.status(500).json({ error: 'Failed to capture PayPal payment' });
   }
 });
 

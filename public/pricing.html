@@ -6,6 +6,7 @@
   <title>Trust Factor™ Pricing - Credli.ai</title>
   <link rel="stylesheet" href="styles.css?v=99">
   <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -28,18 +29,21 @@
           <div class="pricing-card">
             <div class="plan-header">
               <h3>Professional</h3>
-              <div class="price">$497<span>/month</span></div>
+              <div class="price">$4.97<span> one-time</span></div>
             </div>
             <div class="plan-features">
               <ul>
-                <li>✅ Monthly Trust Factor scans</li>
-                <li>✅ Competitor analysis (3 competitors)</li>
-                <li>✅ Quarterly content strategy</li>
-                <li>✅ Email support</li>
-                <li>✅ Basic imposter monitoring</li>
+                <li>✅ Complete Trust Factor analysis</li>
+                <li>✅ Basic competitor analysis (3 competitors)</li>
+                <li>✅ Content strategy recommendations</li>
+                <li>✅ Authority building roadmap</li>
+                <li>✅ Imposter detection check</li>
               </ul>
             </div>
-            <button class="btn primary" onclick="selectPlan('professional', 497)">Choose Professional</button>
+            <div class="payment-buttons">
+              <button class="btn primary" onclick="selectPlan('professional', 4.97)">Pay with Stripe</button>
+              <div id="paypal-professional" class="paypal-button-container"></div>
+            </div>
             <p class="plan-note">Best for individual consultants</p>
           </div>
 
@@ -48,19 +52,22 @@
             <div class="recommended-badge">MOST POPULAR</div>
             <div class="plan-header">
               <h3>Executive</h3>
-              <div class="price">$997<span>/month</span></div>
+              <div class="price">$9.97<span> one-time</span></div>
             </div>
             <div class="plan-features">
               <ul>
-                <li>✅ Bi-weekly Trust Factor scans</li>
+                <li>✅ Deep Trust Factor analysis</li>
                 <li>✅ Advanced competitor analysis (6 competitors)</li>
-                <li>✅ Monthly strategy calls</li>
-                <li>✅ Priority support + content planning</li>
-                <li>✅ Real-time imposter alerts</li>
-                <li>✅ Custom recommendations</li>
+                <li>✅ AI optimization strategy</li>
+                <li>✅ Authority building action plan</li>
+                <li>✅ Advanced imposter monitoring</li>
+                <li>✅ Custom content recommendations</li>
               </ul>
             </div>
-            <button class="btn primary" onclick="selectPlan('executive', 997)">Choose Executive</button>
+            <div class="payment-buttons">
+              <button class="btn primary" onclick="selectPlan('executive', 9.97)">Pay with Stripe</button>
+              <div id="paypal-executive" class="paypal-button-container"></div>
+            </div>
             <p class="plan-note">Best for established experts</p>
           </div>
 
@@ -68,66 +75,69 @@
           <div class="pricing-card">
             <div class="plan-header">
               <h3>Enterprise</h3>
-              <div class="price">$1,997<span>/month</span></div>
+              <div class="price">$19.97<span> one-time</span></div>
             </div>
             <div class="plan-features">
               <ul>
-                <li>✅ Weekly Trust Factor monitoring</li>
+                <li>✅ Comprehensive Trust Factor analysis</li>
                 <li>✅ Unlimited competitor tracking</li>
-                <li>✅ White-label reports</li>
-                <li>✅ Dedicated account management</li>
-                <li>✅ Multi-expert tracking</li>
-                <li>✅ Custom integrations</li>
+                <li>✅ Multi-platform optimization</li>
+                <li>✅ Executive reputation strategy</li>
+                <li>✅ Team member analysis (up to 5)</li>
+                <li>✅ White-label reporting options</li>
               </ul>
             </div>
-            <button class="btn primary" onclick="selectPlan('enterprise', 1997)">Choose Enterprise</button>
+            <div class="payment-buttons">
+              <button class="btn primary" onclick="selectPlan('enterprise', 19.97)">Pay with Stripe</button>
+              <div id="paypal-enterprise" class="paypal-button-container"></div>
+            </div>
             <p class="plan-note">Best for larger firms</p>
           </div>
         </div>
 
-        <!-- Commitment Message -->
+        <!-- Value Proposition -->
         <div class="commitment-section">
-          <h3>🎯 Why 12-Month Commitment?</h3>
+          <h3>🎯 What You Get</h3>
           <div class="commitment-grid">
             <div class="commitment-point">
-              <h4>Months 1-3: Foundation</h4>
-              <p>Baseline establishment, gap identification, content strategy development</p>
+              <h4>Instant Analysis</h4>
+              <p>Complete Trust Factor assessment with detailed breakdown and scoring</p>
             </div>
             <div class="commitment-point">
-              <h4>Months 4-8: Building</h4>
-              <p>Authority signals strengthen, AI engines begin recognizing expertise patterns</p>
+              <h4>Actionable Insights</h4>
+              <p>AI optimization recommendations and authority building strategy</p>
             </div>
             <div class="commitment-point">
-              <h4>Months 9-12: Results</h4>
-              <p>Measurable Trust Factor improvement, competitive advantage established</p>
+              <h4>Competitive Edge</h4>
+              <p>See how you compare to competitors and identify opportunities</p>
             </div>
           </div>
           <p class="commitment-note">
-            <strong>Trust Factor improvement isn't like advertising - it's like building academic reputation.</strong> 
-            Clients who commit to 12+ months see transformational results. Shorter commitments rarely produce meaningful change.
+            <strong>Get immediate insights into your AI authority.</strong> 
+            Each analysis provides specific, actionable recommendations you can implement right away.
           </p>
         </div>
 
         <!-- ROI Section -->
         <div class="roi-section">
-          <h3>💰 Return on Investment</h3>
+          <h3>💰 Instant Value</h3>
           <div class="roi-comparison">
             <div class="roi-item">
-              <h4>Executive Coach</h4>
-              <p>$300-500/hour × 2 hours/month = <strong>$7,200/year</strong></p>
+              <h4>Business Consultant</h4>
+              <p>1 hour analysis session = <strong>$300-500</strong></p>
             </div>
             <div class="roi-item">
-              <h4>Marketing Agency</h4>
-              <p>$3,000-5,000/month = <strong>$36,000-60,000/year</strong></p>
+              <h4>Marketing Audit</h4>
+              <p>Professional audit = <strong>$1,000-2,500</strong></p>
             </div>
             <div class="roi-item">
-              <h4>Trust Factor™ Platform</h4>
-              <p>$997/month = <strong>$11,964/year</strong></p>
-              <span class="roi-value">Builds permanent AI authority</span>
+              <h4>Trust Factor™ Analysis</h4>
+              <p>Complete assessment = <strong>$4.97-19.97</strong></p>
+              <span class="roi-value">Instant insights & action plan</span>
             </div>
           </div>
           <p class="roi-note">
-            <strong>Question:</strong> If appearing first in AI search results for your expertise brings you 2-3 new qualified clients per year, what's that worth to your business?
+            <strong>Question:</strong> If knowing your AI trust score and getting specific improvement recommendations brings you even 1 new client, what's that worth?
           </p>
         </div>
 
@@ -207,6 +217,49 @@
       document.getElementById('selected-plan-name').textContent = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
       document.getElementById('selected-price').textContent = price;
       document.getElementById('payment-modal').style.display = 'flex';
+    }
+    
+    // Initialize PayPal buttons
+    function initializePayPal() {
+      const plans = ['professional', 'executive', 'enterprise'];
+      const prices = { professional: '4.97', executive: '9.97', enterprise: '19.97' };
+      
+      plans.forEach(plan => {
+        paypal.Buttons({
+          createOrder: function(data, actions) {
+            return fetch('/api/paypal/create-order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                plan: plan,
+                email: 'user@example.com', // Will get from form later
+                name: 'User Name', // Will get from form later  
+                company: 'User Company' // Will get from form later
+              })
+            }).then(response => response.json())
+              .then(data => data.orderID);
+          },
+          onApprove: function(data, actions) {
+            return fetch('/api/paypal/capture-order', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ orderID: data.orderID })
+            }).then(response => response.json())
+              .then(data => {
+                if (data.status === 'COMPLETED') {
+                  alert('🎉 Payment successful! Redirecting to your dashboard...');
+                  window.location.href = data.redirectUrl;
+                }
+              });
+          },
+          style: {
+            layout: 'horizontal',
+            color: 'blue',
+            shape: 'pill',
+            label: 'pay'
+          }
+        }).render(`#paypal-${plan}`);
+      });
     }
     
     function closePaymentModal() {
@@ -299,7 +352,31 @@
         submitButton.textContent = 'Start 12-Month Subscription';
       }
     });
+    
+    // Initialize PayPal buttons when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof paypal !== 'undefined') {
+        initializePayPal();
+      }
+    });
   </script>
+  
+  <style>
+    .payment-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .paypal-button-container {
+      min-height: 55px;
+    }
+    
+    .payment-buttons .btn {
+      margin-bottom: 5px;
+    }
+  </style>
   <!-- Footer -->
   <footer class="footer">
     <div class="container">

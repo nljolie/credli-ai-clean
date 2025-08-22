@@ -2363,4 +2363,189 @@ h2 {
     font-size: 2rem;
   }
 }
+
+/* ===== ROI Comparison Section ===== */
+.roi-comparison {
+  padding: 4rem 0;
+  background: var(--paper);
+  position: relative;
+}
+
+.roi-content-block {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  transform: translateY(-10px);
+}
+
+.roi-content-block h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--brand);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.roi-content-block h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.roi-intro {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.cost-breakdown {
+  margin: 2rem 0;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.cost-item {
+  display: flex;
+  align-items: flex-start;
+  margin: 1rem 0;
+  gap: 0.75rem;
+}
+
+.cost-bullet {
+  color: var(--brand);
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 15px;
+}
+
+.cost-description {
+  flex: 1;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.cost-amount {
+  font-weight: 700;
+  color: var(--header);
+  font-size: 1.1rem;
+  min-width: 150px;
+  text-align: right;
+}
+
+.diy-total {
+  background: var(--brand);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.3rem;
+  margin: 2rem 0;
+}
+
+.comparison-section {
+  margin: 2rem 0;
+}
+
+.comparison-section h4 {
+  font-size: 1.4rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.credli-comparison {
+  background: #e8f5e8;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.comparison-item {
+  display: flex;
+  align-items: flex-start;
+  margin: 1rem 0;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.comparison-bullet {
+  color: var(--success);
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 15px;
+}
+
+.comparison-description {
+  flex: 1;
+  min-width: 200px;
+}
+
+.comparison-note {
+  color: #666;
+  font-style: italic;
+}
+
+.value-proposition {
+  background: linear-gradient(135deg, #f77f00 0%, #ff8c42 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.value-icon {
+  font-size: 2rem;
+}
+
+.value-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .roi-content-block {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .roi-content-block h2 {
+    font-size: 2rem;
+  }
+  
+  .roi-content-block h3 {
+    font-size: 1.4rem;
+  }
+  
+  .cost-item, .comparison-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .cost-amount {
+    text-align: left;
+    min-width: auto;
+  }
+  
+  .value-proposition {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  
+  .value-text {
+    font-size: 1.1rem;
+  }
+}
 }
