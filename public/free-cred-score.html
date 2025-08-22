@@ -13,7 +13,7 @@
   
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🚀 FIXED AUGUST 22 🚀 Free Cred Score - Credli.ai</title>
+  <title>Free Cred Score - Credli.ai AI Trust Consultant</title>
   <meta name="description" content="Get your free Cred Score analysis. Discover your authority ranking across AI engines with 3 Ask Phrases - instant scan.">
   
   <!-- Open Graph meta tags -->
@@ -511,33 +511,34 @@
       gap: 1rem;
     }
 
+    .human-verify-container {
+      background: white;
+      padding: 1rem 1.2rem;
+      border-radius: 8px;
+      border: 2px solid #e3e6ec;
+      margin-top: 1rem;
+    }
+
     .human-verify-label {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       font-size: 1rem;
-      font-weight: 600;
-      color: #3454D1;
+      font-weight: 500;
+      color: #374151;
       cursor: pointer;
       transition: all 0.3s ease;
-      padding: 1rem;
-      background: white;
-      border-radius: 8px;
-      border: 2px solid #e3e6ec;
     }
 
     .human-verify-label:hover {
-      color: #2d4db3;
-      border-color: #3454D1;
-      background: #f8fafc;
+      color: #3454D1;
     }
 
     .human-verify-label input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       accent-color: #3454D1;
       cursor: pointer;
-      transform: scale(1.2);
     }
 
     .captcha-hint {
@@ -736,8 +737,8 @@
   <!-- Hero Section -->
   <section class="free-cred-hero">
     <div class="hero-container">
-      <h1>🔥 UPDATED 8/22/25 🔥 What's Your Cred Score?</h1>
-      <p class="hero-subtitle">✅ CHECKBOX CAPTCHA LIVE ✅ Discover how AI engines rank your expertise with Credli.ai's free instant scan.</p>
+      <h1>What's Your Cred Score?</h1>
+      <p class="hero-subtitle">Discover how AI engines rank your expertise with Credli.ai's free instant scan.</p>
     </div>
   </section>
 
@@ -789,19 +790,23 @@
         </div>
       </div>
 
-      <!-- ⭐ COMPLETELY NEW AUGUST 22, 2025 ⭐ -->
-      <div style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); padding: 2rem; text-align: center; margin: 2rem 0; border-radius: 15px; border: 5px solid #333;">
-        <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">🎉 NEW CHECKBOX VERIFICATION! 🎉</h2>
-        <p style="color: white; font-size: 1.2rem; margin-bottom: 2rem;">NO MORE MATH! Just check the box below:</p>
-        
-        <div style="background: white; padding: 2rem; border-radius: 10px; display: inline-block;">
-          <label style="display: flex; align-items: center; gap: 1rem; font-size: 1.5rem; font-weight: bold; color: #333; cursor: pointer;">
-            <input type="checkbox" id="human-verify" name="captcha" required style="width: 30px; height: 30px; accent-color: #ff6b6b;">
-            ✅ I'm not a robot - Click me!
+      <!-- Security Check -->
+      <div class="captcha-section">
+        <div class="captcha-container">
+          <label for="human-verify" class="captcha-label">
+            🔒 <strong>Security Check:</strong>
           </label>
+          <div class="human-verify-container">
+            <label class="human-verify-label">
+              <input type="checkbox" id="human-verify" name="captcha" required>
+              <span class="checkmark"></span>
+              I'm not a robot
+            </label>
+          </div>
+          <div class="captcha-hint">
+            <small>💡 This helps us prevent automated submissions</small>
+          </div>
         </div>
-        
-        <p style="color: white; font-size: 1rem; margin-top: 1rem;">🚀 Updated August 22, 2025 - Much easier!</p>
       </div>
       
       <div class="privacy-notice">
