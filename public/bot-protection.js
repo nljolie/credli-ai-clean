@@ -150,7 +150,7 @@ class CredliBotProtection {
                         • Contact us for enterprise access<br>
                         • Join our Beta Concierge Program for unlimited access
                     </p>
-                    <a href="/public/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                    <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 8px; font-weight: 600;">
                         View Beta Program
                     </a>
                 </div>
