@@ -510,53 +510,33 @@
       gap: 1rem;
     }
 
-    .captcha-label {
-      color: #3454D1;
-      font-weight: 600;
-      font-size: 0.95rem;
+    .human-verify-label {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-    }
-
-    .captcha-question {
-      background: white;
-      padding: 1rem 1.2rem;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      font-weight: 500;
-      color: #374151;
-      line-height: 1.5;
-    }
-
-    .captcha-input {
-      padding: 0.75rem 1rem;
-      border: 2px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-    }
-
-    .captcha-input:focus {
-      border-color: #3454D1;
-      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
-      outline: none;
-    }
-
-    .refresh-captcha {
-      background: #6b7280;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      gap: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #3454D1;
       cursor: pointer;
       transition: all 0.3s ease;
-      align-self: flex-start;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      border: 2px solid #e3e6ec;
     }
 
-    .refresh-captcha:hover {
-      background: #4b5563;
+    .human-verify-label:hover {
+      color: #2d4db3;
+      border-color: #3454D1;
+      background: #f8fafc;
+    }
+
+    .human-verify-label input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #3454D1;
+      cursor: pointer;
+      transform: scale(1.2);
     }
 
     .captcha-hint {
@@ -808,19 +788,14 @@
         </div>
       </div>
 
-      <!-- Simple Math Captcha -->
+      <!-- Simple Human Verification -->
       <div class="captcha-section">
         <div class="captcha-container">
-          <label for="captcha-answer" class="captcha-label">
-            🔒 <strong>Security Check:</strong>
+          <label class="human-verify-label">
+            <input type="checkbox" id="human-verify" name="captcha" required>
+            <span class="checkmark"></span>
+            🤖 I'm not a robot
           </label>
-          <div id="math-question" class="captcha-question">
-            <!-- Math question will be generated here -->
-          </div>
-          <input type="number" id="captcha-answer" name="captcha" class="captcha-input" placeholder="Enter the answer" required>
-          <button type="button" id="refresh-captcha" class="refresh-captcha">
-            🔄 New Question
-          </button>
           <div class="captcha-hint">
             <small>💡 This helps us prevent automated submissions</small>
           </div>
@@ -983,49 +958,12 @@
     </div>
   </footer>
 
-  <!-- Simple Math Captcha Script -->
+  <!-- Simple Human Verification Script -->
   <script>
-    let correctAnswer = 0;
-    
-    function generateMathQuestion() {
-      const num1 = Math.floor(Math.random() * 20) + 1;
-      const num2 = Math.floor(Math.random() * 20) + 1;
-      const operations = ['+', '-'];
-      const operation = operations[Math.floor(Math.random() * operations.length)];
-      
-      let question, answer;
-      
-      if (operation === '+') {
-        question = `${num1} + ${num2} = ?`;
-        answer = num1 + num2;
-      } else {
-        // Make sure subtraction doesn't result in negative numbers
-        const larger = Math.max(num1, num2);
-        const smaller = Math.min(num1, num2);
-        question = `${larger} - ${smaller} = ?`;
-        answer = larger - smaller;
-      }
-      
-      correctAnswer = answer;
-      document.getElementById('math-question').textContent = question;
-      document.getElementById('captcha-answer').value = '';
-    }
-    
-    function validateCaptcha() {
-      const userAnswer = parseInt(document.getElementById('captcha-answer').value);
-      return userAnswer === correctAnswer;
-    }
-    
-    // Initialize captcha when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      generateMathQuestion();
-      
-      // Add refresh button functionality
-      document.getElementById('refresh-captcha').addEventListener('click', generateMathQuestion);
-    });
-    
-    // Make validateCaptcha available globally for the form validation
-    window.validateCaptcha = validateCaptcha;
+    // Simple checkbox validation - no complex math needed
+    window.validateCaptcha = function() {
+      return document.getElementById('human-verify').checked;
+    };
   </script>
 
   <!-- Bot Protection System -->

@@ -204,12 +204,9 @@ class CredliBotProtection {
     }
 
     validateCaptcha(userAnswer) {
-        if (!userAnswer || !this.currentCaptcha) return false;
-        
-        const normalizedAnswer = userAnswer.toLowerCase().trim();
-        return this.currentCaptcha.answers.some(answer => 
-            normalizedAnswer === answer || normalizedAnswer.includes(answer)
-        );
+        // Simple checkbox validation - just check if they confirmed they're human
+        // For checkbox: userAnswer will be the checkbox value from the form
+        return userAnswer === 'on' || userAnswer === true || userAnswer === 'true';
     }
 
     // Human Behavior Validation

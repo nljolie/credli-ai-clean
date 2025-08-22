@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Validate math captcha
-        if (window.validateCaptcha && !window.validateCaptcha()) {
-            alert('Incorrect answer to security question. Please try again.');
+        // Validate human verification checkbox
+        if (!document.getElementById('human-verify').checked) {
+            alert('Please confirm you are not a robot by checking the verification box.');
             return;
         }
         
