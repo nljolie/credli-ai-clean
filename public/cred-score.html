@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Cred Score - Credli.ai AI Trust Consultant</title>
+  <meta name="description" content="Get your free Cred Score analysis. Discover your authority ranking across AI engines with 3 Ask Phrases - instant scan.">
+  
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="Free Cred Score Analysis - Credli.ai AI Trust Consultant">
+  <meta property="og:description" content="Get your free AI Trust Score analysis. Discover how AI engines rank your expertise with 3 Ask Phrases - instant scan and actionable insights.">
+  <meta property="og:image" content="https://credli.ai/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/svg+xml">
+  <meta property="og:url" content="https://credli.ai/cred-score.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Credli.ai">
+  
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@Credli_ai">
+  <meta name="twitter:title" content="Free Cred Score Analysis - Credli.ai">
+  <meta name="twitter:description" content="Get your free AI Trust Score analysis. Discover how AI engines rank your expertise - instant scan.">
+  <meta name="twitter:image" content="https://credli.ai/og-image.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing-styles.css?v=105">
+  <style>
+    .cred-hero {
+      background: linear-gradient(135deg, #3454D1, #2d4db3);
+      color: white;
+      padding: 6rem 0 3rem;
+      margin-top: 80px;
+      text-align: center;
+    }
+    
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .cred-hero h1 {
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.9);
+      margin: 0 auto 2rem;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+    
+    .form-section {
+      padding: 2rem 0 4rem;
+      background: #f8fafc;
+    }
+    
+    .cred-form-container {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      margin: -3rem auto 0;
+      box-shadow: 0 20px 40px rgba(52, 84, 209, 0.2);
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+    }
+    
+    .form-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .form-header h2 {
+      color: #3454D1;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .form-header p {
+      color: rgba(7,7,7,0.7);
+      font-size: 1rem;
+    }
+    
+    .cred-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .form-input {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    
+    .form-input label {
+      display: block;
+      font-weight: 600;
+      color: #3454D1;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-input input, .form-input textarea {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    
+    .form-input input:focus, .form-input textarea:focus {
+      border-color: #3454D1;
+      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
+      outline: none;
+    }
+    
+    .form-input input::placeholder, .form-input textarea::placeholder {
+      color: rgba(7,7,7,0.5);
+    }
+    
+    .verification-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: #f8fafc;
+      border: 2px solid #e3e6ec;
+      border-radius: 12px;
+      border-left: 4px solid #3454D1;
+    }
+    
+    .verify-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .verify-label:hover {
+      color: #3454D1;
+    }
+    
+    .verify-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #3454D1;
+      cursor: pointer;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #BBE1C3, #A9D6B9);
+      color: #070707;
+      border: none;
+      padding: 1.2rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #A9D6B9, #98CBA5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(52, 84, 209, 0.2);
+    }
+    
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      display: none;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #e5e7eb;
+      border-left: 4px solid #3454D1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .results-section {
+      padding: 2rem 0;
+      background: #f8fafc;
+    }
+    
+    .results-container {
+      display: none;
+      background: white;
+      margin: 0 auto;
+      max-width: 800px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(52, 84, 209, 0.15);
+      overflow: hidden;
+    }
+    
+    .privacy-notice {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .cred-hero {
+        padding: 4rem 0 2rem;
+        margin-top: 70px;
+      }
+      
+      .cred-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .cred-form-container {
+        margin: -2rem auto 0;
+        padding: 2rem;
+        max-width: calc(100% - 2rem);
+      }
+      
+      .form-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/landing.html" class="nav-link">Home</a>
+        <a href="/landing.html#who-this-is-for" class="nav-link">Who This Is For</a>
+        <a href="/landing.html#timeline" class="nav-link">Timeline</a>
+        <a href="/landing.html#pricing" class="nav-link">Pricing</a>
+        <a href="cred-score.html" class="nav-link cta-nav active">Get Your Cred Score</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="cred-hero">
+    <div class="hero-container">
+      <h1>What's Your Cred Score?</h1>
+      <p class="hero-subtitle">Discover how AI engines rank your expertise with Credli.ai's free instant scan.</p>
+    </div>
+  </section>
+
+  <!-- Form Section -->
+  <section class="form-section">
+    <div class="container">
+      <div class="cred-form-container">
+        <div class="form-header">
+          <h2>🔍 Free AI Authority Check</h2>
+          <p>Enter your details and 3 Ask Phrases that represent your expertise</p>
+        </div>
+    
+        <form id="cred-score-form" class="cred-form">
+          <div class="form-input">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Jane Smith" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="e.g., jane@company.com" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="company">Company/Brand</label>
+            <input type="text" id="company" name="company" placeholder="e.g., Smith Consulting" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="askphrase1">Ask Phrase #1</label>
+            <input type="text" id="askphrase1" name="askphrase1" placeholder="e.g., Who is the best AI consultant?" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="askphrase2">Ask Phrase #2</label>
+            <input type="text" id="askphrase2" name="askphrase2" placeholder="e.g., Top executive coaching expert?" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="askphrase3">Ask Phrase #3</label>
+            <input type="text" id="askphrase3" name="askphrase3" placeholder="e.g., Best digital transformation leader?" required>
+          </div>
+
+          <!-- Simple Verification -->
+          <div class="verification-section">
+            <label class="verify-label">
+              <input type="checkbox" id="human-verify" required>
+              <span>I'm not a robot</span>
+            </label>
+          </div>
+          
+          <div class="privacy-notice">
+            <p style="font-size: 0.9rem; color: rgba(7,7,7,0.6); text-align: center; margin-top: 1rem;">
+              By submitting this form, you agree to our <a href="/privacy-policy.html" style="color: #3454D1; text-decoration: underline;" target="_blank">Privacy Policy</a>
+            </p>
+          </div>
+          
+          <button type="submit" class="submit-btn" id="submit-btn">
+            🚀 Get My Free Cred Score
+          </button>
+        </form>
+        
+        <div class="loading-state" id="loading-state">
+          <h3>🔍 Analyzing Your AI Authority...</h3>
+          <p>Checking AI engines for your expertise mentions...</p>
+          <div class="loading-spinner"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Container -->
+  <section class="results-section">
+    <div class="container">
+      <div class="results-container" id="results-container">
+        <!-- Results will be populated here via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Credli.ai</h3>
+          <p>The AI Trust Consultant</p>
+        </div>
+        <div class="footer-links">
+          <a href="landing.html">Home</a>
+          <a href="landing.html#who-this-is-for">Who This Is For</a>
+          <a href="landing.html#timeline">Timeline</a>
+          <a href="landing.html#pricing">Pricing</a>
+          <a href="cred-score.html">Free Cred Score</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <div class="legal-links">
+          <a href="privacy-policy.html" class="legal-link" target="_blank">Privacy Policy</a>
+          <a href="terms-of-service.html" class="legal-link" target="_blank">Terms of Service</a>
+          <a href="gdpr-ccpa-policy.html" class="legal-link" target="_blank">GDPR & CCPA Policy</a>
+          <a href="affiliate-disclaimer.html" class="legal-link" target="_blank">Affiliate Disclaimer</a>
+          <a href="anti-class-action-provision.html" class="legal-link" target="_blank">Anti-Class Action Provision</a>
+          <a href="dmca-policy.html" class="legal-link" target="_blank">DMCA Policy</a>
+          <a href="earnings-results-disclaimer.html" class="legal-link" target="_blank">Earnings & Results Disclaimer</a>
+          <a href="legal-disclaimer.html" class="legal-link" target="_blank">Legal Disclaimer</a>
+          <a href="optin-agreement.html" class="legal-link" target="_blank">Optin Agreement</a>
+          <a href="refund-policy.html" class="legal-link" target="_blank">Refund Policy</a>
+          <a href="testimonialist-disclaimer.html" class="legal-link" target="_blank">Testimonialist Disclaimer</a>
+        </div>
+      </div>
+      <div class="footer-legal-disclaimer">
+        <p>LEGAL DISCLAIMER: Credli.ai provides collaborative consulting services with NO GUARANTEES of results, earnings, or Cred Score improvements. All results are the user's responsibility. This information is for educational purposes only. You are responsible for all content creation, posting, and implementation. We are NOT a posting service or social media management company. Individual success depends entirely on your own efforts, consistency, and market factors beyond our control.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025-2026 Credli.ai. All rights reserved.</p>
+        <p>Worthy of Success, LLC</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Simple JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('cred-score-form');
+      const loadingState = document.getElementById('loading-state');
+      const resultsContainer = document.getElementById('results-container');
+      const submitBtn = document.getElementById('submit-btn');
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(form);
+        const name = formData.get('name').trim();
+        const email = formData.get('email').trim();
+        const company = formData.get('company').trim();
+        const askphrase1 = formData.get('askphrase1').trim();
+        const askphrase2 = formData.get('askphrase2').trim();
+        const askphrase3 = formData.get('askphrase3').trim();
+        
+        // Simple validation
+        if (!name || !email || !company || !askphrase1 || !askphrase2 || !askphrase3) {
+          alert('Please fill in all fields');
+          return;
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert('Please enter a valid email address');
+          return;
+        }
+        
+        // Check verification
+        if (!document.getElementById('human-verify').checked) {
+          alert('Please confirm you are not a robot');
+          return;
+        }
+        
+        try {
+          // Show loading state
+          showLoading();
+          
+          // Prepare API call data
+          const apiData = {
+            name: name,
+            email: email,
+            company: company,
+            askphrases: [askphrase1, askphrase2, askphrase3]
+          };
+          
+          // Make API call
+          const response = await fetch('/api/free-cred-score', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(apiData)
+          });
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          
+          const data = await response.json();
+          displayResults(data);
+          
+        } catch (err) {
+          console.error('Cred Score error:', err);
+          showError(`Analysis failed: ${err.message}. Please try again.`);
+        }
+      });
+      
+      function showLoading() {
+        form.style.display = 'none';
+        loadingState.style.display = 'block';
+        submitBtn.disabled = true;
+        loadingState.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      function hideLoading() {
+        loadingState.style.display = 'none';
+      }
+      
+      function showError(message) {
+        hideLoading();
+        form.style.display = 'flex';
+        submitBtn.disabled = false;
+        
+        resultsContainer.innerHTML = `
+          <div style="padding: 3rem; text-align: center;">
+            <h3 style="color: #dc2626; margin-bottom: 1rem;">❌ Analysis Failed</h3>
+            <p style="margin-bottom: 2rem;">${message}</p>
+            <button onclick="location.reload()" style="background: #3454D1; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; cursor: pointer;">
+              Try Again
+            </button>
+          </div>
+        `;
+        resultsContainer.style.display = 'block';
+        resultsContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      function displayResults(data) {
+        hideLoading();
+        
+        // Calculate basic metrics
+        const totalQueries = data.queries ? data.queries.length : 3;
+        const mentions = data.mentions || 0;
+        const credScore = data.credScore || Math.round((mentions / totalQueries) * 100);
+        
+        // Determine status
+        let statusMessage, statusIcon;
+        if (credScore >= 80) {
+          statusMessage = "Strong AI Authority!";
+          statusIcon = "🌟";
+        } else if (credScore >= 60) {
+          statusMessage = "Good AI Presence";
+          statusIcon = "👍";
+        } else if (credScore >= 40) {
+          statusMessage = "Building Authority";
+          statusIcon = "📈";
+        } else {
+          statusMessage = "Growth Opportunity";
+          statusIcon = "🚀";
+        }
+        
+        resultsContainer.innerHTML = `
+          <div style="background: linear-gradient(135deg, #3454D1, #2d4db3); color: white; padding: 3rem; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">${statusIcon}</div>
+            <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;">${statusMessage}</h2>
+            <div style="background: rgba(255,255,255,0.15); border-radius: 50%; width: 120px; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 2rem auto; border: 3px solid rgba(255,255,255,0.3);">
+              <div style="font-size: 2.5rem; font-weight: 700; color: white; line-height: 1;">${credScore}</div>
+              <div style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Cred Score</div>
+            </div>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; max-width: 500px; margin: 0 auto;">
+              ${getStatusDescription(credScore, name)}
+            </p>
+          </div>
+          
+          <div style="padding: 3rem; text-align: center;">
+            <h3 style="color: #3454D1; margin-bottom: 2rem;">🔥 Ready for the Full Analysis?</h3>
+            <p style="margin-bottom: 2rem;">This free check covers one AI engine. Get your complete Cred Score across all major AI engines + competitor analysis + imposter detection.</p>
+            <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s ease;">
+              Get Full Analysis
+            </a>
+          </div>
+        `;
+        
+        resultsContainer.style.display = 'block';
+        resultsContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      function getStatusDescription(score, name) {
+        if (score >= 80) {
+          return `${name} has excellent AI authority! AI engines consistently recognize your expertise.`;
+        } else if (score >= 60) {
+          return `${name} has good AI visibility with clear opportunities to dominate your field.`;
+        } else if (score >= 40) {
+          return `${name} is building AI authority. Focus on content creation to boost visibility.`;
+        } else {
+          return `${name} has significant opportunity to establish AI authority in your expertise areas.`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
