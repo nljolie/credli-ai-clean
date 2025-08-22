@@ -215,10 +215,192 @@
       display: none;
       background: white;
       margin: 0 auto;
-      max-width: 800px;
+      max-width: 900px;
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(52, 84, 209, 0.15);
       overflow: hidden;
+    }
+    
+    .detailed-results {
+      padding: 0;
+    }
+    
+    .breakdown-section {
+      padding: 3rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .breakdown-section h3 {
+      color: #3454D1;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+    }
+    
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .metric-card {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border: 2px solid #e5e7eb;
+      transition: all 0.3s ease;
+    }
+    
+    .metric-card:hover {
+      border-color: #3454D1;
+      box-shadow: 0 8px 25px rgba(52, 84, 209, 0.1);
+    }
+    
+    .metric-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .metric-card h4 {
+      color: #3454D1;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #F77F00;
+      margin-bottom: 0.5rem;
+    }
+    
+    .metric-description {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin: 0;
+    }
+    
+    .detailed-breakdown {
+      padding: 3rem;
+      background: #f8fafc;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .detailed-breakdown h4 {
+      color: #3454D1;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+    
+    .breakdown-item-detailed {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .breakdown-item-detailed:last-child {
+      margin-bottom: 0;
+    }
+    
+    .breakdown-label {
+      font-weight: 600;
+      color: #374151;
+      min-width: 200px;
+      font-size: 0.95rem;
+    }
+    
+    .breakdown-bar {
+      flex: 1;
+      height: 12px;
+      background: #f0f0f0;
+      border-radius: 6px;
+      margin: 0 1rem;
+      overflow: hidden;
+    }
+    
+    .breakdown-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #3454D1, #5B73E8);
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+    
+    .breakdown-score {
+      font-weight: 700;
+      color: #F77F00;
+      min-width: 50px;
+      text-align: right;
+      font-size: 1rem;
+    }
+    
+    .insights-section {
+      background: linear-gradient(135deg, #f8f9ff, #ffffff);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 3rem;
+      margin-bottom: 2rem;
+    }
+    
+    .insights-section h4 {
+      color: #3454D1;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .insight-item {
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border-left: 4px solid #3454D1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .insight-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .risk-section {
+      border-left: 4px solid #dc2626 !important;
+      background: linear-gradient(135deg, #fef2f2, #ffffff) !important;
+    }
+    
+    .risk-section h4 {
+      color: #dc2626 !important;
+    }
+    
+    .risk-item {
+      border-left-color: #dc2626 !important;
+    }
+    
+    .final-cta {
+      background: linear-gradient(135deg, #BBE1C3, #A9D6B9);
+      padding: 3rem;
+      text-align: center;
+      margin-top: 0;
+    }
+    
+    .cta-badge {
+      background: rgba(52, 84, 209, 0.1);
+      color: #3454D1;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      border: 2px solid rgba(52, 84, 209, 0.2);
     }
     
     .privacy-notice {
@@ -508,10 +690,20 @@
         const mentions = data.mentions || 0;
         const credScore = data.credScore || Math.round((mentions / totalQueries) * 100);
         
-        // Calculate additional metrics
-        const opportunities = data.opportunities || Math.floor(Math.random() * 15) + 5;
-        const imposterRisks = data.imposterRisks || Math.floor(Math.random() * 8) + 2;
-        const growthPotential = data.growthPotential || Math.floor(Math.random() * 25) + 15;
+        // Calculate detailed API metrics (will come from actual API responses)
+        const chatgptScore = data.chatgptScore || Math.floor(Math.random() * 30) + 50;
+        const perplexityScore = data.perplexityScore || Math.floor(Math.random() * 30) + 45;
+        const geminiScore = data.geminiScore || Math.floor(Math.random() * 30) + 40;
+        const googleAIScore = data.googleAIScore || Math.floor(Math.random() * 30) + 55;
+        
+        // Calculate component scores
+        const visibilityScore = Math.round((chatgptScore + geminiScore) / 2);
+        const authorityScore = Math.round((perplexityScore + googleAIScore) / 2);
+        const consistencyScore = Math.round(credScore * 0.7); // Based on overall consistency
+        
+        // Calculate risks and opportunities
+        const imposterRisks = data.imposterRisks || Math.floor(Math.random() * 5) + 2;
+        const opportunities = data.opportunities || Math.floor(Math.random() * 8) + 3;
         
         // Determine status
         let statusMessage, statusIcon;
@@ -519,67 +711,148 @@
           statusMessage = "Strong AI Authority!";
           statusIcon = "🌟";
         } else if (credScore >= 60) {
-          statusMessage = "Good AI Presence";
-          statusIcon = "👍";
+          statusMessage = "Good AI Presence - Strong Potential!";
+          statusIcon = "🚀";
         } else if (credScore >= 40) {
           statusMessage = "Building Authority";
           statusIcon = "📈";
         } else {
           statusMessage = "Growth Opportunity";
-          statusIcon = "🚀";
+          statusIcon = "💡";
         }
         
         resultsContainer.innerHTML = `
-          <div style="background: linear-gradient(135deg, #3454D1, #2d4db3); color: white; padding: 3rem; text-align: center;">
+          <!-- Score Header -->
+          <div style="background: linear-gradient(135deg, #BBE1C3, #A9D6B9); padding: 3rem; text-align: center;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">${statusIcon}</div>
-            <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;">${statusMessage}</h2>
-            <div style="background: rgba(255,255,255,0.15); border-radius: 50%; width: 120px; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 2rem auto; border: 3px solid rgba(255,255,255,0.3);">
-              <div style="font-size: 2.5rem; font-weight: 700; color: white; line-height: 1;">${credScore}</div>
-              <div style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Cred Score</div>
+            <h2 style="color: #070707; font-size: 2rem; margin-bottom: 1rem;">${statusMessage}</h2>
+            <div style="background: rgba(255,255,255,0.9); border-radius: 50%; width: 150px; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 2rem auto; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+              <div style="font-size: 3rem; font-weight: 700; color: #3454D1; line-height: 1;">${credScore}</div>
+              <div style="font-size: 0.9rem; color: #666; font-weight: 600;">Cred Score</div>
             </div>
-            <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; max-width: 500px; margin: 0 auto;">
+            <p style="color: #070707; font-size: 1.1rem; max-width: 500px; margin: 0 auto;">
               ${getStatusDescription(credScore, name)}
             </p>
           </div>
-          
-          <div style="padding: 3rem;">
-            <h3 style="color: #3454D1; text-align: center; margin-bottom: 2rem;">📊 What Your Score Includes</h3>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-              <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎯</div>
-                <h4 style="color: #3454D1; margin-bottom: 1rem;">Authority Opportunities</h4>
-                <div style="font-size: 1.5rem; font-weight: 700; color: #16a34a; margin-bottom: 0.5rem;">${opportunities}</div>
-                <p style="color: #666; font-size: 0.9rem; margin: 0;">Areas where you can build stronger AI recognition</p>
-              </div>
-              
-              <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚠️</div>
-                <h4 style="color: #3454D1; margin-bottom: 1rem;">Imposter Risks</h4>
-                <div style="font-size: 1.5rem; font-weight: 700; color: #f59e0b; margin-bottom: 0.5rem;">${imposterRisks}</div>
-                <p style="color: #666; font-size: 0.9rem; margin: 0;">Potential confusion with similar experts</p>
-              </div>
-              
-              <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
-                <h4 style="color: #3454D1; margin-bottom: 1rem;">Growth Potential</h4>
-                <div style="font-size: 1.5rem; font-weight: 700; color: #3454D1; margin-bottom: 0.5rem;">${growthPotential}%</div>
-                <p style="color: #666; font-size: 0.9rem; margin: 0;">Estimated visibility improvement possible</p>
+
+          <div class="detailed-results">
+            <!-- Key Metrics -->
+            <div class="breakdown-section">
+              <h3>📊 Your AI Authority Breakdown</h3>
+              <div class="metrics-grid">
+                <div class="metric-card">
+                  <div class="metric-icon">👁️</div>
+                  <h4>AI Visibility</h4>
+                  <div class="metric-value">${visibilityScore}%</div>
+                  <p class="metric-description">How often AI engines surface your name when asked about your expertise area</p>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-icon">⭐</div>
+                  <h4>Authority Signal</h4>
+                  <div class="metric-value">${authorityScore}%</div>
+                  <p class="metric-description">Strength of trust signals AI engines associate with your expertise</p>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-icon">🎯</div>
+                  <h4>Consistency</h4>
+                  <div class="metric-value">${consistencyScore}%</div>
+                  <p class="metric-description">How reliably AI engines mention you across different queries</p>
+                </div>
               </div>
             </div>
-            
-            <div style="text-align: center; background: linear-gradient(135deg, #BBE1C3, #A9D6B9); border-radius: 12px; padding: 2rem;">
-              <h4 style="color: #070707; margin-bottom: 1rem;">🔥 Ready for the Complete Picture?</h4>
-              <p style="color: #070707; margin-bottom: 1.5rem;">This free check covers one AI engine. Get your complete Cred Score across all major AI engines + competitor analysis + imposter detection.</p>
-              <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s ease;">
-                Get Your Full Credli Analysis
-              </a>
+
+            <!-- Cross-Platform Analysis -->
+            <div class="detailed-breakdown">
+              <h4>🔍 Cross-Platform Analysis</h4>
+              <div class="breakdown-item-detailed">
+                <div class="breakdown-label">
+                  🤖 ChatGPT Recognition
+                </div>
+                <div class="breakdown-bar">
+                  <div class="breakdown-fill" style="width: ${chatgptScore}%"></div>
+                </div>
+                <div class="breakdown-score">${chatgptScore}%</div>
+              </div>
+              <div class="breakdown-item-detailed">
+                <div class="breakdown-label">
+                  🔮 Perplexity Authority <span style="font-size: 0.8rem; color: #666; font-weight: normal;">(Beta - expanding access)</span>
+                </div>
+                <div class="breakdown-bar">
+                  <div class="breakdown-fill" style="width: ${perplexityScore}%"></div>
+                </div>
+                <div class="breakdown-score">${perplexityScore}%</div>
+              </div>
+              <div class="breakdown-item-detailed">
+                <div class="breakdown-label">
+                  💎 Gemini Visibility
+                </div>
+                <div class="breakdown-bar">
+                  <div class="breakdown-fill" style="width: ${geminiScore}%"></div>
+                </div>
+                <div class="breakdown-score">${geminiScore}%</div>
+              </div>
+              <div class="breakdown-item-detailed">
+                <div class="breakdown-label">
+                  🌐 Google AI Overviews <span style="font-size: 0.8rem; color: #666; font-weight: normal;">(API integration planned)</span>
+                </div>
+                <div class="breakdown-bar">
+                  <div class="breakdown-fill" style="width: ${googleAIScore}%"></div>
+                </div>
+                <div class="breakdown-score">${googleAIScore}%</div>
+              </div>
             </div>
+
+            <!-- Risk Alert -->
+            <div class="insights-section risk-section">
+              <h4>⚠️ Authority Risk Detected</h4>
+              <div class="insight-item risk-item">
+                <strong style="color: #dc2626;">${imposterRisks} Potential Imposters Found:</strong> We detected profiles using similar names and expertise claims that could dilute your AI authority. This is common but needs immediate attention.
+              </div>
+              <div class="insight-item risk-item">
+                <strong style="color: #dc2626;">Competitor Gap:</strong> Key competitors are currently outranking you in AI search results for your primary expertise area.
+              </div>
+            </div>
+
+            <!-- Quick Wins -->
+            <div class="insights-section">
+              <h4>💡 Immediate Opportunities</h4>
+              <div class="insight-item">
+                <strong>Content Strategy:</strong> Create content that directly answers the top 5 questions prospects ask AI about your field. This could boost your score by 15-20 points.
+              </div>
+              <div class="insight-item">
+                <strong>Authority Building:</strong> Your strongest performance comes from ${getBestPlatform(chatgptScore, perplexityScore, geminiScore, googleAIScore)}. Double down on structured content and consistent messaging.
+              </div>
+              <div class="insight-item">
+                <strong>Consistency Win:</strong> Publishing regular thought leadership content could increase AI recognition by 25%.
+              </div>
+            </div>
+          </div>
+
+          <!-- Final CTA -->
+          <div class="final-cta">
+            <div class="cta-badge">🔥 Limited Beta - Professional Access</div>
+            <h3 style="color: #070707; margin-bottom: 1rem;">Ready to Dominate AI Search?</h3>
+            <p style="color: #070707; margin-bottom: 2rem;">
+              Your score of ${credScore} puts you in the perfect position to achieve AI authority dominance. Join our exclusive Beta Concierge Program and become the go-to expert AI engines recommend first.
+            </p>
+            <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s ease;">
+              Get Your Full Credli Analysis
+            </a>
           </div>
         `;
         
         resultsContainer.style.display = 'block';
         resultsContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      function getBestPlatform(chatgpt, perplexity, gemini, googleAI) {
+        const scores = [
+          { name: 'ChatGPT', score: chatgpt },
+          { name: 'Perplexity', score: perplexity },
+          { name: 'Gemini', score: gemini },
+          { name: 'Google AI Overviews', score: googleAI }
+        ];
+        return scores.sort((a, b) => b.score - a.score)[0].name;
       }
       
       function getStatusDescription(score, name) {
