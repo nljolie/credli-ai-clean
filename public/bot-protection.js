@@ -106,6 +106,12 @@ class CredliBotProtection {
 
     // Rate Limiting Check
     checkRateLimit() {
+        // Developer bypass: add ?dev=reset to URL to clear limits
+        if (window.location.search.includes('dev=reset')) {
+            localStorage.clear();
+            console.log('🔧 Developer mode: Rate limits reset');
+        }
+        
         const today = new Date().toDateString();
         const storageKey = `credli_usage_${today}`;
         const fingerprintKey = `credli_fp_${this.fingerprint}`;
@@ -125,8 +131,9 @@ class CredliBotProtection {
         localStorage.setItem(storageKey, JSON.stringify(todayUsage));
         localStorage.setItem(fingerprintKey, JSON.stringify(fingerprintUsage));
         
-        // Check limits
-        if (todayUsage.count > 3 || fingerprintUsage.count > 5) {
+        // Check limits (increased for better user experience)
+        // Allow 10 attempts per day per IP, 15 per device fingerprint
+        if (todayUsage.count > 10 || fingerprintUsage.count > 15) {
             this.showRateLimitMessage();
             return false;
         }
