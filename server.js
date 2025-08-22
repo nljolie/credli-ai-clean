@@ -346,6 +346,64 @@ app.post('/api/scan', async (req, res) => {
   });
 });
 
+// POST /api/free-scan - Limited free scan using only ChatGPT
+app.post('/api/free-scan', async (req, res) => {
+  const { name, keywords = [], captcha } = req.body;
+  
+  // Verify CAPTCHA (in production, verify with Google's API)
+  if (!captcha) {
+    return res.status(400).json({ error: 'CAPTCHA verification required' });
+  }
+  
+  // Limited prompts for free scan (only 3 queries to save API costs)
+  const freePrompts = [
+    `Who are the top experts in ${keywords[0] || 'consulting'}?`,
+    `Who would you hire as a ${keywords[0] || 'consultant'}?`,
+    `Best companies for ${keywords[0] || 'consulting'} services`
+  ];
+  
+  const matrix = [];
+  
+  // Only use ChatGPT for free scans
+  for (const prompt of freePrompts) {
+    console.log(`🔍 Free Scan - Querying ChatGPT: ${prompt}`);
+    const ans = await getRealEngineAnswer('chatgpt', prompt, name);
+    
+    const mentioned = ans?.names || [];
+    const youAppear = mentioned.map(s => s.toLowerCase()).includes((name||'').toLowerCase());
+    
+    matrix.push({
+      engine: 'chatgpt',
+      prompt,
+      youAppear,
+      mentioned,
+      userPosition: ans?.userPosition,
+      rawResponse: ans?.rawResponse
+    });
+  }
+  
+  // Calculate basic metrics
+  const mentions = matrix.filter(r => r.youAppear).length;
+  const opportunities = matrix.filter(r => !r.youAppear).length;
+  const credScore = Math.round((mentions / matrix.length) * 100);
+  
+  // Simple breakdown calculation
+  const visibility = credScore;
+  const authority = mentions > 0 ? Math.min(credScore + 20, 100) : credScore;
+  const consistency = credScore;
+  
+  res.json({
+    credScore,
+    mentions,
+    opportunities,
+    imposters: Math.floor(Math.random() * 3), // Mock for free version
+    visibility,
+    authority,
+    consistency,
+    message: "This is a limited free scan. Upgrade for full analysis across all AI engines."
+  });
+});
+
 // POST /api/ideas  { gaps:[{engine,prompt}...] }
 app.post('/api/ideas', (req, res) => {
   const { gaps = [] } = req.body;

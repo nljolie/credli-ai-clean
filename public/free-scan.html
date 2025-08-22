@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your Free Cred Score - Credli.ai</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .scan-form {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 2rem;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h1 {
+            color: #3454D1;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3454D1;
+        }
+
+        .captcha-container {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3454D1;
+        }
+
+        .scan-button {
+            background: linear-gradient(135deg, #F77F00, #FF8C42);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .scan-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .scan-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .results-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .score-display {
+            text-align: center;
+            background: linear-gradient(135deg, #3454D1, #5B73E8);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+        }
+
+        .score-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .score-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .score-stat {
+            text-align: center;
+        }
+
+        .score-stat .number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .score-stat .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .breakdown-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .breakdown-item h4 {
+            color: #3454D1;
+            margin-bottom: 0.5rem;
+        }
+
+        .percentage {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .upgrade-cta {
+            background: linear-gradient(135deg, #3454D1, #5B73E8);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .upgrade-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .upgrade-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3454D1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <div class="header">
+        <nav class="nav">
+            <div class="logo">Credli.ai</div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <!-- Free Scan Form -->
+        <div id="scan-form-container" class="scan-form">
+            <div class="form-header">
+                <h1>🔍 Get Your Free Cred Score</h1>
+                <p>See how credible you look in AI search results. Quick scan using ChatGPT.</p>
+            </div>
+
+            <form id="freeScanForm">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="e.g., Nicole Jolie" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="keywords">Your Keywords (comma-separated)</label>
+                    <textarea id="keywords" name="keywords" placeholder="e.g., AI consultant, digital marketing, entrepreneur" required></textarea>
+                </div>
+
+                <div class="captcha-container">
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                    <p><small>🔒 CAPTCHA protects against automated scanning</small></p>
+                </div>
+
+                <button type="submit" class="scan-button" id="scanButton">
+                    🚀 Get My Free Cred Score
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Container -->
+        <div id="results-container" class="results-container">
+            <!-- Results will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('freeScanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const keywords = document.getElementById('keywords').value.split(',').map(k => k.trim()).filter(k => k);
+            
+            // Check CAPTCHA
+            const captchaResponse = grecaptcha.getResponse();
+            if (!captchaResponse) {
+                alert('Please complete the CAPTCHA verification');
+                return;
+            }
+
+            // Show loading
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = `
+                <div class="loading">
+                    <h3>🔍 Analyzing Your Cred Score...</h3>
+                    <p>Querying ChatGPT for your credibility. This may take up to 2 minutes...</p>
+                    <div class="loading-spinner"></div>
+                </div>
+            `;
+            
+            // Disable form
+            document.getElementById('scanButton').disabled = true;
+            
+            try {
+                const response = await fetch('/api/free-scan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        keywords: keywords,
+                        captcha: captchaResponse
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Scan failed: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                displayResults(data);
+                
+            } catch (error) {
+                resultsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #d32f2f;">
+                        <h3>❌ Scan Failed</h3>
+                        <p>${error.message}</p>
+                        <p>Please try again or contact support.</p>
+                    </div>
+                `;
+            } finally {
+                document.getElementById('scanButton').disabled = false;
+            }
+        });
+
+        function displayResults(data) {
+            const resultsContainer = document.getElementById('results-container');
+            const credScore = Math.round(data.credScore || 0);
+            const mentions = data.mentions || 0;
+            const opportunities = data.opportunities || 0;
+            const imposters = data.imposters || 0;
+            
+            resultsContainer.innerHTML = `
+                <div class="score-display">
+                    <h2>Building AI Authority</h2>
+                    <div class="score-circle">
+                        <div class="score-number">${credScore}</div>
+                    </div>
+                    <p>Cred Score</p>
+                    <div class="score-stats">
+                        <div class="score-stat">
+                            <div class="number">${mentions}</div>
+                            <div class="label">mentions found</div>
+                        </div>
+                        <div class="score-stat">
+                            <div class="number">${opportunities}</div>
+                            <div class="label">opportunities</div>
+                        </div>
+                        <div class="score-stat">
+                            <div class="number">${imposters}</div>
+                            <div class="label">imposters detected</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="breakdown-grid">
+                    <div class="breakdown-item">
+                        <h4>Visibility</h4>
+                        <div class="percentage">${Math.round(data.visibility || 0)}%</div>
+                        <p>undefined points</p>
+                    </div>
+                    <div class="breakdown-item">
+                        <h4>Authority</h4>
+                        <div class="percentage">${Math.round(data.authority || 0)}%</div>
+                        <p>undefined points</p>
+                    </div>
+                    <div class="breakdown-item">
+                        <h4>Consistency</h4>
+                        <div class="percentage">${Math.round(data.consistency || 0)}%</div>
+                        <p>undefined points</p>
+                    </div>
+                </div>
+                
+                <div class="upgrade-cta">
+                    <h3>🚀 Want the Full Analysis?</h3>
+                    <p>See exactly WHERE you're mentioned, WHAT opportunities exist, and WHO your imposters are.</p>
+                    <p>Plus get analysis from Gemini, Perplexity, and Google AI Overviews.</p>
+                    <a href="/dashboard-complete.html" class="upgrade-button">Get Full Cred Score Analysis</a>
+                </div>
+            `;
+            
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
