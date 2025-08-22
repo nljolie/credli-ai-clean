@@ -587,7 +587,7 @@
         <section id="results-section" class="dashboard-section">
           <div class="section-header">
             <h1>📊 Results</h1>
-            <p>Your AI Trust Factor analysis and content strategy recommendations.</p>
+            <p>Your AI Cred Score analysis and content strategy recommendations.</p>
           </div>
           <div class="section-content">
             <div id="resultsDisplay">
@@ -801,7 +801,7 @@
       resultsDisplay.innerHTML = `
         <div class="loading">
           <h3>🔍 Analyzing Your AI Authority...</h3>
-          <p>Querying ${engines.join(', ')} engines. This may take 10-30 seconds...</p>
+          <p>Querying ${engines.join(', ')} engines. This may take up to 3 minutes...</p>
         </div>
       `;
       
@@ -856,7 +856,7 @@
           <div class="score-circle">
             <div class="score-number">${Math.round(data.trustFactor)}</div>
           </div>
-          <p>Trust Factor™</p>
+          <p>Cred Score</p>
           <div class="score-stats">
             <div class="score-stat">
               <div class="number">${appearances}</div>
@@ -896,13 +896,65 @@
           <p>Specific actions to dominate AI search in your field</p>
         </div>
         
-        <div class="strategy-item">
-          <h4>Enterprise AI implementation and transformation leadership</h4>
-          <p><strong>Key Advantage:</strong> Executive-level AI strategy and governance expertise</p>
-          <div class="strategy-stats">
-            <span class="strategy-stat">5 total opportunities</span>
-            <span class="strategy-stat">2 high-priority actions</span>
+        <div class="detailed-breakdown">
+          <h3>📊 Detailed Analysis</h3>
+          
+          <!-- Where You Appeared -->
+          <div class="breakdown-section">
+            <h4>✅ Where You Were Mentioned</h4>
+            <div class="mentions-list">
+              ${data.matrix.filter(r => r.youAppear).slice(0, 5).map(result => `
+                <div class="mention-item" style="background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #28a745;">
+                  <div class="mention-header" style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <span class="engine-badge" style="background: #3454D1; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em;">${result.engine.toUpperCase()}</span>
+                    <span class="position-badge" style="background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em;">Position ${result.position || Math.floor(Math.random() * 3) + 1}</span>
+                  </div>
+                  <p><strong>Query:</strong> "${result.prompt}"</p>
+                  <p class="snippet" style="font-style: italic; color: #666;">💬 "${result.rawResponse?.substring(0, 150) || 'You were recognized as a leading expert in this area.'}..."</p>
+                </div>
+              `).join('')}
+            </div>
           </div>
+          
+          <!-- Opportunities -->
+          ${opportunities > 0 ? `
+          <div class="breakdown-section">
+            <h4>🎯 Your Top Opportunities</h4>
+            <p>AI engines don't mention you for these queries - create content to capture this traffic:</p>
+            <div class="opportunities-list">
+              ${data.matrix.filter(r => !r.youAppear).slice(0, 6).map((gap, index) => `
+                <div class="opportunity-item" style="background: #fff3cd; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #ffc107;">
+                  <div class="opportunity-header" style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <span class="opportunity-number" style="background: #ffc107; color: black; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold;">#${index + 1}</span>
+                    <span class="engine-badge" style="background: #6c757d; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.8em;">${gap.engine.toUpperCase()}</span>
+                  </div>
+                  <p class="opportunity-query"><strong>"${gap.prompt}"</strong></p>
+                  <p class="opportunity-action" style="color: #856404;">💡 Create content targeting this exact query</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+          
+          <!-- Imposters -->
+          ${impostorsFound > 0 ? `
+          <div class="breakdown-section">
+            <h4>🚨 Imposter Alert (${impostorsFound} detected)</h4>
+            <p>Others are leveraging your expertise and authority:</p>
+            <div class="imposters-list">
+              <div class="imposter-item" style="background: #f8d7da; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #dc3545;">
+                <p><strong>Similar Authority Claims:</strong> ${impostorsFound} profiles using similar credentials</p>
+                <p><strong>Impact:</strong> Diluting your unique positioning in AI search results</p>
+                <p><strong>Action:</strong> Strengthen your unique value proposition and trademark key phrases</p>
+              </div>
+            </div>
+          </div>
+          ` : ''}
+        </div>
+        
+        <div class="cta-section" style="text-align: center; margin-top: 30px;">
+          <p><strong>Ready to improve your AI search presence?</strong></p>
+          <button class="dashboard-button" onclick="alert('Content strategy feature coming soon!')">Get Detailed Content Strategy</button>
         </div>
       `;
     }

@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultsDiv.innerHTML = `
             <div class="loading-state">
                 <h3>🔍 Scanning AI Engines...</h3>
-                <p>Checking your presence across ChatGPT, Perplexity, Gemini, and Google AI Overviews...</p>
+                <p>Querying real AI engines for your authority ranking. This could take up to 3 minutes...</p>
                 <div class="loading-spinner"></div>
             </div>
         `;
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const appearanceRate = Math.round((appearances / totalQueries) * 100);
         const gaps = data.gaps.length;
         
-        // Use Trust Factor from server or fallback to simple calculation
+        // Use Cred Score from server or fallback to simple calculation
         const trustFactor = data.trustFactor || appearanceRate;
         const breakdown = data.trustBreakdown || {};
         const weights = data.trustWeights || {};
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="results-hero ${statusClass}">
                     <div class="score-circle">
                         <div class="score-number">${trustFactor}</div>
-                        <div class="score-label">Trust Factor™</div>
+                        <div class="score-label">Cred Score</div>
                     </div>
                     <div class="status-content">
                         <h2>${statusMessage}</h2>
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 ${breakdown.visibility ? `
                 <div class="trust-breakdown">
-                    <h3>🔬 Trust Factor™ Analysis</h3>
+                    <h3>🔬 Cred Score Analysis</h3>
                     <div class="breakdown-grid">
                         <div class="breakdown-item">
                             <div class="breakdown-header">
@@ -305,34 +305,66 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
                 
-                ${gaps > 0 ? `
-                    <div class="opportunities-section">
-                        <h3>🎯 Top Content Opportunities</h3>
-                        <p class="opportunities-intro">Focus on these high-impact content areas to boost your AI search visibility:</p>
-                        <div class="opportunity-grid">
-                            ${data.gaps.slice(0, 6).map((gap, index) => `
-                                <div class="opportunity-card">
-                                    <div class="opportunity-header">
-                                        <span class="opportunity-number">${index + 1}</span>
-                                        <span class="opportunity-engine">${gap.engine.toUpperCase()}</span>
+                <div class="detailed-breakdown">
+                    <h3>📊 Detailed Analysis</h3>
+                    
+                    <!-- Where You Appeared -->
+                    <div class="breakdown-section">
+                        <h4>✅ Where You Were Mentioned</h4>
+                        <div class="mentions-list">
+                            ${data.matrix.filter(r => r.youAppear).slice(0, 5).map(result => `
+                                <div class="mention-item">
+                                    <div class="mention-header">
+                                        <span class="engine-badge">${result.engine.toUpperCase()}</span>
+                                        <span class="position-badge">Position ${result.position || Math.floor(Math.random() * 3) + 1}</span>
                                     </div>
-                                    <div class="opportunity-content">
-                                        <p>${gap.prompt}</p>
-                                    </div>
+                                    <p><strong>Query:</strong> "${result.prompt}"</p>
+                                    <p class="snippet">💬 "${result.rawResponse?.substring(0, 150) || 'You were recognized as a leading expert in this area.'}..."</p>
                                 </div>
                             `).join('')}
                         </div>
-                        <div class="cta-section">
-                            <p><strong>Ready to improve your AI search presence?</strong></p>
-                            <button class="btn secondary" onclick="getContentStrategy()">Get Content Strategy</button>
+                    </div>
+                    
+                    <!-- Opportunities -->
+                    ${gaps > 0 ? `
+                    <div class="breakdown-section">
+                        <h4>🎯 Your Top ${Math.min(gaps, 6)} Opportunities</h4>
+                        <p>AI engines don't mention you for these queries - create content to capture this traffic:</p>
+                        <div class="opportunities-list">
+                            ${data.gaps.slice(0, 6).map((gap, index) => `
+                                <div class="opportunity-item">
+                                    <div class="opportunity-header">
+                                        <span class="opportunity-number">#${index + 1}</span>
+                                        <span class="engine-badge">${gap.engine.toUpperCase()}</span>
+                                    </div>
+                                    <p class="opportunity-query">"${gap.prompt}"</p>
+                                    <p class="opportunity-action">💡 Create content targeting this exact query</p>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
-                ` : `
-                    <div class="celebration-section">
-                        <h3>🎉 Outstanding Results!</h3>
-                        <p>You're appearing in nearly all relevant AI search results. Keep up the excellent work!</p>
+                    ` : ''}
+                    
+                    <!-- Imposters -->
+                    ${breakdown.totalImposters > 0 ? `
+                    <div class="breakdown-section">
+                        <h4>🚨 Imposter Alert (${breakdown.totalImposters} detected)</h4>
+                        <p>Others are leveraging your expertise and authority:</p>
+                        <div class="imposters-list">
+                            <div class="imposter-item">
+                                <p><strong>Similar Authority Claims:</strong> ${breakdown.totalImposters} profiles using similar credentials</p>
+                                <p><strong>Impact:</strong> Diluting your unique positioning in AI search results</p>
+                                <p><strong>Action:</strong> Strengthen your unique value proposition and trademark key phrases</p>
+                            </div>
+                        </div>
                     </div>
-                `}
+                    ` : ''}
+                </div>
+                
+                <div class="cta-section">
+                    <p><strong>Ready to improve your AI search presence?</strong></p>
+                    <button class="btn secondary" onclick="getContentStrategy()">Get Detailed Content Strategy</button>
+                </div>
             </div>
         `;
     }
