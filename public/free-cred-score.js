@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Validate math captcha
+        if (window.validateCaptcha && !window.validateCaptcha()) {
+            alert('Incorrect answer to security question. Please try again.');
+            return;
+        }
+        
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {

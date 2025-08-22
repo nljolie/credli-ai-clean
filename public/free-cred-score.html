@@ -808,21 +808,21 @@
         </div>
       </div>
 
-      <!-- Custom Credli.ai Captcha -->
+      <!-- Simple Math Captcha -->
       <div class="captcha-section">
         <div class="captcha-container">
           <label for="captcha-answer" class="captcha-label">
-            🔒 <strong>Security Question:</strong>
+            🔒 <strong>Security Check:</strong>
           </label>
-          <div id="captcha-question" class="captcha-question">
-            Loading security question...
+          <div id="math-question" class="captcha-question">
+            <!-- Math question will be generated here -->
           </div>
-          <input type="text" id="captcha-answer" name="captcha" class="captcha-input" placeholder="Type your answer here..." required>
+          <input type="number" id="captcha-answer" name="captcha" class="captcha-input" placeholder="Enter the answer" required>
           <button type="button" id="refresh-captcha" class="refresh-captcha">
             🔄 New Question
           </button>
-          <div id="captcha-hint" class="captcha-hint" style="display: none;">
-            <small>💡 <span id="hint-text"></span></small>
+          <div class="captcha-hint">
+            <small>💡 This helps us prevent automated submissions</small>
           </div>
         </div>
       </div>
@@ -982,6 +982,51 @@
       </div>
     </div>
   </footer>
+
+  <!-- Simple Math Captcha Script -->
+  <script>
+    let correctAnswer = 0;
+    
+    function generateMathQuestion() {
+      const num1 = Math.floor(Math.random() * 20) + 1;
+      const num2 = Math.floor(Math.random() * 20) + 1;
+      const operations = ['+', '-'];
+      const operation = operations[Math.floor(Math.random() * operations.length)];
+      
+      let question, answer;
+      
+      if (operation === '+') {
+        question = `${num1} + ${num2} = ?`;
+        answer = num1 + num2;
+      } else {
+        // Make sure subtraction doesn't result in negative numbers
+        const larger = Math.max(num1, num2);
+        const smaller = Math.min(num1, num2);
+        question = `${larger} - ${smaller} = ?`;
+        answer = larger - smaller;
+      }
+      
+      correctAnswer = answer;
+      document.getElementById('math-question').textContent = question;
+      document.getElementById('captcha-answer').value = '';
+    }
+    
+    function validateCaptcha() {
+      const userAnswer = parseInt(document.getElementById('captcha-answer').value);
+      return userAnswer === correctAnswer;
+    }
+    
+    // Initialize captcha when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      generateMathQuestion();
+      
+      // Add refresh button functionality
+      document.getElementById('refresh-captcha').addEventListener('click', generateMathQuestion);
+    });
+    
+    // Make validateCaptcha available globally for the form validation
+    window.validateCaptcha = validateCaptcha;
+  </script>
 
   <!-- Bot Protection System -->
   <script src="bot-protection.js"></script>
