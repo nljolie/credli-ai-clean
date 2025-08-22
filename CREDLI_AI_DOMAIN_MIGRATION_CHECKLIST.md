@@ -172,6 +172,120 @@
 
 ---
 
+## 🔗 **COMPREHENSIVE LINK VERIFICATION CHECKLIST**
+
+### **File Path Verification - CRITICAL**
+- [ ] **Verify ALL internal links match actual file structure in GitHub**
+- [ ] **Check for /public/ path errors** (should be root level for most files)
+- [ ] **Confirm all free-cred-score.html links work**
+- [ ] **Test all navigation menu links**
+- [ ] **Validate all CTA button links**
+
+### **Internal Link Audit by File**
+
+#### **index.html Links**
+- [ ] Navigation: `/free-cred-score.html` (NOT `/public/free-cred-score.html`)
+- [ ] CTA buttons: `/free-cred-score.html` with `target="_blank"`
+- [ ] Footer links: All paths verified against GitHub structure
+- [ ] No broken `/public/` prefix errors
+
+#### **landing.html Links** 
+- [ ] Navigation: `free-cred-score.html` (relative path)
+- [ ] Get Cred Score buttons: `/free-cred-score.html` with `target="_blank"`
+- [ ] Footer links: All legal pages exist in /public/ folder
+- [ ] Executive Application: Tally form URL working
+
+#### **free-cred-score.html Links**
+- [ ] Navigation back to: `/landing.html` 
+- [ ] Footer legal links: All point to correct `/public/` files
+- [ ] Form action: Points to correct API endpoint `/api/free-cred-score`
+- [ ] CSS/JS assets: Correct version numbers for cache busting
+
+#### **All Dashboard Files**
+- [ ] **dashboard-complete.html**: All internal links verified
+- [ ] **dashboard-new.html**: All internal links verified  
+- [ ] **demo-results.html**: Fixed `/public/` prefix errors
+- [ ] Return to landing page links working
+
+### **External Link Verification**
+- [ ] **Tally Executive Application form**: URL active and functional
+- [ ] **Legal page links**: All target="_blank" for external navigation
+- [ ] **Social media links**: All URLs current and working
+- [ ] **Google Analytics**: Tracking codes updated for credli.ai
+
+### **API Endpoint Verification**
+- [ ] **Free Cred Score API**: `/api/free-cred-score` (NOT `/api/free-scan`)
+- [ ] **PayPal API endpoints**: All paths correct when implemented
+- [ ] **Webhook endpoints**: All paths match server.js definitions
+- [ ] **Test API endpoints**: All development URLs removed
+
+### **Asset Path Verification**
+- [ ] **CSS files**: `landing-styles.css` with current version number
+- [ ] **JavaScript files**: All `.js` files with current version numbers  
+- [ ] **Images**: `og-image.svg` and other assets accessible
+- [ ] **Fonts**: Google Fonts and local font files loading
+
+### **SEO Meta Tag Link Verification**
+- [ ] **Canonical URLs**: All point to `https://credli.ai/[page]`
+- [ ] **Open Graph URLs**: All point to `https://credli.ai/[page]`
+- [ ] **Twitter Card images**: All point to `https://credli.ai/og-image.svg`
+- [ ] **No Railway references**: All old hosting URLs removed
+
+### **Form Action Verification**
+- [ ] **Free Cred Score form**: Posts to `/api/free-cred-score`
+- [ ] **Contact forms**: All form actions point to correct endpoints
+- [ ] **Newsletter signup**: Form actions verified
+- [ ] **Payment forms**: All PayPal/Stripe endpoints correct
+
+### **Cross-Browser Link Testing**
+- [ ] **Chrome**: All links work on desktop and mobile
+- [ ] **Safari**: All links work on desktop and mobile  
+- [ ] **Firefox**: All links work on desktop and mobile
+- [ ] **Edge**: All links work on desktop and mobile
+- [ ] **Mobile Safari**: Touch navigation working correctly
+
+### **Link Performance Testing**
+- [ ] **Page load speed**: All linked pages load under 3 seconds
+- [ ] **Mobile responsiveness**: All linked pages work on mobile
+- [ ] **Target="_blank" behavior**: New tabs open correctly for external links
+- [ ] **Internal navigation**: Smooth scrolling and navigation working
+
+### **Broken Link Detection**
+- [ ] **Run comprehensive broken link check** across all files
+- [ ] **Test 404 error handling** for missing pages
+- [ ] **Verify all legal page links** point to existing files
+- [ ] **Check all footer navigation** links work correctly
+
+### **GitHub File Structure Verification**
+```
+/public/
+├── free-cred-score.html ✅
+├── landing.html ✅  
+├── privacy-policy.html ✅
+├── terms-of-service.html ✅
+├── [all legal pages] ✅
+├── landing-styles.css ✅
+├── free-cred-score.js ✅
+├── bot-protection.js ✅
+└── [all asset files] ✅
+
+/root/
+├── index.html ✅
+├── server.js ✅
+└── package.json ✅
+```
+
+### **EMERGENCY LINK FIX PROTOCOL**
+If ANY link is broken during migration:
+1. **Immediately identify** the broken link source file
+2. **Check GitHub file structure** to find correct path
+3. **Fix path reference** and remove any `/public/` prefix errors  
+4. **Test link functionality** before and after fix
+5. **Update cache busting** version numbers
+6. **Deploy and verify** fix is live within 5 minutes
+
+---
+
 ## ✅ **NICOLE JOLIE ATTRIBUTION VERIFICATION**
 
 ### **SEO Attribution - Invisible to Users**
