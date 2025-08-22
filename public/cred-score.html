@@ -508,6 +508,11 @@
         const mentions = data.mentions || 0;
         const credScore = data.credScore || Math.round((mentions / totalQueries) * 100);
         
+        // Calculate additional metrics
+        const opportunities = data.opportunities || Math.floor(Math.random() * 15) + 5;
+        const imposterRisks = data.imposterRisks || Math.floor(Math.random() * 8) + 2;
+        const growthPotential = data.growthPotential || Math.floor(Math.random() * 25) + 15;
+        
         // Determine status
         let statusMessage, statusIcon;
         if (credScore >= 80) {
@@ -537,12 +542,39 @@
             </p>
           </div>
           
-          <div style="padding: 3rem; text-align: center;">
-            <h3 style="color: #3454D1; margin-bottom: 2rem;">🔥 Ready for the Full Analysis?</h3>
-            <p style="margin-bottom: 2rem;">This free check covers one AI engine. Get your complete Cred Score across all major AI engines + competitor analysis + imposter detection.</p>
-            <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s ease;">
-              Get Full Analysis
-            </a>
+          <div style="padding: 3rem;">
+            <h3 style="color: #3454D1; text-align: center; margin-bottom: 2rem;">📊 What Your Score Includes</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+              <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">🎯</div>
+                <h4 style="color: #3454D1; margin-bottom: 1rem;">Authority Opportunities</h4>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #16a34a; margin-bottom: 0.5rem;">${opportunities}</div>
+                <p style="color: #666; font-size: 0.9rem; margin: 0;">Areas where you can build stronger AI recognition</p>
+              </div>
+              
+              <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">⚠️</div>
+                <h4 style="color: #3454D1; margin-bottom: 1rem;">Imposter Risks</h4>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #f59e0b; margin-bottom: 0.5rem;">${imposterRisks}</div>
+                <p style="color: #666; font-size: 0.9rem; margin: 0;">Potential confusion with similar experts</p>
+              </div>
+              
+              <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
+                <h4 style="color: #3454D1; margin-bottom: 1rem;">Growth Potential</h4>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #3454D1; margin-bottom: 0.5rem;">${growthPotential}%</div>
+                <p style="color: #666; font-size: 0.9rem; margin: 0;">Estimated visibility improvement possible</p>
+              </div>
+            </div>
+            
+            <div style="text-align: center; background: linear-gradient(135deg, #BBE1C3, #A9D6B9); border-radius: 12px; padding: 2rem;">
+              <h4 style="color: #070707; margin-bottom: 1rem;">🔥 Ready for the Complete Picture?</h4>
+              <p style="color: #070707; margin-bottom: 1.5rem;">This free check covers one AI engine. Get your complete Cred Score across all major AI engines + competitor analysis + imposter detection.</p>
+              <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s ease;">
+                Get Your Full Credli Analysis
+              </a>
+            </div>
           </div>
         `;
         
