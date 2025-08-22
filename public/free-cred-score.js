@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             // Make API call
-            const response = await fetch('/api/free-scan', {
+            const response = await fetch('/api/free-cred-score', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

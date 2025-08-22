@@ -878,12 +878,13 @@ app.post('/api/free-cred-score', async (req, res) => {
     const submissionKey = `submission_${req.protection.clientIP}_${email}`;
     const existingSubmission = submissions.get(submissionKey);
     
-    if (existingSubmission && Date.now() - existingSubmission.timestamp < 300000) { // 5 minute cooldown
-      return res.status(429).json({ 
-        error: 'Submission too recent. Please wait before submitting again.',
-        retryAfter: Math.ceil((300000 - (Date.now() - existingSubmission.timestamp)) / 1000)
-      });
-    }
+    // TESTING MODE - Temporarily disable 5-minute cooldown
+    // if (existingSubmission && Date.now() - existingSubmission.timestamp < 300000) { // 5 minute cooldown
+    //   return res.status(429).json({ 
+    //     error: 'Submission too recent. Please wait before submitting again.',
+    //     retryAfter: Math.ceil((300000 - (Date.now() - existingSubmission.timestamp)) / 1000)
+    //   });
+    // }
     
     // 5. Log submission for monitoring
     console.log(`✅ Free Cred Score request:`, {
