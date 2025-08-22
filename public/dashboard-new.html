@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Trust Dashboard - Credli.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing-styles.css?v=100">
+  <style>
+    /* Dashboard-specific styles */
+    .dashboard-hero {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 6rem 0 3rem;
+      margin-top: 80px;
+      text-align: center;
+    }
+    
+    .dashboard-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    
+    .dashboard-hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .dashboard-content {
+      padding: 4rem 0;
+      min-height: 60vh;
+    }
+    
+    .scan-form {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--line);
+      max-width: 800px;
+      margin: 0 auto 3rem;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--line);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
+    }
+    
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    .engines-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: #f8f9ff;
+      border-radius: 15px;
+      border: 1px solid #e3e6ec;
+    }
+    
+    .engines-section h3 {
+      color: var(--brand);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    .engines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .engine-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      transition: all 0.3s ease;
+    }
+    
+    .engine-option:hover {
+      border-color: var(--brand);
+      box-shadow: var(--shadow-light);
+    }
+    
+    .engine-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+    
+    .engine-option label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: 500;
+      flex: 1;
+    }
+    
+    .engine-note {
+      font-size: 0.8rem;
+      color: #666;
+      font-weight: 400;
+    }
+    
+    .scan-button {
+      background: var(--gradient-accent);
+      color: white;
+      border: none;
+      padding: 1.2rem 3rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: var(--shadow-medium);
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .scan-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(247, 127, 0, 0.3);
+    }
+    
+    .scan-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .results-section {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .results-card {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--line);
+      margin-bottom: 2rem;
+    }
+    
+    .trust-score-display {
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 20px;
+      padding: 3rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .trust-score-display h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--header);
+    }
+    
+    .score-circle {
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    
+    .score-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .score-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .score-stat {
+      text-align: center;
+    }
+    
+    .score-stat .number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .score-stat .label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+    }
+    
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .analysis-item {
+      background: #f8f9ff;
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid #e3e6ec;
+      text-align: center;
+    }
+    
+    .analysis-item h4 {
+      color: var(--brand);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    .analysis-item .percentage {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--header);
+      margin-bottom: 0.5rem;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+    }
+    
+    .error {
+      background: #fff5f5;
+      border: 1px solid #fed7d7;
+      color: #c53030;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-hero {
+        padding: 4rem 0 2rem;
+      }
+      
+      .dashboard-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .scan-form {
+        padding: 2rem;
+        margin: 0 1rem 2rem;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .engines-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .results-card {
+        padding: 2rem;
+        margin: 0 1rem 2rem;
+      }
+      
+      .score-stats {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+      
+      .analysis-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/landing.html" class="nav-link">Home</a>
+        <a href="/landing.html#who-this-is-for" class="nav-link">Who This Is For</a>
+        <a href="/landing.html#timeline" class="nav-link">Timeline</a>
+        <a href="/landing.html#pricing" class="nav-link">Pricing</a>
+        <a href="/free-cred-score.html" class="nav-link cta-nav">Get Your Cred Score</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="dashboard-hero">
+    <div class="container">
+      <h1>AI Trust Dashboard</h1>
+      <p>Analyze your authority across AI search engines and discover opportunities to boost your Trust Factor</p>
+    </div>
+  </section>
+
+  <!-- Dashboard Content -->
+  <section class="dashboard-content">
+    <div class="container">
+      
+      <!-- Scan Form -->
+      <div class="scan-form">
+        <form id="scanForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="e.g., Nicole Jolie" required>
+            </div>
+            <div class="form-group">
+              <label for="brand">Your Brand or Company</label>
+              <input type="text" id="brand" name="brand" placeholder="e.g., Be Socially Smashing">
+            </div>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="keywords">Your Keywords (comma-separated)</label>
+            <textarea id="keywords" name="keywords" placeholder="e.g., AI consultant, digital marketing, entrepreneur" required></textarea>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="competitors">Your Competitors (comma-separated, optional)</label>
+            <textarea id="competitors" name="competitors" placeholder="e.g., Mari Smith, Amy Porterfield"></textarea>
+          </div>
+          
+          <div class="engines-section">
+            <h3>Select AI Engines to Analyze</h3>
+            <div class="engines-grid">
+              <div class="engine-option">
+                <input type="checkbox" id="gemini" name="engines" value="gemini" checked>
+                <label for="gemini">
+                  Gemini
+                  <div class="engine-note">Google's AI - Live API</div>
+                </label>
+              </div>
+              <div class="engine-option">
+                <input type="checkbox" id="chatgpt" name="engines" value="chatgpt">
+                <label for="chatgpt">
+                  ChatGPT
+                  <div class="engine-note">Coming soon</div>
+                </label>
+              </div>
+              <div class="engine-option">
+                <input type="checkbox" id="perplexity" name="engines" value="perplexity">
+                <label for="perplexity">
+                  Perplexity
+                  <div class="engine-note">Coming soon</div>
+                </label>
+              </div>
+              <div class="engine-option">
+                <input type="checkbox" id="google-ai" name="engines" value="google-ai">
+                <label for="google-ai">
+                  Google AI Overviews
+                  <div class="engine-note">Coming soon</div>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="scan-button" id="scanBtn">
+            🔍 Run AI Trust Scan
+          </button>
+        </form>
+      </div>
+      
+      <!-- Results Section -->
+      <div id="results" style="display: none;">
+        <div class="results-section">
+          <div id="resultsContent"></div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Credli.ai</h3>
+          <p>The AI Trust Consultant</p>
+        </div>
+        <div class="footer-links">
+          <a href="/landing.html">Home</a>
+          <a href="/landing.html#who-this-is-for">Who This Is For</a>
+          <a href="/landing.html#timeline">Timeline</a>
+          <a href="/landing.html#pricing">Pricing</a>
+          <a href="/free-cred-score.html">Get Cred Score</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <div class="legal-links">
+          <a href="/privacy-policy.html" class="legal-link">Privacy Policy</a>
+          <a href="/terms-of-service.html" class="legal-link">Terms of Service</a>
+          <a href="/gdpr-ccpa-policy.html" class="legal-link">GDPR & CCPA Policy</a>
+          <a href="/affiliate-disclaimer.html" class="legal-link">Affiliate Disclaimer</a>
+          <a href="/anti-class-action-provision.html" class="legal-link">Anti-Class Action Provision</a>
+          <a href="/dmca-policy.html" class="legal-link">DMCA Policy</a>
+          <a href="/earnings-results-disclaimer.html" class="legal-link">Earnings & Results Disclaimer</a>
+          <a href="/legal-disclaimer.html" class="legal-link">Legal Disclaimer</a>
+          <a href="/optin-agreement.html" class="legal-link">Optin Agreement</a>
+          <a href="/refund-policy.html" class="legal-link">Refund Policy</a>
+          <a href="/testimonialist-disclaimer.html" class="legal-link">Testimonialist Disclaimer</a>
+        </div>
+      </div>
+      <div class="footer-legal-disclaimer">
+        <p>LEGAL DISCLAIMER: Credli.ai provides collaborative consulting services with NO GUARANTEES of results, earnings, or Cred Score improvements. All results are the user's responsibility. This information is for educational purposes only. You are responsible for all content creation, posting, and implementation. We are NOT a posting service or social media management company. Individual success depends entirely on your own efforts, consistency, and market factors beyond our control.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025-2026 Credli.ai. All rights reserved.</p>
+        <p>Worthy of Success, LLC</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('scanForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('scanBtn');
+      const resultsDiv = document.getElementById('results');
+      const resultsContent = document.getElementById('resultsContent');
+      
+      // Get form data
+      const formData = new FormData(e.target);
+      const name = formData.get('name');
+      const brand = formData.get('brand');
+      const keywords = formData.get('keywords').split(',').map(k => k.trim()).filter(k => k);
+      const competitors = formData.get('competitors').split(',').map(c => c.trim()).filter(c => c);
+      const engines = Array.from(formData.getAll('engines'));
+      
+      if (engines.length === 0) {
+        alert('Please select at least one AI engine to analyze.');
+        return;
+      }
+      
+      // Show loading
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ Analyzing...';
+      resultsDiv.style.display = 'block';
+      resultsContent.innerHTML = `
+        <div class="loading">
+          <h3>🔍 Analyzing Your AI Authority...</h3>
+          <p>Querying ${engines.join(', ')} engines. This may take 10-30 seconds...</p>
+        </div>
+      `;
+      
+      try {
+        const response = await fetch('/api/scan', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            brand: brand,
+            keywords: keywords,
+            competitors: competitors,
+            engines: engines
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Display results
+        displayResults(data, name);
+        
+      } catch (error) {
+        resultsContent.innerHTML = `
+          <div class="error">
+            <h3>❌ Scan Failed</h3>
+            <p><strong>Error:</strong> ${error.message}</p>
+            <p>Please try again or contact support if the problem persists.</p>
+          </div>
+        `;
+        console.error('Scan Error:', error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '🔍 Run AI Trust Scan';
+      }
+    });
+    
+    function displayResults(data, name) {
+      const resultsContent = document.getElementById('resultsContent');
+      const appearances = data.matrix.filter(r => r.youAppear).length;
+      const opportunities = data.matrix.filter(r => !r.youAppear).length;
+      const impostorsFound = data.matrix.reduce((sum, r) => sum + (r.imposters?.length || 0), 0);
+      
+      resultsContent.innerHTML = `
+        <div class="trust-score-display">
+          <h2>Building AI Authority</h2>
+          <div class="score-circle">
+            <div class="score-number">${Math.round(data.trustFactor)}</div>
+          </div>
+          <p>Trust Factor™</p>
+          <div class="score-stats">
+            <div class="score-stat">
+              <div class="number">${appearances}</div>
+              <div class="label">mentions found</div>
+            </div>
+            <div class="score-stat">
+              <div class="number">${opportunities}</div>
+              <div class="label">opportunities</div>
+            </div>
+            <div class="score-stat">
+              <div class="number">${impostorsFound}</div>
+              <div class="label">imposters detected</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="results-card">
+          <h3>🔍 Trust Factor™ Analysis</h3>
+          <div class="analysis-grid">
+            <div class="analysis-item">
+              <h4>Visibility</h4>
+              <div class="percentage">${Math.round(data.trustBreakdown.visibility)}%</div>
+              <p>${data.trustWeights.visibility} points</p>
+            </div>
+            <div class="analysis-item">
+              <h4>Authority</h4>
+              <div class="percentage">${Math.round(data.trustBreakdown.authority)}%</div>
+              <p>${data.trustWeights.authority} points</p>
+            </div>
+            <div class="analysis-item">
+              <h4>Consistency</h4>
+              <div class="percentage">${Math.round(data.trustBreakdown.consistency)}%</div>
+              <p>${data.trustWeights.consistency} points</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="results-card">
+          <h3>📊 Detailed Engine Analysis</h3>
+          <p><strong>Good foundation with clear opportunities.</strong> Focus on the recommendations below to boost your Trust Factor.</p>
+          <br>
+          <p>You have solid AI authority recognition with clear opportunities to dominate your field. AI engines like Gemini are starting to recognize your expertise consistently.</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
