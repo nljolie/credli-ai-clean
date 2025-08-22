@@ -787,13 +787,13 @@ function serverSideProtection(req, res, next) {
     ipRateData.dailyReset = now;
   }
   
-  // Check limits (stricter than client-side)
-  if (ipRateData.count > 3 || ipRateData.dailyCount > 2) {
-    return res.status(429).json({ 
-      error: 'Rate limit exceeded. Please try again later.',
-      retryAfter: Math.ceil((60000 - (now - ipRateData.lastReset)) / 1000)
-    });
-  }
+  // Check limits (TESTING MODE - Temporarily disabled for demo testing)
+  // if (ipRateData.count > 3 || ipRateData.dailyCount > 2) {
+  //   return res.status(429).json({ 
+  //     error: 'Rate limit exceeded. Please try again later.',
+  //     retryAfter: Math.ceil((60000 - (now - ipRateData.lastReset)) / 1000)
+  //   });
+  // }
   
   // 2. Request Pattern Analysis
   const requestPattern = {
@@ -809,9 +809,10 @@ function serverSideProtection(req, res, next) {
     return res.status(400).json({ error: 'Request too large' });
   }
   
-  if (!requestPattern.referer.includes('credli.ai') && !requestPattern.referer.includes('localhost')) {
-    return res.status(403).json({ error: 'Invalid referer' });
-  }
+  // TESTING MODE - Allow all referers for demo testing
+  // if (!requestPattern.referer.includes('credli.ai') && !requestPattern.referer.includes('localhost')) {
+  //   return res.status(403).json({ error: 'Invalid referer' });
+  // }
   
   // 3. Bot Detection via User Agent
   const botPatterns = [
