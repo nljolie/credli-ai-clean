@@ -54,11 +54,115 @@ app.use((req, res, next) => {
   next();
 });
 
+// ===== SECURE SESSION MANAGEMENT & USER ACCOUNTS =====
+const crypto = require('crypto');
+
+// In-memory user store (in production, use database)
+const users = new Map();
+const sessions = new Map();
+
 // Simple session middleware (in production, use express-session with secure store)
 app.use((req, res, next) => {
-  req.session = req.session || {};
+  // Get session ID from cookie or create new one
+  let sessionId = req.headers.cookie?.split(';')
+    .find(c => c.trim().startsWith('sessionId='))
+    ?.split('=')[1];
+    
+  if (!sessionId || !sessions.has(sessionId)) {
+    sessionId = crypto.randomUUID();
+    req.session = { id: sessionId };
+    sessions.set(sessionId, req.session);
+  } else {
+    req.session = sessions.get(sessionId);
+  }
+  
+  // Set session cookie
+  res.cookie('sessionId', sessionId, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  });
+  
   next();
 });
+
+// Helper functions for user management
+function createUser(email, password, paypalData = {}) {
+  const userId = crypto.randomUUID();
+  const passwordHash = crypto.createHash('sha256').update(password + process.env.SALT || 'credli-salt-2025').digest('hex');
+  
+  const user = {
+    id: userId,
+    email: email.toLowerCase(),
+    passwordHash: passwordHash,
+    createdAt: new Date(),
+    plan: 'professional',
+    paypalData: paypalData,
+    lastLogin: null
+  };
+  
+  users.set(email.toLowerCase(), user);
+  console.log(`✅ User account created: ${email}`);
+  return user;
+}
+
+function authenticateUser(email, password) {
+  const user = users.get(email.toLowerCase());
+  if (!user) return null;
+  
+  const passwordHash = crypto.createHash('sha256').update(password + process.env.SALT || 'credli-salt-2025').digest('hex');
+  if (user.passwordHash !== passwordHash) return null;
+  
+  user.lastLogin = new Date();
+  console.log(`✅ User authenticated: ${email}`);
+  return user;
+}
+
+function generateRandomPassword() {
+  return crypto.randomBytes(8).toString('hex').slice(0, 12);
+}
+
+// ===== EMAIL INTEGRATION SYSTEM =====
+async function sendWelcomeEmail(email, password) {
+  // In production, integrate with email service (SendGrid, AWS SES, etc.)
+  const emailContent = `
+🎉 Welcome to Credli.ai Professional Beta!
+
+Your account has been created successfully.
+
+LOGIN CREDENTIALS:
+Email: ${email}
+Password: ${password}
+
+Access your dashboard: https://credli.ai/login.html
+
+IMPORTANT SECURITY NOTES:
+- Change your password after first login
+- Keep your credentials secure
+- Contact support if you need assistance
+
+Thank you for your $197 Professional Beta purchase!
+
+---
+The Credli.ai Team
+AI Trust Consultant Platform
+  `;
+  
+  console.log('\n📧 ===== WELCOME EMAIL (WOULD BE SENT) =====');
+  console.log(`📧 To: ${email}`);
+  console.log(`📧 Subject: Welcome to Credli.ai - Your Login Credentials`);
+  console.log(`📧 Content:\n${emailContent}`);
+  console.log('📧 =========================================\n');
+  
+  // In production, actually send the email:
+  // await emailService.send({
+  //   to: email,
+  //   subject: 'Welcome to Credli.ai - Your Login Credentials',
+  //   html: emailContent
+  // });
+  
+  return true;
+}
 
 // Test endpoint
 app.get('/test', (req, res) => {
@@ -73,23 +177,52 @@ app.get('/api/paypal-config', (req, res) => {
   });
 });
 
-// PayPal return URL handler (success)
-app.get('/paypal-return', (req, res) => {
+// PayPal return URL handler (success) - CREATE USER ACCOUNT
+app.get('/paypal-return', async (req, res) => {
   // PayPal redirects here after successful payment
   const { token, PayerID } = req.query;
   
   if (token && PayerID) {
-    // Create session for dashboard access
-    req.session.paid = true;
-    req.session.paymentProvider = 'paypal';
-    req.session.paymentToken = token;
-    req.session.payerId = PayerID;
-    req.session.plan = 'professional';
-    
-    console.log(`✅ PayPal payment successful - Token: ${token}, PayerID: ${PayerID}`);
-    
-    // Redirect to professional welcome page
-    return res.redirect('/professional-welcome.html');
+    try {
+      // TODO: In production, verify payment with PayPal API
+      // For now, we'll create the user account directly
+      
+      // Generate temporary password for user
+      const tempPassword = generateRandomPassword();
+      
+      // For demo purposes, use a default email (in production, get from PayPal API)
+      // In real implementation, you'd call PayPal API to get payer details
+      const userEmail = `customer_${PayerID}@paypal.generated`; // Placeholder
+      
+      // Create user account
+      const user = createUser(userEmail, tempPassword, {
+        paypalToken: token,
+        payerId: PayerID,
+        paymentDate: new Date()
+      });
+      
+      // Create session for immediate access
+      req.session.paid = true;
+      req.session.userId = user.id;
+      req.session.userEmail = user.email;
+      req.session.paymentProvider = 'paypal';
+      req.session.paymentToken = token;
+      req.session.payerId = PayerID;
+      req.session.plan = 'professional';
+      
+      console.log(`✅ PayPal payment successful - User created: ${userEmail}`);
+      console.log(`📧 Temporary password: ${tempPassword} (send via email in production)`);
+      
+      // Send email with login credentials
+      await sendWelcomeEmail(user.email, tempPassword);
+      
+      // Redirect to professional welcome page with success parameters
+      return res.redirect('/professional-welcome.html?created=true&email=' + encodeURIComponent(userEmail));
+      
+    } catch (error) {
+      console.error('❌ Error creating user account:', error);
+      return res.redirect('/payment-required.html?error=account_creation_failed');
+    }
   } else {
     console.log('❌ PayPal return without proper parameters');
     return res.redirect('/payment-required.html?error=payment_failed');
@@ -102,16 +235,92 @@ app.get('/paypal-cancel', (req, res) => {
   res.redirect('/payment-required.html?cancelled=true');
 });
 
+// ===== LOGIN API ENDPOINT =====
+app.post('/api/login', (req, res) => {
+  const { email, password, remember } = req.body;
+  
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: 'Email and password are required'
+    });
+  }
+  
+  // Authenticate user
+  const user = authenticateUser(email, password);
+  if (!user) {
+    console.log(`❌ Failed login attempt: ${email}`);
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid email or password'
+    });
+  }
+  
+  // Create session
+  req.session.loggedIn = true;
+  req.session.userId = user.id;
+  req.session.userEmail = user.email;
+  req.session.plan = user.plan;
+  req.session.paid = true; // Professional beta customers
+  
+  // Extend session if remember me is checked
+  if (remember) {
+    req.session.rememberMe = true;
+    // In production, extend cookie expiration to 30 days
+  }
+  
+  console.log(`✅ Successful login: ${email}`);
+  
+  res.json({
+    success: true,
+    message: 'Login successful',
+    user: {
+      id: user.id,
+      email: user.email,
+      plan: user.plan
+    }
+  });
+});
+
+// ===== LOGOUT API ENDPOINT =====
+app.post('/api/logout', (req, res) => {
+  const userEmail = req.session?.userEmail;
+  
+  // Clear session
+  req.session.loggedIn = false;
+  req.session.userId = null;
+  req.session.userEmail = null;
+  req.session.paid = false;
+  
+  console.log(`✅ User logged out: ${userEmail}`);
+  
+  res.json({
+    success: true,
+    message: 'Logged out successfully'
+  });
+});
+
 // Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
   console.log('Root route hit - serving homepage');
   res.sendFile(path.join(__dirname, 'public', 'landing.html'));
 });
 
-// TESTING: Serve original working dashboard (REMOVE BEFORE PRODUCTION)
-app.get('/dashboard-complete.html', (req, res) => {
-  console.log('Dashboard access - serving original dashboard.html file');
+// ===== DASHBOARD ACCESS CONTROL =====
+app.get('/dashboard.html', (req, res) => {
+  // Check if user is logged in
+  if (!req.session?.loggedIn || !req.session?.paid) {
+    console.log('❌ Unauthorized dashboard access attempt - redirecting to login');
+    return res.redirect('/login.html');
+  }
+  
+  console.log(`✅ Dashboard access granted: ${req.session.userEmail}`);
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+// Legacy dashboard URL redirect
+app.get('/dashboard-complete.html', (req, res) => {
+  res.redirect('/dashboard.html');
 });
 
 // Other protected dashboard pages
