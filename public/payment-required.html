@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Your Cred Score Analysis - Credli.ai</title>
+    <title>Complete Your Cred Score Analysis - Credli.ai Professional Beta</title>
     
     <!-- Aggressive Cache Control -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <!-- PayPal SDK - will be loaded dynamically -->
+    <!-- PayPal SDK with LIVE credentials -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AcGoLNULLeJy3m9aY3jTTDXEDvoUEJU0ztSSeEbl-JxsrqFD0GPw8IigdympXcFREnr0IZkf4TsOEagE&enable-funding=venmo&currency=USD"></script>
     
     <style>
         * {
@@ -28,7 +29,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -52,12 +53,16 @@
         .payment-header h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         .payment-header p {
             font-size: 1.2rem;
             opacity: 0.9;
             margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .pricing-section {
@@ -65,43 +70,37 @@
             text-align: center;
         }
 
-        .pricing-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .pricing-card {
-            border: 3px solid #e1e5e9;
-            border-radius: 15px;
-            padding: 2rem;
+        .professional-card {
+            border: 3px solid #F77F00;
+            border-radius: 20px;
+            padding: 3rem 2rem;
             text-align: center;
-            transition: all 0.3s ease;
-            background: #f8f9ff;
-        }
-
-        .pricing-card.featured {
-            border-color: #F77F00;
             background: linear-gradient(135deg, #fff5eb, #fef5eb);
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(247, 127, 0, 0.2);
+            box-shadow: 0 15px 40px rgba(247, 127, 0, 0.2);
+            max-width: 500px;
+            margin: 2rem auto;
         }
 
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        .beta-badge {
+            background: linear-gradient(135deg, #F77F00, #FF8C42);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-block;
         }
 
         .plan-name {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: #3454D1;
             margin-bottom: 1rem;
         }
 
         .plan-price {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 800;
             color: #2d4db3;
             margin-bottom: 0.5rem;
@@ -110,20 +109,25 @@
         .plan-period {
             color: #666;
             margin-bottom: 2rem;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 500;
         }
 
         .plan-features {
             text-align: left;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .plan-features li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             list-style: none;
             position: relative;
-            padding-left: 2rem;
-            line-height: 1.4;
+            padding-left: 2.5rem;
+            line-height: 1.5;
+            font-size: 1rem;
         }
 
         .plan-features li:before {
@@ -131,11 +135,12 @@
             position: absolute;
             left: 0;
             top: 0;
+            font-size: 1.2rem;
         }
 
-        .paypal-button-container {
-            margin-top: 2rem;
-            min-height: 120px;
+        .paypal-container {
+            margin: 2rem auto;
+            max-width: 300px;
         }
 
         .benefits-section {
@@ -153,7 +158,7 @@
 
         .benefit-item {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
             background: white;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
@@ -167,59 +172,97 @@
         .benefit-item h3 {
             color: #3454D1;
             margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .benefit-item p {
+            color: #666;
+            line-height: 1.5;
         }
 
         .security-note {
             background: rgba(52, 84, 209, 0.1);
             border: 1px solid rgba(52, 84, 209, 0.2);
-            border-radius: 10px;
-            padding: 1.5rem;
+            border-radius: 15px;
+            padding: 2rem;
             margin: 2rem 0;
             text-align: center;
         }
 
         .security-note h4 {
             color: #3454D1;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .security-note p {
+            color: #2d4db3;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
         @media (max-width: 768px) {
-            .pricing-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
             .payment-header h1 {
                 font-size: 2rem;
             }
             
             .plan-price {
-                font-size: 2.5rem;
+                font-size: 3rem;
+            }
+            
+            .professional-card {
+                padding: 2rem 1.5rem;
             }
         }
 
         .loading-spinner {
             display: none;
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
         }
 
         .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3454D1;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            margin: 0 auto 1rem;
         }
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        .executive-info {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border: 2px solid #F59E0B;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .executive-info h3 {
+            color: #92400E;
+            margin-bottom: 1rem;
+        }
+
+        .executive-info p {
+            color: #78350F;
+            line-height: 1.6;
+        }
+
+        .executive-info a {
+            color: #3454D1;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .executive-info a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -228,53 +271,54 @@
         <div class="payment-card">
             <div class="payment-header">
                 <h1>🚀 Complete Your AI Authority Analysis</h1>
-                <p>Get the full detailed report with competitor insights and content strategy</p>
+                <p>Get the full Professional Beta report with detailed insights and competitive analysis</p>
             </div>
 
             <div class="pricing-section">
-                <h2 style="color: #3454D1; margin-bottom: 2rem;">Choose Your Analysis Level</h2>
-                
-                <div class="pricing-options">
-                    <!-- Professional Plan -->
-                    <div class="pricing-card featured">
-                        <div class="plan-name">Professional Beta</div>
-                        <div class="plan-price">$197</div>
-                        <div class="plan-period">One-time payment</div>
-                        
-                        <ul class="plan-features">
-                            <li>Complete 4-API analysis (ChatGPT, Gemini, Perplexity, Google AI)</li>
-                            <li>Detailed mention breakdown</li>
-                            <li>Top missed opportunities</li>
-                            <li>Imposter alert analysis</li>
-                            <li>Basic content strategy</li>
-                            <li>Instant dashboard access</li>
-                        </ul>
-                        
-                        <div id="professional-paypal-button" class="paypal-button-container"></div>
-                    </div>
-
-                    <!-- Executive Plan -->
-                    <div class="pricing-card">
-                        <div class="plan-name">Executive Growth Cohort</div>
-                        <div class="plan-price">$3,000</div>
-                        <div class="plan-period">3-month commitment</div>
-                        
-                        <ul class="plan-features">
-                            <li>Everything in Professional</li>
-                            <li>Advanced competitive analysis</li>
-                            <li>Comprehensive content strategy</li>
-                            <li>Industry authority mapping</li>
-                            <li>Executive-level reporting</li>
-                            <li>Priority analysis processing</li>
-                        </ul>
-                        
-                        <div id="executive-paypal-button" class="paypal-button-container"></div>
+                <!-- Professional Beta Plan -->
+                <div class="professional-card">
+                    <div class="beta-badge">🌟 Professional Beta</div>
+                    <div class="plan-name">AI Cred Score Analysis</div>
+                    <div class="plan-price">$197</div>
+                    <div class="plan-period">One-time payment • Instant access</div>
+                    
+                    <ul class="plan-features">
+                        <li>Complete 4-API analysis (ChatGPT, Gemini, Perplexity, Google AI)</li>
+                        <li>Detailed mention breakdown with context</li>
+                        <li>Top missed opportunities identification</li>
+                        <li>Imposter alert and authority dilution analysis</li>
+                        <li>Content strategy recommendations</li>
+                        <li>Competitive intelligence insights</li>
+                        <li>Instant dashboard access</li>
+                        <li>Professional Beta support included</li>
+                    </ul>
+                    
+                    <!-- PayPal Button Container -->
+                    <div class="paypal-container">
+                        <div id="paypal-container-9HEAPSZK3LS92"></div>
+                        <script>
+                            paypal.HostedButtons({
+                                hostedButtonId: "9HEAPSZK3LS92",
+                            }).render("#paypal-container-9HEAPSZK3LS92")
+                        </script>
                     </div>
                 </div>
 
                 <div class="security-note">
                     <h4>🔒 Secure Payment Processing</h4>
-                    <p>All payments processed securely through PayPal. Pay with PayPal account or any debit/credit card. No account required.</p>
+                    <p>All payments processed securely through PayPal. Pay with PayPal account or any debit/credit card. Apple Pay and Venmo also accepted. No PayPal account required for card payments.</p>
+                </div>
+
+                <!-- Executive Cohort Information -->
+                <div class="executive-info">
+                    <h3>💼 Looking for Executive-Level Analysis?</h3>
+                    <p>
+                        Our Executive Growth Cohort ($3,000) includes white-glove service and comprehensive 3-month implementation. 
+                        <strong>Application required.</strong>
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        <a href="/landing.html#executive-application">Apply for Executive Cohort →</a>
+                    </p>
                 </div>
             </div>
 
@@ -284,26 +328,26 @@
                 <div class="benefits-grid">
                     <div class="benefit-item">
                         <div class="benefit-icon">🎯</div>
-                        <h3>Precise Visibility</h3>
-                        <p>See exactly where AI engines mention you and your competitors</p>
+                        <h3>Precise AI Visibility</h3>
+                        <p>See exactly where and how AI engines mention you versus your competitors</p>
                     </div>
                     
                     <div class="benefit-item">
                         <div class="benefit-icon">💡</div>
                         <h3>Content Opportunities</h3>
-                        <p>Get specific gaps where you can build authority and outrank competitors</p>
+                        <p>Get specific gaps where you can build authority and outrank industry leaders</p>
                     </div>
                     
                     <div class="benefit-item">
                         <div class="benefit-icon">⚠️</div>
                         <h3>Imposter Detection</h3>
-                        <p>Identify who's diluting your authority and stealing your expertise</p>
+                        <p>Identify who's diluting your authority and stealing your expertise positioning</p>
                     </div>
                     
                     <div class="benefit-item">
                         <div class="benefit-icon">📊</div>
-                        <h3>Competitive Intel</h3>
-                        <p>Detailed analysis of how you stack up against industry leaders</p>
+                        <h3>Competitive Intelligence</h3>
+                        <p>Detailed analysis of how you stack up against industry competitors and thought leaders</p>
                     </div>
                 </div>
             </div>
@@ -312,124 +356,30 @@
         <!-- Loading Spinner -->
         <div id="loading-spinner" class="loading-spinner">
             <div class="spinner"></div>
-            <p>Processing your payment...</p>
+            <p style="color: white; font-size: 1.2rem;">Processing your payment...</p>
+            <p style="color: rgba(255,255,255,0.8); margin-top: 0.5rem;">You'll be redirected to your welcome page momentarily.</p>
         </div>
     </div>
 
     <script>
-        // Initialize PayPal buttons
-        function initializePayPalButtons() {
-            // Professional Plan Button
-            paypal.Buttons({
-                style: {
-                    layout: 'horizontal',
-                    color: 'blue',
-                    shape: 'pill',
-                    label: 'paypal',
-                    height: 45
-                },
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: '197.00',
-                                currency_code: 'USD'
-                            },
-                            description: 'Professional Beta - AI Cred Score Analysis',
-                            custom_id: JSON.stringify({
-                                plan: 'professional',
-                                amount: 197.00,
-                                email: 'customer@example.com' // Will be updated with actual customer data
-                            })
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    document.getElementById('loading-spinner').style.display = 'block';
-                    document.querySelector('.payment-card').style.display = 'none';
-                    
-                    return actions.order.capture().then(function(details) {
-                        // Redirect to dashboard with success token
-                        const successUrl = '/dashboard-complete.html?payment_success=true&plan=professional&order_id=' + data.orderID;
-                        window.location.href = successUrl;
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal error:', err);
-                    alert('Payment failed. Please try again or contact support.');
-                    document.getElementById('loading-spinner').style.display = 'none';
-                    document.querySelector('.payment-card').style.display = 'block';
-                }
-            }).render('#professional-paypal-button');
-
-            // Executive Plan Button
-            paypal.Buttons({
-                style: {
-                    layout: 'horizontal',
-                    color: 'gold',
-                    shape: 'pill',
-                    label: 'paypal',
-                    height: 45
-                },
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: '3000.00',
-                                currency_code: 'USD'
-                            },
-                            description: 'Executive Growth Cohort - Premium AI Analysis',
-                            custom_id: JSON.stringify({
-                                plan: 'executive',
-                                amount: 3000.00,
-                                email: 'customer@example.com' // Will be updated with actual customer data
-                            })
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    document.getElementById('loading-spinner').style.display = 'block';
-                    document.querySelector('.payment-card').style.display = 'none';
-                    
-                    return actions.order.capture().then(function(details) {
-                        // Redirect to dashboard with success token
-                        const successUrl = '/dashboard-complete.html?payment_success=true&plan=executive&order_id=' + data.orderID;
-                        window.location.href = successUrl;
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal error:', err);
-                    alert('Payment failed. Please try again or contact support.');
-                    document.getElementById('loading-spinner').style.display = 'none';
-                    document.querySelector('.payment-card').style.display = 'block';
-                }
-            }).render('#executive-paypal-button');
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', async function() {
-            try {
-                // Fetch PayPal configuration from server
-                const configResponse = await fetch('/api/paypal-config');
-                const config = await configResponse.json();
-                
-                // Load PayPal SDK dynamically
-                const paypalScript = document.createElement('script');
-                paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${config.clientId}&vault=true&intent=capture&currency=USD`;
-                paypalScript.onload = function() {
-                    console.log('✅ PayPal SDK loaded successfully');
-                    initializePayPalButtons();
-                };
-                paypalScript.onerror = function() {
-                    console.error('❌ Failed to load PayPal SDK');
-                    alert('Payment system temporarily unavailable. Please try again later.');
-                };
-                document.head.appendChild(paypalScript);
-                
-            } catch (error) {
-                console.error('Error loading PayPal configuration:', error);
-                alert('Payment system temporarily unavailable. Please try again later.');
+        // Handle payment processing
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Professional Beta payment page loaded with LIVE PayPal integration');
+            
+            // Monitor for PayPal events
+            if (window.paypal) {
+                console.log('✅ PayPal SDK loaded successfully');
             }
+            
+            // Add payment success handling
+            window.addEventListener('beforeunload', function() {
+                // Show loading if navigating away (likely to PayPal)
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('payment') === 'success') {
+                    document.getElementById('loading-spinner').style.display = 'block';
+                    document.querySelector('.payment-card').style.display = 'none';
+                }
+            });
         });
     </script>
 </body>

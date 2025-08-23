@@ -11,11 +11,11 @@ if (process.env.STRIPE_SECRET_KEY) {
   console.log('⚠️  Stripe disabled - no secret key found');
 }
 
-// Initialize PayPal SDK
+// Initialize PayPal SDK with LIVE credentials
 let paypal;
-const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || 'AQz4IR9Omue19xyTXjCXXKREgIud-rEDXSpHKcMOG-Z-CKYH-zIv1oAwz3aD_Olb5wqFD5SjQ8Ieiqrj';
-const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET || 'EKDVLMIr4M21DYrJuRnrz8Y0IXLDDE6U0EOzlZeQj44GpQlVgqhTirYgx3Pb4FlxtC1MJrUnvX1ax3D_';
-const PAYPAL_ENVIRONMENT = process.env.PAYPAL_ENVIRONMENT || 'sandbox';
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || 'AcGoLNULLeJy3m9aY3jTTDXEDvoUEJU0ztSSeEbl-JxsrqFD0GPw8IigdympXcFREnr0IZkf4TsOEagE';
+const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET || 'EAGgKHWzmKKZ9OWCnVILj-g0oWaY__tJfPkP6cev3lgqXFbXQ4X56_E9ONhWIJ40QrHf5IfoOvmi9ZQP';
+const PAYPAL_ENVIRONMENT = process.env.PAYPAL_ENVIRONMENT || 'live';
 
 if (PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET) {
   const paypalCheckoutNodeJSSdk = require('@paypal/checkout-server-sdk');
@@ -80,6 +80,35 @@ app.get('/api/paypal-config', (req, res) => {
   });
 });
 
+// PayPal return URL handler (success)
+app.get('/paypal-return', (req, res) => {
+  // PayPal redirects here after successful payment
+  const { token, PayerID } = req.query;
+  
+  if (token && PayerID) {
+    // Create session for dashboard access
+    req.session.paid = true;
+    req.session.paymentProvider = 'paypal';
+    req.session.paymentToken = token;
+    req.session.payerId = PayerID;
+    req.session.plan = 'professional';
+    
+    console.log(`✅ PayPal payment successful - Token: ${token}, PayerID: ${PayerID}`);
+    
+    // Redirect to professional welcome page
+    return res.redirect('/professional-welcome.html');
+  } else {
+    console.log('❌ PayPal return without proper parameters');
+    return res.redirect('/payment-required.html?error=payment_failed');
+  }
+});
+
+// PayPal cancel URL handler
+app.get('/paypal-cancel', (req, res) => {
+  console.log('❌ PayPal payment cancelled by user');
+  res.redirect('/payment-required.html?cancelled=true');
+});
+
 // Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
   console.log('Root route hit - serving homepage');
@@ -128,6 +157,12 @@ app.get('/dashboard-new.html', (req, res) => {
   }
   
   res.sendFile(path.join(__dirname, 'public', 'dashboard-new.html'));
+});
+
+// Professional welcome page (accessible after payment)
+app.get('/professional-welcome.html', (req, res) => {
+  // Allow access to welcome page - no restrictions
+  res.sendFile(path.join(__dirname, 'public', 'professional-welcome.html'));
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
