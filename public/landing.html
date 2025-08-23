@@ -46,6 +46,98 @@
   <link rel="stylesheet" href="landing-styles.css?v=150822">
   <!-- CACHE BUST DEPLOYMENT: 2025-08-22-FORCE-REFRESH -->
   
+  <style>
+    .unfair-advantage-quote {
+      background: linear-gradient(135deg, rgba(247, 127, 0, 0.1), rgba(247, 127, 0, 0.05));
+      border: 2px solid rgba(247, 127, 0, 0.3);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .unfair-advantage-quote::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, #F77F00, #FF8C42);
+    }
+    
+    .unfair-advantage-quote p {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #070707;
+      font-style: italic;
+      line-height: 1.6;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .unfair-advantage-quote p::before {
+      content: '"';
+      font-size: 2rem;
+      color: #F77F00;
+      position: absolute;
+      left: -1rem;
+      top: -0.5rem;
+      font-family: Georgia, serif;
+    }
+    
+    .unfair-advantage-quote p::after {
+      content: '"';
+      font-size: 2rem;
+      color: #F77F00;
+      position: absolute;
+      right: -1rem;
+      bottom: -1rem;
+      font-family: Georgia, serif;
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .unfair-advantage-quote {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .unfair-advantage-quote p {
+        font-size: 1.1rem;
+      }
+      
+      .unfair-advantage-quote p::before,
+      .unfair-advantage-quote p::after {
+        font-size: 1.5rem;
+      }
+      
+      .unfair-advantage-quote p::before {
+        left: -0.5rem;
+        top: -0.3rem;
+      }
+      
+      .unfair-advantage-quote p::after {
+        right: -0.5rem;
+        bottom: -0.8rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .unfair-advantage-quote {
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .unfair-advantage-quote p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+  
   <!-- Structured Data for SEO -->
   <script type="application/ld+json">
   {
@@ -122,6 +214,9 @@
         </div>
 
         <div class="hero-cta">
+          <div class="unfair-advantage-quote">
+            <p>"I'm offering an unfair advantage to high-integrity professionals who want to dominate the next wave of digital trust."</p>
+          </div>
           <p class="micro-promise">⚡ Test Drive Credli.ai: See Where You Rank in AI Search vs. Competitors</p>
           <a href="/cred-score.html" class="btn-primary" target="_blank">Get Your Cred Score</a>
         </div>
