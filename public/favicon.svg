@@ -2,11 +2,11 @@
   <!-- Blue background circle -->
   <circle cx="32" cy="32" r="32" fill="#3454D1"/>
   
-  <!-- Large white "C" taking up most of the space -->
-  <path d="M48 32C48 42.493 39.493 51 29 51H18C12.477 51 8 46.523 8 41V23C8 17.477 12.477 13 18 13H29C39.493 13 48 21.507 48 32Z" fill="#ffffff"/>
+  <!-- White "C" shape - opening on the RIGHT -->
+  <path d="M32 8C42.493 8 51 16.507 51 27V37C51 47.493 42.493 56 32 56H16C10.477 56 6 51.523 6 46V18C6 12.477 10.477 8 16 8H32Z" fill="#ffffff"/>
   
-  <!-- Inner cutout to create the "C" opening -->
-  <path d="M38 32C38 37.523 33.523 42 28 42H22C20.895 42 20 41.105 20 40V24C20 22.895 20.895 22 22 22H28C33.523 22 38 26.477 38 32Z" fill="#3454D1"/>
+  <!-- Blue cutout to create the "C" opening on the RIGHT -->
+  <path d="M32 20C37.523 20 42 24.477 42 30V34C42 39.523 37.523 44 32 44H20V20H32Z" fill="#3454D1"/>
   
   <!-- Orange accent dot -->
   <circle cx="52" cy="52" r="6" fill="#F77F00"/>
