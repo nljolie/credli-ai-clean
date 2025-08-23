@@ -211,6 +211,75 @@
         font-size: 0.85rem;
       }
     }
+    
+    /* Payment Redirect Section Styling */
+    .payment-redirect-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+      border: 2px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      text-align: center;
+    }
+    
+    .payment-redirect-text {
+      font-size: 1rem;
+      color: #059669;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .btn-secondary {
+      background: #10B981;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+      border: 2px solid #10B981;
+    }
+    
+    .btn-secondary:hover {
+      background: #059669;
+      border-color: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .payment-redirect-section {
+        margin-top: 1.5rem;
+        padding: 1rem;
+      }
+      
+      .payment-redirect-text {
+        font-size: 0.9rem;
+      }
+      
+      .btn-secondary {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.3rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .payment-redirect-section {
+        margin-top: 1rem;
+        padding: 0.8rem;
+      }
+      
+      .payment-redirect-text {
+        font-size: 0.85rem;
+      }
+      
+      .btn-secondary {
+        font-size: 0.85rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
   </style>
   
   <!-- Structured Data for SEO -->
@@ -294,6 +363,10 @@
           </div>
           <p class="micro-promise">⚡ Test Drive Credli.ai: See Where You Rank in AI Search vs. Competitors</p>
           <a href="/cred-score.html" class="btn-primary" target="_blank">Get Your Cred Score</a>
+          <div class="payment-redirect-section">
+            <p class="payment-redirect-text">Just completed your $197 payment?</p>
+            <a href="/success.html" class="btn-secondary payment-redirect-btn">✅ Click Here for Your Next Steps</a>
+          </div>
         </div>
       </div>
       
@@ -1151,6 +1224,23 @@
       // Replace with your actual Calendly link
       window.open('https://calendly.com/your-username/enterprise-consultation', '_blank');
     }
+    
+    // PayPal Payment Detection and Redirect
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user returned from PayPal payment
+      if (document.referrer.includes('paypal.com') || 
+          window.location.search.includes('payment=success') ||
+          sessionStorage.getItem('paypalReturn')) {
+        
+        // Clear any existing session marker
+        sessionStorage.removeItem('paypalReturn');
+        
+        // Redirect to success page with small delay for better UX
+        setTimeout(() => {
+          window.location.href = '/success.html';
+        }, 500);
+      }
+    });
   </script>
 </body>
 </html>
