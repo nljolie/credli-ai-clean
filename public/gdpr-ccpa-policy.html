@@ -28,6 +28,57 @@
     .legal-document p {
       margin-bottom: 1rem;
     }
+    
+    /* Footer Quote Styling */
+    .footer-quote {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 2rem;
+    }
+    
+    .footer-quote p:first-child {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #333;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    
+    .footer-quote p:last-child {
+      font-size: 0.95rem;
+      color: #666;
+      font-weight: 500;
+      margin: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .footer-quote {
+        padding: 1.5rem 0;
+      }
+      
+      .footer-quote p:first-child {
+        font-size: 1rem;
+      }
+      
+      .footer-quote p:last-child {
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .footer-quote {
+        padding: 1rem 0;
+      }
+      
+      .footer-quote p:first-child {
+        font-size: 0.95rem;
+      }
+      
+      .footer-quote p:last-child {
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -144,6 +195,10 @@
           <a href="/refund-policy.html" class="legal-link">Refund Policy</a>
           <a href="/testimonialist-disclaimer.html" class="legal-link">Testimonialist Disclaimer</a>
         </div>
+      </div>
+      <div class="footer-quote">
+        <p><em>"I'm offering an unfair advantage to high-integrity professionals who want to dominate the next wave of digital trust."</em></p>
+        <p>— Nicole Jolie, AI Trust Consultant</p>
       </div>
       <div class="footer-legal-disclaimer">
         <p>LEGAL DISCLAIMER: Credli.ai provides collaborative consulting services with NO GUARANTEES of results, earnings, or Cred Score improvements. All results are the user's responsibility. This information is for educational purposes only. You are responsible for all content creation, posting, and implementation. We are NOT a posting service or social media management company. Individual success depends entirely on your own efforts, consistency, and market factors beyond our control.</p>
