@@ -108,10 +108,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'landing.html'));
 });
 
-// TESTING: Dashboard access without payment gate (REMOVE BEFORE PRODUCTION)
+// TESTING: Serve original working dashboard (REMOVE BEFORE PRODUCTION)
 app.get('/dashboard-complete.html', (req, res) => {
-  console.log('Dashboard access - TESTING MODE (payment gate disabled)');
-  res.sendFile(path.join(__dirname, 'public', 'dashboard-complete.html'));
+  console.log('Dashboard access - serving original dashboard.html file');
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
 // Other protected dashboard pages
