@@ -13,19 +13,27 @@ if (process.env.STRIPE_SECRET_KEY) {
 
 // Initialize PayPal SDK
 let paypal;
-if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || 'AQz4IR9Omue19xyTXjCXXKREgIud-rEDXSpHKcMOG-Z-CKYH-zIv1oAwz3aD_Olb5wqFD5SjQ8Ieiqrj';
+const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET || 'EKDVLMIr4M21DYrJuRnrz8Y0IXLDDE6U0EOzlZeQj44GpQlVgqhTirYgx3Pb4FlxtC1MJrUnvX1ax3D_';
+const PAYPAL_ENVIRONMENT = process.env.PAYPAL_ENVIRONMENT || 'sandbox';
+
+if (PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET) {
   const paypalCheckoutNodeJSSdk = require('@paypal/checkout-server-sdk');
   
   // Configure environment (sandbox for testing, live for production)
-  const environment = process.env.PAYPAL_ENVIRONMENT === 'live' 
-    ? new paypalCheckoutNodeJSSdk.core.LiveEnvironment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_CLIENT_SECRET)
-    : new paypalCheckoutNodeJSSdk.core.SandboxEnvironment(process.env.PAYPAL_CLIENT_ID, process.env.PAYPAL_CLIENT_SECRET);
+  const environment = PAYPAL_ENVIRONMENT === 'live' 
+    ? new paypalCheckoutNodeJSSdk.core.LiveEnvironment(PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
+    : new paypalCheckoutNodeJSSdk.core.SandboxEnvironment(PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET);
   
   paypal = new paypalCheckoutNodeJSSdk.core.PayPalHttpClient(environment);
-  console.log('✅ PayPal SDK initialized');
+  console.log(`✅ PayPal SDK initialized (${PAYPAL_ENVIRONMENT} mode)`);
 } else {
   console.log('⚠️  PayPal disabled - no API credentials found');
 }
+
+// Export PayPal credentials for client-side use
+const PAYPAL_CLIENT_ID_PUBLIC = PAYPAL_CLIENT_ID;
+console.log(`📋 PayPal Client ID: ${PAYPAL_CLIENT_ID_PUBLIC.substring(0, 20)}...`);}
 
 // Initialize Gemini API
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5ef3Y0JmumLEtc7qDWf_jMekLy-od-YI';
@@ -64,6 +72,14 @@ app.get('/test', (req, res) => {
   res.json({ message: 'Server is working! Homepage updated.', timestamp: new Date() });
 });
 
+// PayPal configuration endpoint for client-side
+app.get('/api/paypal-config', (req, res) => {
+  res.json({
+    clientId: PAYPAL_CLIENT_ID_PUBLIC,
+    environment: PAYPAL_ENVIRONMENT
+  });
+});
+
 // Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
   console.log('Root route hit - serving homepage');
@@ -72,12 +88,24 @@ app.get('/', (req, res) => {
 
 // Payment gate for dashboard access
 app.get('/dashboard-complete.html', (req, res) => {
-  // Check if user has valid payment session
-  const hasAccess = req.session?.paid || req.query.access_token; // Temporary access via URL param
+  // Check if user has valid payment session or payment success
+  const hasAccess = req.session?.paid || 
+                   req.query.access_token || 
+                   req.query.payment_success === 'true' || 
+                   req.query.order_id; // PayPal success parameters
   
   if (!hasAccess) {
     console.log('Unauthorized dashboard access attempt - redirecting to payment');
     return res.redirect('/payment-required.html');
+  }
+  
+  // If payment success, create session for future access
+  if (req.query.payment_success === 'true' && req.query.order_id) {
+    req.session.paid = true;
+    req.session.paymentProvider = 'paypal';
+    req.session.orderId = req.query.order_id;
+    req.session.plan = req.query.plan;
+    console.log(`✅ Payment successful - Order: ${req.query.order_id}, Plan: ${req.query.plan}`);
   }
   
   // If authorized, serve the dashboard
@@ -86,10 +114,17 @@ app.get('/dashboard-complete.html', (req, res) => {
 
 // Other protected dashboard pages
 app.get('/dashboard-new.html', (req, res) => {
-  const hasAccess = req.session?.paid || req.query.access_token;
+  const hasAccess = req.session?.paid || 
+                   req.query.access_token ||
+                   req.query.payment_success === 'true';
   
   if (!hasAccess) {
     return res.redirect('/payment-required.html');
+  }
+  
+  // Create session if payment success
+  if (req.query.payment_success === 'true') {
+    req.session.paid = true;
   }
   
   res.sendFile(path.join(__dirname, 'public', 'dashboard-new.html'));

@@ -3,6 +3,19 @@
 
 ---
 
+## 🚨 **CRITICAL: API ENDPOINT PRESERVATION**
+
+### **NEVER DELETE THESE API ENDPOINTS**
+- ✅ **`/api/free-cred-score`** - FUNCTIONAL & REQUIRED
+  - **Purpose:** Backend API for cred score analysis  
+  - **Used by:** `/cred-score.html` page
+  - **Status:** Active in server.js (lines 856-859)
+  - **⚠️ WARNING:** Renaming APIs can break functionality - leave as-is
+  - **Note:** The endpoint name doesn't matter as long as it works
+  - **Scope:** This endpoint is for APIs only, NOT HTML pages
+
+---
+
 ## 🌐 **DOMAIN & DNS CONFIGURATION**
 
 ### **Domain Setup**
