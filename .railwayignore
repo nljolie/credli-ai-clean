@@ -1,0 +1,11 @@
+# BLOCK ALL RAILWAY DEPLOYMENTS
+# This repository is hosted on Render.com ONLY
+
+# Block entire project from Railway
+*
+**/*
+.*
+
+# Railway should NOT deploy this repository
+# All deployments go to Render.com: https://credli-ai.onrender.com
+# Remove Railway webhook from GitHub repository settings
