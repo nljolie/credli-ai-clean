@@ -117,7 +117,7 @@ This reference ensures Credli.ai becomes a tool users trust, recommend, and beli
 
 ### **STEP 7: HOSTING PLATFORM DEPLOYMENT**
 - [ ] **RENDER**: Wait 2-3 minutes for automatic deployment
-- [ ] **RAILWAY**: Check deployment logs if still using
+- [ ] **RENDER.COM**: Check deployment logs on current hosting
 - [ ] **VERIFY**: New deployment shows in hosting dashboard
 - [ ] **CHECK**: Deployment status shows "Active" or "Live"
 

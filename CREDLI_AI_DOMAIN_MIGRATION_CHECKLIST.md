@@ -242,7 +242,7 @@
 - [ ] **Canonical URLs**: All point to `https://credli.ai/[page]`
 - [ ] **Open Graph URLs**: All point to `https://credli.ai/[page]`
 - [ ] **Twitter Card images**: All point to `https://credli.ai/og-image.svg`
-- [ ] **No Railway references**: All old hosting URLs removed
+- [x] **No old hosting references**: All deprecated hosting URLs removed
 
 ### **Form Action Verification**
 - [ ] **Free Cred Score form**: Posts to `/api/free-cred-score`
