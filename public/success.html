@@ -138,6 +138,43 @@
       box-shadow: 0 8px 25px rgba(52, 84, 209, 0.3);
     }
     
+    .beta-timeline-info {
+      background: linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%);
+      padding: 2rem;
+      border-radius: 16px;
+      margin: 2rem 0;
+      text-align: center;
+      border: 2px solid #F77F00;
+    }
+    
+    .beta-timeline-info h3 {
+      color: #F77F00;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
+    
+    .timeline-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      text-align: left;
+    }
+    
+    .timeline-details p {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 0;
+      border-left: 3px solid #F77F00;
+      font-size: 0.95rem;
+    }
+    
+    .timeline-details strong {
+      color: #F77F00;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    
     @media (max-width: 768px) {
       .success-hero h1 {
         font-size: 2.2rem;
@@ -151,6 +188,68 @@
       .steps-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+      }
+      
+      .beta-timeline-info {
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      
+      .timeline-details {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        text-align: center;
+      }
+    }
+    
+    /* Footer Quote Styling */
+    .footer-quote {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 2rem;
+    }
+    
+    .footer-quote p:first-child {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #333;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    
+    .footer-quote p:last-child {
+      font-size: 0.95rem;
+      color: #666;
+      font-weight: 500;
+      margin: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .footer-quote {
+        padding: 1.5rem 0;
+      }
+      
+      .footer-quote p:first-child {
+        font-size: 1rem;
+      }
+      
+      .footer-quote p:last-child {
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .footer-quote {
+        padding: 1rem 0;
+      }
+      
+      .footer-quote p:first-child {
+        font-size: 0.95rem;
+      }
+      
+      .footer-quote p:last-child {
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -172,40 +271,50 @@
 
   <!-- Hero Section -->
   <section class="success-hero">
-    <div class="success-badge">✅ PAYMENT CONFIRMED</div>
-    <h1>Welcome to Credli.ai!</h1>
-    <p class="success-subtitle">Your subscription is now active. Get ready to transform your AI authority and establish unshakeable trust in your expertise.</p>
+    <div class="success-badge">✅ BETA RESERVED</div>
+    <h1>You're In! Beta Starts September 1st</h1>
+    <p class="success-subtitle">Your spot in the Credli.ai Beta is confirmed. You're one of the first 100 professionals to secure AI Trust Consulting at the lowest price it will ever be offered.</p>
   </section>
 
   <!-- Next Steps -->
   <div class="next-steps-container">
     <div class="next-steps">
-      <h2>Here's What Happens Next</h2>
+      <h2>Your Beta Journey Starts September 1st, 2025</h2>
       
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-number">1</div>
           <h3>Confirmation Email</h3>
-          <p>Check your inbox for your subscription confirmation and access instructions within the next 5 minutes.</p>
+          <p>Check your inbox for your beta confirmation and payment receipt. Save this email for your records.</p>
         </div>
         
         <div class="step-card">
           <div class="step-number">2</div>
-          <h3>Account Setup</h3>
-          <p>Our team will reach out within 24 hours to set up your personalized Cred Score analysis and strategy session.</p>
+          <h3>September 1st Launch</h3>
+          <p><strong>Beta access begins September 1st, 2025.</strong> You'll receive login credentials and access instructions on launch day.</p>
         </div>
         
         <div class="step-card">
           <div class="step-number">3</div>
-          <h3>First Analysis</h3>
-          <p>Your initial AI authority audit will be delivered within 48-72 hours, complete with actionable recommendations.</p>
+          <h3>First Cred Score Analysis</h3>
+          <p>Once beta launches, your personalized AI Trust Score analysis will be ready within 24-48 hours of logging in.</p>
+        </div>
+      </div>
+      
+      <div class="beta-timeline-info">
+        <h3>🚀 Important Beta Information</h3>
+        <div class="timeline-details">
+          <p><strong>Beta Start Date:</strong> September 1st, 2025</p>
+          <p><strong>Your Beta Price:</strong> $197/month (locked in - price increases after beta closes)</p>
+          <p><strong>Beta Duration:</strong> Limited time - first 100 professionals only</p>
+          <p><strong>Login Access:</strong> Available starting September 1st, 2025</p>
         </div>
       </div>
       
       <div class="support-info">
-        <h3>Need Immediate Support?</h3>
-        <p>Our team is here to help you get started on the right foot. Have questions about your subscription or want to fast-track your setup?</p>
-        <a href="mailto:hello@credli.ai" class="contact-btn">Contact Support</a>
+        <h3>Questions About Your Beta Access?</h3>
+        <p>Our team is standing by to help with any questions about your beta reservation or the upcoming launch.</p>
+        <a href="mailto:hello@credli.ai" class="contact-btn">Contact Beta Support</a>
       </div>
     </div>
   </div>
@@ -223,6 +332,10 @@
           <a href="/landing.html#pricing">Pricing</a>
           <a href="/cred-score.html">Free Cred Score</a>
         </div>
+      </div>
+      <div class="footer-quote">
+        <p><em>"I'm offering an unfair advantage to high-integrity professionals who want to dominate the next wave of digital trust."</em></p>
+        <p>— Nicole Jolie, AI Trust Consultant</p>
       </div>
     </div>
   </footer>
