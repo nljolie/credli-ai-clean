@@ -308,13 +308,7 @@ app.get('/', (req, res) => {
 
 // ===== DASHBOARD ACCESS CONTROL =====
 app.get('/dashboard.html', (req, res) => {
-  // Check if user is logged in
-  if (!req.session?.loggedIn || !req.session?.paid) {
-    console.log('❌ Unauthorized dashboard access attempt - redirecting to login');
-    return res.redirect('/login.html');
-  }
-  
-  console.log(`✅ Dashboard access granted: ${req.session.userEmail}`);
+  console.log('✅ Dashboard access - TESTING MODE (login disabled)');
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
