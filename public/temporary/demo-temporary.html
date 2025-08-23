@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEMO: Get Your Free Cred Score - Credli.ai AI Trust Consultant</title>
+  <meta name="description" content="Enter your information to get your free Cred Score analysis. Discover your authority ranking across AI engines with 3 Ask Phrases - instant scan.">
+  
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="Free Cred Score Demo - Credli.ai AI Trust Consultant">
+  <meta property="og:description" content="Get your free AI Trust Score analysis. Enter your details and discover how AI engines rank your expertise.">
+  <meta property="og:image" content="https://credli.ai/og-image.svg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/svg+xml">
+  <meta property="og:url" content="https://credli.ai/demo.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Credli.ai">
+  
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@Credli_ai">
+  <meta name="twitter:title" content="Free Cred Score Demo - Credli.ai">
+  <meta name="twitter:description" content="Get your free AI Trust Score analysis. Discover how AI engines rank your expertise.">
+  <meta name="twitter:image" content="https://credli.ai/og-image.svg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=2025082301">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico?v=2025082301">
+  
+  <!-- Aggressive Cache Control -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../landing-styles.css?v=150822">
+  
+  <style>
+    .cred-hero {
+      background: linear-gradient(135deg, #3454D1, #2d4db3);
+      color: white;
+      padding: 6rem 0 3rem;
+      margin-top: 80px;
+      text-align: center;
+    }
+    
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .cred-hero h1 {
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.9);
+      margin: 0 auto 2rem;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+    
+    .form-section {
+      padding: 2rem 0 4rem;
+      background: #f8fafc;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .cred-form-container {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      margin: -3rem auto 0;
+      box-shadow: 0 20px 40px rgba(52, 84, 209, 0.2);
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+    }
+    
+    .form-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .form-header h2 {
+      color: #3454D1;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    
+    .form-header p {
+      color: rgba(7,7,7,0.7);
+      font-size: 1rem;
+    }
+    
+    .cred-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .form-input {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    
+    .form-input label {
+      display: block;
+      font-weight: 600;
+      color: #3454D1;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-input input, .form-input textarea {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    
+    .form-input input:focus, .form-input textarea:focus {
+      border-color: #3454D1;
+      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
+      outline: none;
+    }
+    
+    .form-input input::placeholder, .form-input textarea::placeholder {
+      color: rgba(7,7,7,0.5);
+    }
+    
+    .verification-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: #f8fafc;
+      border: 2px solid #e3e6ec;
+      border-radius: 12px;
+      border-left: 4px solid #3454D1;
+    }
+    
+    .verify-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .verify-label:hover {
+      color: #3454D1;
+    }
+    
+    .verify-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #3454D1;
+      cursor: pointer;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #BBE1C3, #A9D6B9);
+      color: #070707;
+      border: none;
+      padding: 1.2rem 2rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+    
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #A9D6B9, #98CBA5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(52, 84, 209, 0.2);
+    }
+    
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      display: none;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #e5e7eb;
+      border-left: 4px solid #3454D1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .cred-hero {
+        padding: 4rem 0 2rem;
+        margin-top: 70px;
+      }
+      
+      .cred-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .cred-form-container {
+        margin: -2rem auto 0;
+        padding: 2rem;
+        max-width: calc(100% - 2rem);
+      }
+      
+      .form-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .cred-form-container {
+        padding: 1.5rem;
+        margin: -1rem auto 0;
+      }
+      
+      .form-input input, .form-input textarea {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .submit-btn {
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+      }
+    }
+    
+    /* Footer Quote Styling */
+    .footer-quote {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 2rem;
+    }
+    
+    .footer-quote p:first-child {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #333;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    
+    .footer-quote p:last-child {
+      font-size: 0.95rem;
+      color: #666;
+      font-weight: 500;
+      margin: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .footer-quote {
+        padding: 1.5rem 0;
+      }
+      
+      .footer-quote p:first-child {
+        font-size: 1rem;
+      }
+      
+      .footer-quote p:last-child {
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .footer-quote {
+        padding: 1rem 0;
+      }
+      
+      .footer-quote p:first-child {
+        font-size: 0.95rem;
+      }
+      
+      .footer-quote p:last-child {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/landing.html" class="nav-link">Home</a>
+        <a href="/landing.html#who-this-is-for" class="nav-link">Who This Is For</a>
+        <a href="/landing.html#timeline" class="nav-link">Timeline</a>
+        <a href="/landing.html#pricing" class="nav-link">Pricing</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="cred-hero">
+    <div class="hero-container">
+      <h1>What's Your Cred Score?</h1>
+      <p class="hero-subtitle">Discover how AI engines rank your expertise with Credli.ai's free instant scan.</p>
+    </div>
+  </section>
+
+  <!-- Form Section -->
+  <section class="form-section">
+    <div class="container">
+      <div class="cred-form-container">
+        <div class="form-header">
+          <h2>Get Your Free Cred Score Analysis</h2>
+          <p>Enter your information and 3 "Ask Phrases" to discover how AI engines rank your expertise.</p>
+        </div>
+        
+        <form id="cred-score-form" class="cred-form">
+          <div class="form-input">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="company">Company/Brand</label>
+            <input type="text" id="company" name="company" placeholder="Your company or personal brand" required>
+          </div>
+          
+          <div class="form-input">
+            <label for="askphrase1">Ask Phrase 1</label>
+            <textarea id="askphrase1" name="askphrase1" placeholder="What question would clients ask AI about your expertise?" rows="2" required></textarea>
+          </div>
+          
+          <div class="form-input">
+            <label for="askphrase2">Ask Phrase 2</label>
+            <textarea id="askphrase2" name="askphrase2" placeholder="What's another way clients might search for your services?" rows="2" required></textarea>
+          </div>
+          
+          <div class="form-input">
+            <label for="askphrase3">Ask Phrase 3</label>
+            <textarea id="askphrase3" name="askphrase3" placeholder="What problem do you solve that clients ask AI about?" rows="2" required></textarea>
+          </div>
+          
+          <div class="verification-section">
+            <label class="verify-label">
+              <input type="checkbox" id="human-verify" required>
+              I'm not a robot
+            </label>
+          </div>
+          
+          <button type="submit" id="submit-btn" class="submit-btn">
+            🚀 Analyze My Cred Score
+          </button>
+        </form>
+        
+        <div id="loading-state" class="loading-state">
+          <div class="loading-spinner"></div>
+          <h3>Analyzing Your AI Authority...</h3>
+          <p>Scanning ChatGPT, Gemini, Perplexity, and Google AI Overviews</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>Credli.ai</h3>
+          <p>The AI Trust Consultant</p>
+        </div>
+        <div class="footer-links">
+          <a href="landing.html">Home</a>
+          <a href="landing.html#who-this-is-for">Who This Is For</a>
+          <a href="landing.html#timeline">Timeline</a>
+          <a href="landing.html#pricing">Pricing</a>
+          <a href="demo.html">Free Cred Score</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <div class="legal-links">
+          <a href="privacy-policy.html" class="legal-link" target="_blank">Privacy Policy</a>
+          <a href="terms-of-service.html" class="legal-link" target="_blank">Terms of Service</a>
+          <a href="gdpr-ccpa-policy.html" class="legal-link" target="_blank">GDPR & CCPA Policy</a>
+          <a href="affiliate-disclaimer.html" class="legal-link" target="_blank">Affiliate Disclaimer</a>
+          <a href="anti-class-action-provision.html" class="legal-link" target="_blank">Anti-Class Action Provision</a>
+          <a href="dmca-policy.html" class="legal-link" target="_blank">DMCA Policy</a>
+          <a href="earnings-results-disclaimer.html" class="legal-link" target="_blank">Earnings & Results Disclaimer</a>
+          <a href="legal-disclaimer.html" class="legal-link" target="_blank">Legal Disclaimer</a>
+          <a href="optin-agreement.html" class="legal-link" target="_blank">Optin Agreement</a>
+          <a href="refund-policy.html" class="legal-link" target="_blank">Refund Policy</a>
+          <a href="testimonialist-disclaimer.html" class="legal-link" target="_blank">Testimonialist Disclaimer</a>
+        </div>
+      </div>
+      <div class="footer-quote">
+        <p><em>"I'm offering an unfair advantage to high-integrity professionals who want to dominate the next wave of digital trust."</em></p>
+        <p>— Nicole Jolie, AI Trust Consultant</p>
+      </div>
+      <div class="footer-legal-disclaimer">
+        <p>LEGAL DISCLAIMER: Credli.ai provides collaborative consulting services with NO GUARANTEES of results, earnings, or Cred Score improvements. All results are the user's responsibility. This information is for educational purposes only. You are responsible for all content creation, posting, and implementation. We are NOT a posting service or social media management company. Individual success depends entirely on your own efforts, consistency, and market factors beyond our control.</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025-2026 Credli.ai. All rights reserved.</p>
+        <p>Worthy of Success, LLC</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Form Processing JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('cred-score-form');
+      const loadingState = document.getElementById('loading-state');
+      const submitBtn = document.getElementById('submit-btn');
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(form);
+        const name = formData.get('name').trim();
+        const email = formData.get('email').trim();
+        const company = formData.get('company').trim();
+        const askphrase1 = formData.get('askphrase1').trim();
+        const askphrase2 = formData.get('askphrase2').trim();
+        const askphrase3 = formData.get('askphrase3').trim();
+        
+        // Simple validation
+        if (!name || !email || !company || !askphrase1 || !askphrase2 || !askphrase3) {
+          alert('Please fill in all fields');
+          return;
+        }
+        
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert('Please enter a valid email address');
+          return;
+        }
+        
+        // Check verification
+        if (!document.getElementById('human-verify').checked) {
+          alert('Please confirm you are not a robot');
+          return;
+        }
+        
+        try {
+          // Show loading state
+          showLoading();
+          
+          // Store form data for results page
+          const resultsData = {
+            name: name,
+            email: email,
+            company: company,
+            askphrases: [askphrase1, askphrase2, askphrase3],
+            timestamp: new Date().getTime()
+          };
+          
+          // Store in sessionStorage for results page
+          sessionStorage.setItem('credScoreData', JSON.stringify(resultsData));
+          
+          // Simulate processing time
+          setTimeout(() => {
+            // Redirect to results page
+            window.location.href = 'cred-score-temporary.html';
+          }, 3000);
+          
+        } catch (err) {
+          console.error('Cred Score error:', err);
+          showError(`Analysis failed: ${err.message}. Please try again.`);
+        }
+      });
+      
+      function showLoading() {
+        form.style.display = 'none';
+        loadingState.style.display = 'block';
+        submitBtn.disabled = true;
+        loadingState.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      function showError(message) {
+        loadingState.style.display = 'none';
+        form.style.display = 'flex';
+        submitBtn.disabled = false;
+        alert(message);
+      }
+    });
+  </script>
+</body>
+</html>
