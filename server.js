@@ -33,7 +33,7 @@ if (PAYPAL_CLIENT_ID && PAYPAL_CLIENT_SECRET) {
 
 // Export PayPal credentials for client-side use
 const PAYPAL_CLIENT_ID_PUBLIC = PAYPAL_CLIENT_ID;
-console.log(`📋 PayPal Client ID: ${PAYPAL_CLIENT_ID_PUBLIC.substring(0, 20)}...`);}
+console.log(`📋 PayPal Client ID: ${PAYPAL_CLIENT_ID_PUBLIC.substring(0, 20)}...`);
 
 // Initialize Gemini API
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5ef3Y0JmumLEtc7qDWf_jMekLy-od-YI';
