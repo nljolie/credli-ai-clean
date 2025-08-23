@@ -1,0 +1,3 @@
+Webhook Test - $(date)
+Testing automatic deployment from GitHub to Render.com
+This file verifies the webhook connection is working properly.
