@@ -108,29 +108,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'landing.html'));
 });
 
-// Payment gate for dashboard access
+// TESTING: Dashboard access without payment gate (REMOVE BEFORE PRODUCTION)
 app.get('/dashboard-complete.html', (req, res) => {
-  // Check if user has valid payment session or payment success
-  const hasAccess = req.session?.paid || 
-                   req.query.access_token || 
-                   req.query.payment_success === 'true' || 
-                   req.query.order_id; // PayPal success parameters
-  
-  if (!hasAccess) {
-    console.log('Unauthorized dashboard access attempt - redirecting to payment');
-    return res.redirect('/payment-required.html');
-  }
-  
-  // If payment success, create session for future access
-  if (req.query.payment_success === 'true' && req.query.order_id) {
-    req.session.paid = true;
-    req.session.paymentProvider = 'paypal';
-    req.session.orderId = req.query.order_id;
-    req.session.plan = req.query.plan;
-    console.log(`✅ Payment successful - Order: ${req.query.order_id}, Plan: ${req.query.plan}`);
-  }
-  
-  // If authorized, serve the dashboard
+  console.log('Dashboard access - TESTING MODE (payment gate disabled)');
   res.sendFile(path.join(__dirname, 'public', 'dashboard-complete.html'));
 });
 
