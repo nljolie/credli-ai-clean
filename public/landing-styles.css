@@ -2636,31 +2636,32 @@ h2 {
 }
 
 .beta-announcement-header h3 {
-  color: white;
+  color: black;
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
 }
 
 .beta-announcement-content {
   text-align: center;
-  color: white;
+  color: black;
 }
 
 .beta-announcement-content h4 {
   font-size: 1.6rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  color: black;
+  text-shadow: 1px 1px 3px rgba(255,255,255,0.5);
 }
 
 .beta-main-text {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  color: black;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
 }
 
 .beta-deadline {
@@ -2668,7 +2669,8 @@ h2 {
   margin-bottom: 1.5rem;
   opacity: 0.95;
   font-weight: 500;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  color: black;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
 }
 
 .beta-cta {
@@ -2697,7 +2699,8 @@ h2 {
 .beta-cta-text {
   font-size: 1.1rem;
   font-weight: 700;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  color: black;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
 }
 
 .pricing-containers {
