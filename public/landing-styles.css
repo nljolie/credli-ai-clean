@@ -2882,5 +2882,12 @@ h2 {
     padding: 1rem 2rem;
     font-size: 1.1rem;
   }
-}
+  
+  /* Mobile responsiveness for urgency section */
+  .pricing-header .section-subtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+  }
 }
