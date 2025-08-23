@@ -2,14 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
-// Initialize Stripe only if key is available
-let stripe;
-if (process.env.STRIPE_SECRET_KEY) {
-  stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-  console.log('✅ Stripe initialized');
-} else {
-  console.log('⚠️  Stripe disabled - no secret key found');
-}
+// PayPal-only payment processing - Stripe removed
 
 // Initialize PayPal SDK with LIVE credentials
 let paypal;

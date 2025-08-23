@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trust Factor™ Pricing - Credli.ai</title>
   <link rel="stylesheet" href="styles.css?v=99">
-  <script src="https://js.stripe.com/v3/"></script>
+  <!-- PayPal-only payment processing -->
 </head>
 <body>
   <div class="app-shell">
