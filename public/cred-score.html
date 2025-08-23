@@ -757,19 +757,11 @@
       }
       
       function resetForm() {
-        // Clear all form fields
-        document.getElementById('cred-score-form').reset();
+        // Clear sessionStorage to reset demo
+        sessionStorage.removeItem('credScoreData');
         
-        // Hide results and show form
-        resultsContainer.style.display = 'none';
-        form.style.display = 'flex';
-        submitBtn.disabled = false;
-        
-        // Scroll back to form
-        form.scrollIntoView({ behavior: 'smooth' });
-        
-        // Focus on first field for easy re-entry
-        document.getElementById('name').focus();
+        // Redirect back to demo form for new analysis
+        window.location.href = '/demo.html';
       }
       
       function getBestPlatform(chatgpt, perplexity, gemini, googleAI) {
