@@ -3049,3 +3049,54 @@ h2 {
     font-size: 1rem;
   }
 }
+
+/* Footer Quote Styling - White text on all pages */
+.footer-quote {
+  text-align: center;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin-top: 2rem;
+}
+
+.footer-quote p:first-child {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #FFFFFF;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.footer-quote p:last-child {
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  font-weight: 500;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .footer-quote {
+    padding: 1.5rem 0;
+  }
+  
+  .footer-quote p:first-child {
+    font-size: 1rem;
+  }
+  
+  .footer-quote p:last-child {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-quote {
+    padding: 1rem 0;
+  }
+  
+  .footer-quote p:first-child {
+    font-size: 0.95rem;
+  }
+  
+  .footer-quote p:last-child {
+    font-size: 0.85rem;
+  }
+}
