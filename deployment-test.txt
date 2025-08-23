@@ -1,0 +1,3 @@
+Deployment Test - $(date)
+This file tests automatic deployment from GitHub to Render.com
+Commit hash: $(git rev-parse HEAD)
