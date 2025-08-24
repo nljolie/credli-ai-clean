@@ -494,6 +494,16 @@
           // Show loading state
           showLoading();
           
+          // Submit to Google Sheets first
+          await submitToGoogleSheets({
+            name: name,
+            email: email,
+            company: company,
+            askphrase1: askphrase1,
+            askphrase2: askphrase2,
+            askphrase3: askphrase3
+          });
+          
           // Store form data for results page
           const resultsData = {
             name: name,
@@ -517,6 +527,27 @@
           showError(`Analysis failed: ${err.message}. Please try again.`);
         }
       });
+      
+      async function submitToGoogleSheets(data) {
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzd5WaQwN14hrMM-R607hKfkE4ogU1G7MBHjYA4oJkog7nvcNimja9bB_EER8e7jaxN/exec';
+        
+        try {
+          const response = await fetch(GOOGLE_SHEETS_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+          
+          console.log('Form data submitted to Google Sheets successfully');
+          
+        } catch (error) {
+          console.error('Failed to submit to Google Sheets:', error);
+          // Don't throw error - let form continue working even if Google Sheets fails
+        }
+      }
       
       function showLoading() {
         form.style.display = 'none';
