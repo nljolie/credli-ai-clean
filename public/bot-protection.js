@@ -131,9 +131,9 @@ class CredliBotProtection {
         localStorage.setItem(storageKey, JSON.stringify(todayUsage));
         localStorage.setItem(fingerprintKey, JSON.stringify(fingerprintUsage));
         
-        // Check limits (increased for better user experience)
-        // Allow 10 attempts per day per IP, 15 per device fingerprint
-        if (todayUsage.count > 10 || fingerprintUsage.count > 15) {
+        // Check limits - 2 attempts max, then redirect to pricing
+        // Allow 2 attempts per day per IP, 2 per device fingerprint
+        if (todayUsage.count > 2 || fingerprintUsage.count > 2) {
             this.showRateLimitMessage();
             return false;
         }
@@ -142,27 +142,8 @@ class CredliBotProtection {
     }
 
     showRateLimitMessage() {
-        const form = document.getElementById('free-cred-form');
-        if (form) {
-            form.innerHTML = `
-                <div style="text-align: center; padding: 3rem; background: #fee2e2; border-radius: 12px; border: 2px solid #dc2626;">
-                    <h3 style="color: #dc2626; margin-bottom: 1rem;">⏰ Usage Limit Reached</h3>
-                    <p style="color: #666; margin-bottom: 2rem;">
-                        You've reached the daily limit for free Cred Score assessments. 
-                        This helps us maintain service quality for everyone.
-                    </p>
-                    <p style="color: #666; margin-bottom: 2rem;">
-                        <strong>Options:</strong><br>
-                        • Try again tomorrow<br>
-                        • Contact us for enterprise access<br>
-                        • Join our Beta Concierge Program for unlimited access
-                    </p>
-                    <a href="/landing.html#pricing" style="background: #3454D1; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 8px; font-weight: 600;">
-                        View Beta Program
-                    </a>
-                </div>
-            `;
-        }
+        // Redirect directly to pricing after 2 attempts
+        window.location.href = '/landing.html#pricing';
     }
 
     // Custom Credli.ai Captcha System
