@@ -3,7 +3,10 @@ class CredliChatbot {
     constructor() {
         this.isOpen = false;
         this.sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        this.googleSheetUrl = 'https://script.google.com/macros/s/AKfycbwc5bnDNuUBaRmw69ar2KuGVGzmTL9E9hnBoDwvzGO_kDljK308r8HL6iryR9TmHj-s/exec';
+        this.googleSheetUrl = 'https://script.google.com/macros/s/AKfycbwRIhstqiH9aqp8wvEpBzp617v_edGtp3kX_a2atX_ZUqBPSY05k0v0Tfe33k3RQ1jJ/exec';
+        this.userName = '';
+        this.userEmail = '';
+        this.isInfoCollected = false;
         this.init();
     }
 
@@ -43,16 +46,13 @@ class CredliChatbot {
                     
                     <div id="chat-messages" class="chat-messages">
                         <div class="message bot-message">
-                            <div class="message-content">
-                                <p>Hi, thanks for visiting Credli! 👋</p>
-                                <p>I'm here to answer questions about AI Trust Consulting and our Beta Concierge Program.</p>
-                                <p><strong>Popular questions:</strong></p>
-                                <div class="quick-questions">
-                                    <button class="quick-btn" data-question="What is a Cred Score?">What is a Cred Score?</button>
-                                    <button class="quick-btn" data-question="How much does the Beta Program cost?">How much does the Beta Program cost?</button>
-                                    <button class="quick-btn" data-question="What is AEO and GEO?">What is AEO and GEO?</button>
-                                    <button class="quick-btn" data-question="Who is this program for?">Who is this program for?</button>
-                                    <button class="quick-btn" data-question="How do you detect AI impersonators?">How do you detect AI impersonators?</button>
+                            <div class="message-content" id="initial-message">
+                                <p>Hi! Welcome to Credli.ai 👋</p>
+                                <p>Before we chat, I'd love to know who I'm talking to:</p>
+                                <div class="name-email-form">
+                                    <input type="text" id="user-name" placeholder="Your Name" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px;">
+                                    <input type="email" id="user-email" placeholder="Your Email" style="width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px;">
+                                    <button id="start-chat" style="background: #3454D1; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Start Chat</button>
                                 </div>
                             </div>
                         </div>
@@ -487,6 +487,12 @@ class CredliChatbot {
                 });
             }
 
+            // Start chat button for name/email collection
+            const startChatBtn = document.getElementById('start-chat');
+            if (startChatBtn) {
+                startChatBtn.addEventListener('click', () => this.collectUserInfo());
+            }
+
             quickBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const question = btn.dataset.question;
@@ -494,6 +500,61 @@ class CredliChatbot {
                 });
             });
         }, 100);
+    }
+
+    collectUserInfo() {
+        const nameInput = document.getElementById('user-name');
+        const emailInput = document.getElementById('user-email');
+        
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        
+        if (!name || !email) {
+            alert('Please enter both your name and email to start the chat.');
+            return;
+        }
+        
+        if (!this.isValidEmail(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+        
+        this.userName = name;
+        this.userEmail = email;
+        this.isInfoCollected = true;
+        
+        // Replace the initial message with the chat interface
+        this.showChatInterface();
+    }
+    
+    isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    showChatInterface() {
+        const initialMessage = document.getElementById('initial-message');
+        initialMessage.innerHTML = `
+            <p>Hi ${this.userName}! 👋</p>
+            <p>I'm here to answer questions about AI Trust Consulting and our Beta Concierge Program.</p>
+            <p><strong>Popular questions:</strong></p>
+            <div class="quick-questions">
+                <button class="quick-btn" data-question="What is a Cred Score?">What is a Cred Score?</button>
+                <button class="quick-btn" data-question="How much does the Beta Program cost?">How much does the Beta Program cost?</button>
+                <button class="quick-btn" data-question="What is AEO and GEO?">What is AEO and GEO?</button>
+                <button class="quick-btn" data-question="Who is this program for?">Who is this program for?</button>
+                <button class="quick-btn" data-question="How do you detect AI impersonators?">How do you detect AI impersonators?</button>
+            </div>
+        `;
+        
+        // Re-setup quick button event listeners
+        const quickBtns = document.querySelectorAll('.quick-btn');
+        quickBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const question = btn.dataset.question;
+                this.handleUserMessage(question, true);
+            });
+        });
     }
 
     toggleChat() {
@@ -514,6 +575,11 @@ class CredliChatbot {
     }
 
     sendMessage() {
+        if (!this.isInfoCollected) {
+            alert('Please provide your name and email first by clicking "Start Chat".');
+            return;
+        }
+        
         const input = document.getElementById('chat-input');
         const message = input.value.trim();
         
@@ -524,6 +590,11 @@ class CredliChatbot {
     }
 
     handleUserMessage(message, isQuickQuestion = false) {
+        if (!this.isInfoCollected) {
+            alert('Please provide your name and email first by clicking "Start Chat".');
+            return;
+        }
+        
         this.addUserMessage(message);
         
         // Find best matching response
@@ -636,6 +707,8 @@ class CredliChatbot {
     async trackChat(question, responseType) {
         try {
             const data = {
+                name: this.userName || '',
+                email: this.userEmail || '',
                 question: question,
                 response: responseType,
                 pageUrl: window.location.href,
