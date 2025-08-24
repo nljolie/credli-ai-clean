@@ -122,6 +122,83 @@ function generateRandomPassword() {
   return crypto.randomBytes(8).toString('hex').slice(0, 12);
 }
 
+// Google Sheets authentication functions
+async function authenticateUserFromSheets(email, password) {
+  try {
+    // Admin bypass for immediate access
+    if (email.toLowerCase() === 'nicole@nicolejolie.com' && password === 'NLJ2025') {
+      const user = {
+        id: 'admin_user',
+        email: 'nicole@nicolejolie.com',
+        plan: 'professional',
+        lastLogin: new Date()
+      };
+      console.log(`✅ Admin login successful: ${email}`);
+      return user;
+    }
+    
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzVSAz-hUi_2Dni-rZL45cES2z6ef5-WzdbhWtXtvIZlAFlC1HMCafQPADQCjbUddES/exec';
+    
+    // Hash password with same salt as client-side
+    const passwordHash = crypto.createHash('sha256').update(password + 'credli-salt-2025').digest('hex');
+    
+    const response = await fetch(GOOGLE_SHEETS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: 'login',
+        email: email.toLowerCase(),
+        passwordHash: passwordHash
+      })
+    });
+    
+    const result = await response.json();
+    if (!result.success) {
+      return null;
+    }
+    
+    // Since we're using no-cors, we can't read the response directly
+    // We'll assume success and create user object
+    const user = {
+      id: `user_${Date.now()}`,
+      email: email.toLowerCase(),
+      plan: 'professional',
+      lastLogin: new Date()
+    };
+    
+    console.log(`✅ User authenticated from Google Sheets: ${email}`);
+    return user;
+  } catch (error) {
+    console.error('Google Sheets authentication error:', error);
+    return null;
+  }
+}
+
+async function addUserToGoogleSheets(userData) {
+  try {
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzVSAz-hUi_2Dni-rZL45cES2z6ef5-WzdbhWtXtvIZlAFlC1HMCafQPADQCjbUddES/exec';
+    
+    const response = await fetch(GOOGLE_SHEETS_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: 'createUser',
+        ...userData
+      })
+    });
+    
+    console.log('User added to Google Sheets:', userData.email);
+    return true;
+  } catch (error) {
+    console.error('Error adding user to Google Sheets:', error);
+    return false;
+  }
+}
+
 // ===== EMAIL INTEGRATION SYSTEM =====
 async function sendWelcomeEmail(email, password) {
   // In production, integrate with email service (SendGrid, AWS SES, etc.)
@@ -236,7 +313,7 @@ app.get('/paypal-cancel', (req, res) => {
 });
 
 // ===== LOGIN API ENDPOINT =====
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { email, password, remember } = req.body;
   
   if (!email || !password) {
@@ -246,40 +323,48 @@ app.post('/api/login', (req, res) => {
     });
   }
   
-  // Authenticate user
-  const user = authenticateUser(email, password);
-  if (!user) {
-    console.log(`❌ Failed login attempt: ${email}`);
-    return res.status(401).json({
+  try {
+    // Check Google Sheets for user authentication
+    const user = await authenticateUserFromSheets(email, password);
+    if (!user) {
+      console.log(`❌ Failed login attempt: ${email}`);
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password'
+      });
+    }
+    
+    // Create session
+    req.session.loggedIn = true;
+    req.session.userId = user.id;
+    req.session.userEmail = user.email;
+    req.session.plan = user.plan;
+    req.session.paid = true; // Professional beta customers
+    
+    // Extend session if remember me is checked
+    if (remember) {
+      req.session.rememberMe = true;
+      // In production, extend cookie expiration to 30 days
+    }
+    
+    console.log(`✅ Successful login: ${email}`);
+    
+    res.json({
+      success: true,
+      message: 'Login successful',
+      user: {
+        id: user.id,
+        email: user.email,
+        plan: user.plan
+      }
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({
       success: false,
-      message: 'Invalid email or password'
+      message: 'Login system temporarily unavailable'
     });
   }
-  
-  // Create session
-  req.session.loggedIn = true;
-  req.session.userId = user.id;
-  req.session.userEmail = user.email;
-  req.session.plan = user.plan;
-  req.session.paid = true; // Professional beta customers
-  
-  // Extend session if remember me is checked
-  if (remember) {
-    req.session.rememberMe = true;
-    // In production, extend cookie expiration to 30 days
-  }
-  
-  console.log(`✅ Successful login: ${email}`);
-  
-  res.json({
-    success: true,
-    message: 'Login successful',
-    user: {
-      id: user.id,
-      email: user.email,
-      plan: user.plan
-    }
-  });
 });
 
 // ===== LOGOUT API ENDPOINT =====
@@ -308,8 +393,20 @@ app.get('/', (req, res) => {
 
 // ===== DASHBOARD ACCESS CONTROL =====
 app.get('/dashboard.html', (req, res) => {
+  // Allow admin direct access via URL parameter
+  if (req.query.email === 'nicole@nicolejolie.com') {
+    req.session.loggedIn = true;
+    req.session.userEmail = 'nicole@nicolejolie.com';
+    req.session.paid = true;
+  }
+  
   console.log('✅ Dashboard access - TESTING MODE (login disabled)');
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+// Login page
+app.get('/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 // Legacy dashboard URL redirect

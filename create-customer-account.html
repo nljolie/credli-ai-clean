@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Customer Account</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: 0 auto; }
+    input, button { padding: 1rem; margin: 0.5rem 0; width: 100%; box-sizing: border-box; }
+    button { background: #3454D1; color: white; border: none; cursor: pointer; }
+    .result { margin-top: 2rem; padding: 1rem; background: #f0f0f0; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Create Customer Account</h1>
+  
+  <form id="createForm">
+    <input type="email" id="email" placeholder="Customer PayPal Email" required>
+    <input type="text" id="tempPassword" placeholder="Temporary Password (will auto-generate if empty)">
+    <button type="submit">Create Account & Generate Credentials</button>
+  </form>
+  
+  <div id="result" class="result" style="display: none;"></div>
+  
+  <script>
+    document.getElementById('createForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value.trim();
+      let tempPassword = document.getElementById('tempPassword').value.trim();
+      
+      // Auto-generate password if empty
+      if (!tempPassword) {
+        tempPassword = 'CRED' + Math.random().toString(36).substr(2, 8).toUpperCase();
+      }
+      
+      try {
+        // Hash password
+        const encoder = new TextEncoder();
+        const data = encoder.encode(tempPassword + 'credli-salt-2025');
+        const hash = await crypto.subtle.digest('SHA-256', data);
+        const passwordHash = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        
+        const userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        // Submit to Google Sheets
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwqzKYtlOLKFxSPIh-fAS3T2YP_rc66l_H0rrmmXQVnHVy6_ISQ6sqwSN5rSBfor1Bb/exec';
+        
+        await fetch(GOOGLE_SHEETS_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email.toLowerCase(),
+            passwordHash: passwordHash,
+            userId: userId,
+            plan: 'professional'
+          })
+        });
+        
+        // Show credentials to copy/paste into email
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('result').innerHTML = \`
+          <h3>✅ Account Created - Send This to Customer:</h3>
+          <div style="background: white; padding: 1rem; border: 1px solid #ccc; margin: 1rem 0;">
+            <p><strong>Subject:</strong> Your Credli.ai Login Credentials - Access Ready</p>
+            <hr>
+            <p>Your Credli.ai Professional Beta account is ready!</p>
+            <p><strong>Login URL:</strong> https://credli.ai/login.html</p>
+            <p><strong>Email:</strong> \${email}</p>
+            <p><strong>Password:</strong> \${tempPassword}</p>
+            <p><strong>Next Steps:</strong></p>
+            <ol>
+              <li>Visit the login URL above</li>
+              <li>Use these credentials to access your dashboard</li>
+              <li>Change your password in account settings</li>
+            </ol>
+            <p>Welcome to Credli.ai Professional Beta!</p>
+          </div>
+          <button onclick="navigator.clipboard.writeText(document.querySelector('#result div').innerText)">Copy Email Text</button>
+        \`;
+        
+        // Clear form
+        document.getElementById('createForm').reset();
+        
+      } catch (error) {
+        alert('Error creating account: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
