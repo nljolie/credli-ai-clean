@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account - Credli.ai</title>
+  <link rel="stylesheet" href="landing-styles.css?v=150822">
+  <style>
+    body {
+      padding-top: 80px;
+      background: var(--bg);
+    }
+    
+    .signup-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(52, 84, 209, 0.2);
+      max-width: 500px;
+      margin: 4rem auto;
+      overflow: hidden;
+    }
+    
+    .signup-header {
+      background: linear-gradient(135deg, #F77F00 0%, #FF8C42 100%);
+      color: white;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    
+    .signup-header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .signup-form {
+      padding: 3rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #3454D1;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    
+    .form-group input:focus {
+      border-color: #3454D1;
+      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
+      outline: none;
+    }
+    
+    .signup-button {
+      background: linear-gradient(135deg, #BBE1C3, #A9D6B9);
+      color: #070707;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 12px;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .signup-button:hover {
+      background: linear-gradient(135deg, #A9D6B9, #98CBA5);
+      transform: translateY(-2px);
+    }
+    
+    .message {
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    
+    .message.error {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+    
+    .message.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .login-links {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .login-links a {
+      color: #3454D1;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="signup-container">
+    <div class="signup-header">
+      <h1>Create Your Account</h1>
+      <p>Join Credli.ai Professional Beta</p>
+    </div>
+
+    <div class="signup-form">
+      <div id="messageDisplay" style="display: none;"></div>
+
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="invitationCode">Invitation Code</label>
+          <input type="text" id="invitationCode" name="invitationCode" required placeholder="Enter invitation code">
+        </div>
+        
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required minlength="6">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+
+        <button type="submit" class="signup-button" id="signupBtn">
+          Create Account
+        </button>
+      </form>
+
+      <div class="login-links">
+        <p>Already have an account? <a href="login.html">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const invitationCode = document.getElementById('invitationCode').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validation
+      if (!invitationCode || !name || !email || !password) {
+        showMessage('Please fill in all fields', 'error');
+        return;
+      }
+      
+      if (invitationCode !== 'CREDLI-BETA-2025') {
+        showMessage('Invalid invitation code', 'error');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showMessage('Passwords do not match', 'error');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showMessage('Password must be at least 6 characters', 'error');
+        return;
+      }
+      
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showMessage('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      const submitBtn = document.getElementById('signupBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating Account...';
+      
+      try {
+        // Hash password
+        const passwordHash = await hashPassword(password);
+        
+        // Submit to Google Sheets
+        await submitToGoogleSheets({
+          email: email.toLowerCase(),
+          passwordHash: passwordHash,
+          userId: generateUserId(),
+          plan: 'professional'
+        });
+        
+        showMessage('Account created successfully! You can now login.', 'success');
+        document.getElementById('signupForm').reset();
+        
+        setTimeout(() => {
+          window.location.href = '/login.html';
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Signup error:', error);
+        showMessage('Failed to create account. Please try again.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+      }
+    });
+    
+    async function submitToGoogleSheets(data) {
+      const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzVSAz-hUi_2Dni-rZL45cES2z6ef5-WzdbhWtXtvIZlAFlC1HMCafQPADQCjbUddES/exec';
+      
+      const response = await fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      
+      console.log('User account submitted to Google Sheets');
+    }
+    
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password + 'credli-salt-2025');
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    
+    function generateUserId() {
+      return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+    
+    function showMessage(text, type) {
+      const messageDisplay = document.getElementById('messageDisplay');
+      messageDisplay.innerHTML = `<div class="message ${type}">${text}</div>`;
+      messageDisplay.style.display = 'block';
+      
+      if (type !== 'success') {
+        setTimeout(() => messageDisplay.style.display = 'none', 5000);
+      }
+    }
+  </script>
+</body>
+</html>

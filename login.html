@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Credli.ai</title>
+  <link rel="stylesheet" href="landing-styles.css?v=150822">
+  <style>
+    body {
+      padding-top: 80px;
+      background: var(--bg);
+    }
+    
+    .login-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(52, 84, 209, 0.2);
+      max-width: 500px;
+      margin: 4rem auto;
+      overflow: hidden;
+    }
+    
+    .login-header {
+      background: linear-gradient(135deg, #F77F00 0%, #FF8C42 100%);
+      color: white;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    
+    .login-header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .login-form {
+      padding: 3rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #3454D1;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    
+    .form-group input:focus {
+      border-color: #3454D1;
+      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
+      outline: none;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .checkbox-group input {
+      width: auto;
+      margin-right: 0.5rem;
+    }
+    
+    .login-button {
+      background: linear-gradient(135deg, #BBE1C3, #A9D6B9);
+      color: #070707;
+      border: none;
+      padding: 1.2rem;
+      border-radius: 12px;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .login-button:hover {
+      background: linear-gradient(135deg, #A9D6B9, #98CBA5);
+      transform: translateY(-2px);
+    }
+    
+    .login-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .message {
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    
+    .message.error {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+    
+    .message.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .login-links {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    .login-links a {
+      color: #3454D1;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="login-container">
+    <div class="login-header">
+      <h1>Welcome Back</h1>
+      <p>Access your AI Trust Dashboard</p>
+    </div>
+
+    <div class="login-form">
+      <div id="messageDisplay" style="display: none;"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="remember" name="remember">
+          <label for="remember">Remember me</label>
+        </div>
+
+        <button type="submit" class="login-button" id="loginBtn">
+          Access Dashboard
+        </button>
+      </form>
+
+      <div class="login-links">
+        <a href="forgot-password.html">Forgot Password?</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Rate limiting
+    const MAX_ATTEMPTS = 5;
+    const LOCKOUT_DURATION = 30 * 60 * 1000; // 30 minutes
+    
+    function getAttempts() {
+      const data = localStorage.getItem('login_attempts');
+      return data ? JSON.parse(data) : { count: 0, timestamp: Date.now() };
+    }
+    
+    function incrementAttempts() {
+      const attempts = getAttempts();
+      attempts.count++;
+      attempts.timestamp = Date.now();
+      localStorage.setItem('login_attempts', JSON.stringify(attempts));
+      return attempts;
+    }
+    
+    function clearAttempts() {
+      localStorage.removeItem('login_attempts');
+      localStorage.removeItem('login_lockout');
+    }
+    
+    function isLockedOut() {
+      const lockout = localStorage.getItem('login_lockout');
+      if (!lockout) return false;
+      
+      const lockoutTime = parseInt(lockout);
+      const timeRemaining = lockoutTime + LOCKOUT_DURATION - Date.now();
+      
+      if (timeRemaining > 0) {
+        return Math.ceil(timeRemaining / 60000);
+      } else {
+        localStorage.removeItem('login_lockout');
+        return false;
+      }
+    }
+    
+    function setLockout() {
+      localStorage.setItem('login_lockout', Date.now().toString());
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const minutesRemaining = isLockedOut();
+      if (minutesRemaining) {
+        showMessage(`Account locked. Try again in ${minutesRemaining} minutes.`, 'error');
+        return;
+      }
+      
+      const submitBtn = document.getElementById('loginBtn');
+      const email = document.getElementById('email').value.toLowerCase().trim();
+      const password = document.getElementById('password').value;
+      const remember = document.getElementById('remember').checked;
+      
+      if (!email || !password) {
+        showMessage('Please enter both email and password.', 'error');
+        return;
+      }
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing In...';
+      
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, remember })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+          clearAttempts();
+          showMessage('Login successful! Redirecting...', 'success');
+          setTimeout(() => window.location.href = '/dashboard.html', 1500);
+        } else {
+          const attempts = incrementAttempts();
+          const remaining = MAX_ATTEMPTS - attempts.count;
+          
+          if (attempts.count >= MAX_ATTEMPTS) {
+            setLockout();
+            showMessage('Too many failed attempts. Account locked for 30 minutes.', 'error');
+            submitBtn.disabled = true;
+          } else {
+            showMessage(`Invalid email or password. ${remaining} attempts remaining.`, 'error');
+          }
+        }
+      } catch (error) {
+        showMessage('Network error. Please try again.', 'error');
+      } finally {
+        if (!isLockedOut()) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Access Dashboard';
+        }
+      }
+    });
+    
+    function showMessage(text, type) {
+      const messageDisplay = document.getElementById('messageDisplay');
+      messageDisplay.innerHTML = `<div class="message ${type}">${text}</div>`;
+      messageDisplay.style.display = 'block';
+      
+      if (type !== 'success') {
+        setTimeout(() => messageDisplay.style.display = 'none', 5000);
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const minutesRemaining = isLockedOut();
+      if (minutesRemaining) {
+        showMessage(`Account locked. Try again in ${minutesRemaining} minutes.`, 'error');
+        document.getElementById('loginBtn').disabled = true;
+      } else {
+        document.getElementById('email').focus();
+      }
+    });
+  </script>
+</body>
+</html>
