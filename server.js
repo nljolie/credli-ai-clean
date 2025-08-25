@@ -462,9 +462,17 @@ app.get('/dashboard.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
 });
 
-// Login page
+// Authentication pages (served from root level)
 app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
+
+app.get('/signup.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'signup.html'));
+});
+
+app.get('/forgot-password.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'forgot-password.html'));
 });
 
 // Legacy dashboard URL redirect
