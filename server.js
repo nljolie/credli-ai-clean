@@ -362,9 +362,141 @@ async function sendPaymentConfirmationEmail(email) {
   }
 }
 
+async function sendSeptember1stLaunchEmail(email, password) {
+  const emailContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+    .credentials { background: white; padding: 25px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .launch-banner { background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0; }
+    .button { display: inline-block; background: #28a745; color: white; padding: 15px 35px; text-decoration: none; border-radius: 8px; margin: 20px 0; font-weight: bold; font-size: 16px; }
+    .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+    .highlight { background: #d4edda; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 3px solid #28a745; }
+    .urgent { background: #fff3cd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 3px solid #ffc107; color: #856404; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🚀 Beta is LIVE! Welcome to Credli.ai Professional</h1>
+      <p>Your dashboard is ready - Login now!</p>
+    </div>
+    
+    <div class="launch-banner">
+      <h2>🎉 September 1st, 2025 - LAUNCH DAY!</h2>
+      <p>The wait is over. Your exclusive beta access is now active.</p>
+    </div>
+    
+    <div class="content">
+      <h2>Your Beta Journey Begins NOW!</h2>
+      <p>Congratulations! You're officially one of our exclusive 100 beta professionals. Your Credli.ai dashboard is live and ready for you to start building your AI authority.</p>
+      
+      <div class="credentials">
+        <h3>🔐 Your Login Credentials:</h3>
+        <p><strong>Dashboard URL:</strong> <a href="https://credli.ai/login.html" style="color: #28a745; font-weight: bold;">https://credli.ai/login.html</a></p>
+        <p><strong>Email:</strong> <span style="background: #f8f9fa; padding: 5px 10px; border-radius: 4px; font-family: monospace;">${email}</span></p>
+        <p><strong>Password:</strong> <span style="background: #f8f9fa; padding: 5px 10px; border-radius: 4px; font-family: monospace;">${password}</span></p>
+      </div>
+      
+      <div class="urgent">
+        <h3>⚡ First 48 Hours - Priority Actions:</h3>
+        <ol>
+          <li><strong>Login and secure your account</strong> - Change your password</li>
+          <li><strong>Complete your first Trust Score scan</strong> - See your current AI authority</li>
+          <li><strong>Review your opportunities dashboard</strong> - Identify quick wins</li>
+          <li><strong>Download your action plan PDF</strong> - Start building authority immediately</li>
+        </ol>
+      </div>
+      
+      <a href="https://credli.ai/login.html" class="button">🚀 Access Your Dashboard Now</a>
+      
+      <div class="highlight">
+        <h3>🎯 What's Waiting for You:</h3>
+        <ul>
+          <li>✅ Complete AI Trust Score analysis across all major platforms</li>
+          <li>✅ Personalized authority-building recommendations</li>
+          <li>✅ Imposter detection and brand protection alerts</li>
+          <li>✅ Content optimization guidance for maximum AI visibility</li>
+          <li>✅ Priority support as a beta member</li>
+        </ul>
+      </div>
+      
+      <h3>🤝 Beta Community Access</h3>
+      <p>As a beta member, you have exclusive access to:</p>
+      <ul>
+        <li>Monthly group strategy calls with Nicole Jolie</li>
+        <li>Private beta member community</li>
+        <li>Early access to new features</li>
+        <li>Direct feedback channel to influence platform development</li>
+      </ul>
+      
+      <div class="urgent">
+        <p><strong>⏰ Remember:</strong> This beta program is limited to 100 professionals. You secured your spot at the special price of $497 - the regular price will be significantly higher after beta.</p>
+      </div>
+      
+      <p><strong>Questions or need help?</strong> Reply to this email or contact us at credlitrust@credli.ai</p>
+      <p><strong>Ready to dominate AI search results?</strong> Your journey starts with one click above! 🎯</p>
+    </div>
+    <div class="footer">
+      <p>© 2025 Credli.ai - AI Trust Consultant Platform<br>
+      You're receiving this because you're a Credli.ai Professional Beta member.<br>
+      Your beta access is now active as of September 1st, 2025.</p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+  
+  const mailOptions = {
+    from: 'Credli.ai <credlitrust@credli.ai>',
+    to: email,
+    subject: '🚀 LIVE NOW: Your Credli.ai Beta Dashboard + Login Credentials',
+    html: emailContent
+  };
+  
+  try {
+    const info = await emailTransporter.sendMail(mailOptions);
+    console.log(`✅ September 1st launch email sent to ${email} - Message ID: ${info.messageId}`);
+    return true;
+  } catch (error) {
+    console.error(`❌ Failed to send launch email to ${email}:`, error);
+    return false;
+  }
+}
+
 // Test endpoint
 app.get('/test', (req, res) => {
   res.json({ message: 'Server is working! Homepage updated.', timestamp: new Date() });
+});
+
+// TEST ENDPOINT: Test September 1st launch email
+app.get('/test-september-email', async (req, res) => {
+  const testEmail = req.query.email || 'test@example.com';
+  const testPassword = req.query.password || 'samplepassword123';
+  
+  try {
+    console.log(`🧪 TESTING September 1st launch email for: ${testEmail}`);
+    
+    const emailSent = await sendSeptember1stLaunchEmail(testEmail, testPassword);
+    
+    res.json({
+      success: true,
+      message: 'September 1st launch email test completed!',
+      email: testEmail,
+      password: testPassword,
+      launchEmailSent: emailSent,
+      note: 'This is how the email will look on September 1st launch day'
+    });
+    
+  } catch (error) {
+    console.error('❌ September 1st email test error:', error);
+    res.json({ error: error.message });
+  }
 });
 
 // PayPal configuration endpoint for client-side
