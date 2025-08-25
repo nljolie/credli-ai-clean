@@ -523,6 +523,9 @@ class CredliChatbot {
         this.userEmail = email;
         this.isInfoCollected = true;
         
+        // Immediately submit lead data to Google Sheets
+        this.submitLeadToGoogleSheets(name, email);
+        
         // Replace the initial message with the chat interface
         this.showChatInterface();
     }
@@ -702,6 +705,35 @@ class CredliChatbot {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    async submitLeadToGoogleSheets(name, email) {
+        try {
+            const data = {
+                name: name,
+                email: email,
+                question: 'LEAD_CAPTURE', // Special marker for lead capture
+                response: 'chatbot_lead',
+                pageUrl: window.location.href,
+                sessionId: this.sessionId,
+                timestamp: new Date().toISOString()
+            };
+
+            await fetch(this.googleSheetUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            console.log('✅ Chatbot lead captured:', email);
+
+        } catch (error) {
+            console.log('❌ Lead capture failed:', error);
+            // Continue chat functionality even if lead capture fails
+        }
     }
 
     async trackChat(question, responseType) {
