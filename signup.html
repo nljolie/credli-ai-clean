@@ -132,10 +132,6 @@
       <div id="messageDisplay" style="display: none;"></div>
 
       <form id="signupForm">
-        <div class="form-group">
-          <label for="invitationCode">Invitation Code</label>
-          <input type="text" id="invitationCode" name="invitationCode" required placeholder="Enter invitation code">
-        </div>
         
         <div class="form-group">
           <label for="name">Full Name</label>
@@ -172,20 +168,14 @@
     document.getElementById('signupForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      const invitationCode = document.getElementById('invitationCode').value.trim();
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
       
       // Validation
-      if (!invitationCode || !name || !email || !password) {
+      if (!name || !email || !password) {
         showMessage('Please fill in all fields', 'error');
-        return;
-      }
-      
-      if (invitationCode !== 'CREDLI-BETA-2025') {
-        showMessage('Invalid invitation code', 'error');
         return;
       }
       

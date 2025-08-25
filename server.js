@@ -185,60 +185,100 @@ async function addUserToGoogleSheets(userData) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        action: 'createUser',
-        ...userData
-      })
+      body: JSON.stringify(userData)
     });
     
-    console.log('User added to Google Sheets:', userData.email);
+    console.log('✅ User added to Google Sheets:', userData.email);
     return true;
   } catch (error) {
-    console.error('Error adding user to Google Sheets:', error);
+    console.error('❌ Error adding user to Google Sheets:', error);
     return false;
   }
 }
 
 // ===== EMAIL INTEGRATION SYSTEM =====
+const nodemailer = require('nodemailer');
+
+// Email transporter configuration
+const emailTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'credlitrust@credli.ai',
+    pass: 'ptqx wbzv vmrl kpfk'
+  }
+});
+
 async function sendWelcomeEmail(email, password) {
-  // In production, integrate with email service (SendGrid, AWS SES, etc.)
   const emailContent = `
-🎉 Welcome to Credli.ai Professional Beta!
-
-Your account has been created successfully.
-
-LOGIN CREDENTIALS:
-Email: ${email}
-Password: ${password}
-
-Access your dashboard: https://credli.ai/login.html
-
-IMPORTANT SECURITY NOTES:
-- Change your password after first login
-- Keep your credentials secure
-- Contact support if you need assistance
-
-Thank you for your $197 Professional Beta purchase!
-
----
-The Credli.ai Team
-AI Trust Consultant Platform
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #3454D1, #5B73E8); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+    .credentials { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3454D1; }
+    .button { display: inline-block; background: #3454D1; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎉 Welcome to Credli.ai Professional Beta!</h1>
+      <p>Your spot is reserved - Beta launches September 1st, 2025</p>
+    </div>
+    <div class="content">
+      <h2>Your Beta Access is Ready!</h2>
+      <p>Thank you for joining the Credli.ai Professional Beta program. You're one of only 100 professionals with early access to our AI Trust Consulting platform.</p>
+      
+      <div class="credentials">
+        <h3>🔐 Your Login Credentials:</h3>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Password:</strong> ${password}</p>
+        <p><strong>Login URL:</strong> <a href="https://credli.ai/login.html">https://credli.ai/login.html</a></p>
+      </div>
+      
+      <p><strong>Beta Launch Date:</strong> September 1st, 2025</p>
+      <p>Your login will be active starting September 1st. Save this email with your credentials!</p>
+      
+      <a href="https://credli.ai/login.html" class="button">Access Dashboard (Available Sept 1st)</a>
+      
+      <h3>What's Next?</h3>
+      <ul>
+        <li>✅ Your spot is secured at the special beta price of $497</li>
+        <li>📅 Beta access begins September 1st, 2025</li>
+        <li>🔐 Use the credentials above to log in starting Sept 1st</li>
+        <li>📧 You can change your password after first login</li>
+      </ul>
+      
+      <p><strong>Need Help?</strong> Contact us at credlitrust@credli.ai</p>
+    </div>
+    <div class="footer">
+      <p>© 2025 Credli.ai - AI Trust Consultant Platform<br>
+      This email was sent to ${email} because you purchased Credli.ai Professional Beta access.</p>
+    </div>
+  </div>
+</body>
+</html>
   `;
   
-  console.log('\n📧 ===== WELCOME EMAIL (WOULD BE SENT) =====');
-  console.log(`📧 To: ${email}`);
-  console.log(`📧 Subject: Welcome to Credli.ai - Your Login Credentials`);
-  console.log(`📧 Content:\n${emailContent}`);
-  console.log('📧 =========================================\n');
+  const mailOptions = {
+    from: 'Credli.ai <credlitrust@credli.ai>',
+    to: email,
+    subject: '🎉 Your Credli.ai Beta Access is Ready - Login Credentials Inside',
+    html: emailContent
+  };
   
-  // In production, actually send the email:
-  // await emailService.send({
-  //   to: email,
-  //   subject: 'Welcome to Credli.ai - Your Login Credentials',
-  //   html: emailContent
-  // });
-  
-  return true;
+  try {
+    const info = await emailTransporter.sendMail(mailOptions);
+    console.log(`✅ Welcome email sent to ${email} - Message ID: ${info.messageId}`);
+    return true;
+  } catch (error) {
+    console.error(`❌ Failed to send email to ${email}:`, error);
+    return false;
+  }
 }
 
 // Test endpoint
@@ -257,7 +297,7 @@ app.get('/api/paypal-config', (req, res) => {
 // PayPal return URL handler (success) - CREATE USER ACCOUNT
 app.get('/paypal-return', async (req, res) => {
   // PayPal redirects here after successful payment
-  const { token, PayerID } = req.query;
+  const { token, PayerID, email } = req.query;
   
   if (token && PayerID) {
     try {
@@ -267,34 +307,52 @@ app.get('/paypal-return', async (req, res) => {
       // Generate temporary password for user
       const tempPassword = generateRandomPassword();
       
-      // For demo purposes, use a default email (in production, get from PayPal API)
-      // In real implementation, you'd call PayPal API to get payer details
-      const userEmail = `customer_${PayerID}@paypal.generated`; // Placeholder
+      // Use email from PayPal or fallback to generated email
+      const userEmail = email || `customer_${PayerID}@paypal.generated`;
       
-      // Create user account
-      const user = createUser(userEmail, tempPassword, {
+      console.log(`🔄 Creating account for PayPal customer: ${userEmail}`);
+      
+      // Hash password for Google Sheets storage
+      const passwordHash = crypto.createHash('sha256').update(tempPassword + 'credli-salt-2025').digest('hex');
+      
+      // Add user to Google Sheets
+      const userData = {
+        email: userEmail.toLowerCase(),
+        passwordHash: passwordHash,
+        userId: crypto.randomUUID(),
+        plan: 'professional',
         paypalToken: token,
         payerId: PayerID,
-        paymentDate: new Date()
-      });
+        paymentDate: new Date().toISOString(),
+        createdAt: new Date().toISOString()
+      };
+      
+      const sheetsSuccess = await addUserToGoogleSheets(userData);
+      if (!sheetsSuccess) {
+        console.error('❌ Failed to add user to Google Sheets');
+        return res.redirect('/payment-required.html?error=account_creation_failed');
+      }
       
       // Create session for immediate access
       req.session.paid = true;
-      req.session.userId = user.id;
-      req.session.userEmail = user.email;
+      req.session.userId = userData.userId;
+      req.session.userEmail = userData.email;
       req.session.paymentProvider = 'paypal';
       req.session.paymentToken = token;
       req.session.payerId = PayerID;
       req.session.plan = 'professional';
       
       console.log(`✅ PayPal payment successful - User created: ${userEmail}`);
-      console.log(`📧 Temporary password: ${tempPassword} (send via email in production)`);
+      console.log(`📧 Sending welcome email with password: ${tempPassword}`);
       
       // Send email with login credentials
-      await sendWelcomeEmail(user.email, tempPassword);
+      const emailSent = await sendWelcomeEmail(userData.email, tempPassword);
+      if (!emailSent) {
+        console.error('❌ Failed to send welcome email');
+      }
       
-      // Redirect to professional welcome page with success parameters
-      return res.redirect('/professional-welcome.html?created=true&email=' + encodeURIComponent(userEmail));
+      // Redirect to success page
+      return res.redirect('/success.html?created=true&email=' + encodeURIComponent(userEmail));
       
     } catch (error) {
       console.error('❌ Error creating user account:', error);
