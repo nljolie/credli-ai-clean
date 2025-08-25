@@ -438,6 +438,11 @@ app.get('/professional-welcome.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'professional-welcome.html'));
 });
 
+// ===== STATIC FILE SERVING =====
+// IMPORTANT: Files in /public/ folder are served as web root
+// public/landing.html → credli.ai/landing.html
+// public/dashboard.html → credli.ai/dashboard.html
+// public/temporary/landing-temporary.html → credli.ai/temporary/landing-temporary.html
 app.use(express.static(path.join(__dirname, 'public')));
 
 // —— Helpers ——
