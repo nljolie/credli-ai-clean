@@ -873,6 +873,62 @@ app.post('/api/free-scan', async (req, res) => {
   });
 });
 
+// TEST ENDPOINT: Simulate PayPal payment flow (remove in production)
+app.get('/test-paypal-flow', async (req, res) => {
+  try {
+    // Simulate PayPal success with test data
+    const testEmail = req.query.email || 'test@example.com';
+    const tempPassword = generateRandomPassword();
+    
+    console.log(`🧪 TESTING PayPal flow for: ${testEmail}`);
+    
+    // Create user account (same as real PayPal flow)
+    const passwordHash = crypto.createHash('sha256').update(tempPassword + 'credli-salt-2025').digest('hex');
+    
+    const userData = {
+      email: testEmail.toLowerCase(),
+      passwordHash: passwordHash,
+      userId: crypto.randomUUID(),
+      plan: 'professional',
+      paypalToken: 'TEST_TOKEN_' + Date.now(),
+      payerId: 'TEST_PAYER_' + Date.now(),
+      paymentDate: new Date().toISOString(),
+      createdAt: new Date().toISOString()
+    };
+    
+    // Add to Google Sheets
+    const sheetsSuccess = await addUserToGoogleSheets(userData);
+    if (!sheetsSuccess) {
+      return res.json({ error: 'Failed to create account in Google Sheets' });
+    }
+    
+    // Send welcome email
+    const emailSent = await sendWelcomeEmail(userData.email, tempPassword);
+    
+    // Create session
+    req.session.paid = true;
+    req.session.userId = userData.userId;
+    req.session.userEmail = userData.email;
+    req.session.plan = 'professional';
+    
+    console.log(`✅ TEST: Account created for ${testEmail}, password: ${tempPassword}`);
+    console.log(`📧 TEST: Email sent: ${emailSent ? 'SUCCESS' : 'FAILED'}`);
+    
+    res.json({
+      success: true,
+      message: 'Test PayPal flow completed!',
+      email: userData.email,
+      password: tempPassword,
+      emailSent: emailSent,
+      loginUrl: '/login.html'
+    });
+    
+  } catch (error) {
+    console.error('❌ Test PayPal flow error:', error);
+    res.json({ error: error.message });
+  }
+});
+
 // Temporary access endpoint for testing (remove when PayPal is integrated)
 app.get('/grant-access', (req, res) => {
   req.session.paid = true;
