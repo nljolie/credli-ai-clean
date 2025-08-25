@@ -281,6 +281,87 @@ async function sendWelcomeEmail(email, password) {
   }
 }
 
+async function sendPaymentConfirmationEmail(email) {
+  const emailContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #3454D1, #5B73E8); color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+    .confirmation-box { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745; }
+    .button { display: inline-block; background: #3454D1; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+    .highlight { background: #e8f4fd; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 3px solid #3454D1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎉 Payment Confirmed - Your Beta Spot is Reserved!</h1>
+      <p>Welcome to Credli.ai Professional Beta</p>
+    </div>
+    <div class="content">
+      <div class="confirmation-box">
+        <h2>✅ Payment Successfully Processed</h2>
+        <p>Thank you for joining the Credli.ai Professional Beta program! Your payment has been confirmed and your spot is officially reserved.</p>
+      </div>
+      
+      <div class="highlight">
+        <h3>📅 Important Launch Information:</h3>
+        <p><strong>Beta Launch Date:</strong> September 1st, 2025</p>
+        <p><strong>Your Investment:</strong> $497 (Special Beta Pricing)</p>
+        <p><strong>Program Duration:</strong> Exclusive Beta Access</p>
+      </div>
+      
+      <h3>What Happens Next?</h3>
+      <ul>
+        <li>🔐 <strong>Login credentials will be emailed to you on September 1st</strong></li>
+        <li>📧 You'll receive a separate email with your dashboard access details</li>
+        <li>🎯 Beta program officially begins September 1st, 2025</li>
+        <li>💼 You're now one of only 100 beta professionals</li>
+      </ul>
+      
+      <a href="https://credli.ai/success.html" class="button">View Beta Information</a>
+      
+      <h3>🚀 Get Ready for Launch!</h3>
+      <p>Over the next few days, you'll receive additional emails with:</p>
+      <ul>
+        <li>Beta program orientation materials</li>
+        <li>Pre-launch preparation guide</li>
+        <li>Your login credentials (arriving September 1st)</li>
+      </ul>
+      
+      <p><strong>Questions?</strong> Reply to this email or contact us at credlitrust@credli.ai</p>
+    </div>
+    <div class="footer">
+      <p>© 2025 Credli.ai - AI Trust Consultant Platform<br>
+      This confirmation was sent to ${email} for your Credli.ai Professional Beta purchase.</p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+  
+  const mailOptions = {
+    from: 'Credli.ai <credlitrust@credli.ai>',
+    to: email,
+    subject: '✅ Payment Confirmed - Your Credli.ai Beta Spot is Reserved!',
+    html: emailContent
+  };
+  
+  try {
+    const info = await emailTransporter.sendMail(mailOptions);
+    console.log(`✅ Payment confirmation email sent to ${email} - Message ID: ${info.messageId}`);
+    return true;
+  } catch (error) {
+    console.error(`❌ Failed to send confirmation email to ${email}:`, error);
+    return false;
+  }
+}
+
 // Test endpoint
 app.get('/test', (req, res) => {
   res.json({ message: 'Server is working! Homepage updated.', timestamp: new Date() });
@@ -343,13 +424,16 @@ app.get('/paypal-return', async (req, res) => {
       req.session.plan = 'professional';
       
       console.log(`✅ PayPal payment successful - User created: ${userEmail}`);
-      console.log(`📧 Sending welcome email with password: ${tempPassword}`);
+      console.log(`📧 Sending payment confirmation email (no credentials until Sept 1st)`);
       
-      // Send email with login credentials
-      const emailSent = await sendWelcomeEmail(userData.email, tempPassword);
+      // Send payment confirmation email (no login credentials)
+      const emailSent = await sendPaymentConfirmationEmail(userData.email);
       if (!emailSent) {
-        console.error('❌ Failed to send welcome email');
+        console.error('❌ Failed to send payment confirmation email');
       }
+      
+      // TODO: Store user for September 1st credentials email batch
+      console.log(`🗓️ User stored for Sept 1st launch: ${userEmail}, password: ${tempPassword}`);
       
       // Redirect to success page
       return res.redirect('/success.html?created=true&email=' + encodeURIComponent(userEmail));
@@ -902,8 +986,8 @@ app.get('/test-paypal-flow', async (req, res) => {
       return res.json({ error: 'Failed to create account in Google Sheets' });
     }
     
-    // Send welcome email
-    const emailSent = await sendWelcomeEmail(userData.email, tempPassword);
+    // Send payment confirmation email (no credentials until Sept 1st)
+    const emailSent = await sendPaymentConfirmationEmail(userData.email);
     
     // Create session
     req.session.paid = true;
@@ -911,16 +995,16 @@ app.get('/test-paypal-flow', async (req, res) => {
     req.session.userEmail = userData.email;
     req.session.plan = 'professional';
     
-    console.log(`✅ TEST: Account created for ${testEmail}, password: ${tempPassword}`);
-    console.log(`📧 TEST: Email sent: ${emailSent ? 'SUCCESS' : 'FAILED'}`);
+    console.log(`✅ TEST: Account created for ${testEmail}, password stored for Sept 1st: ${tempPassword}`);
+    console.log(`📧 TEST: Payment confirmation email sent: ${emailSent ? 'SUCCESS' : 'FAILED'}`);
     
     res.json({
       success: true,
-      message: 'Test PayPal flow completed!',
+      message: 'Test PayPal flow completed! Payment confirmation sent (credentials will be emailed Sept 1st)',
       email: userData.email,
-      password: tempPassword,
-      emailSent: emailSent,
-      loginUrl: '/login.html'
+      passwordStoredForSept1st: tempPassword,
+      confirmationEmailSent: emailSent,
+      note: 'Login credentials will be emailed on September 1st, 2025'
     });
     
   } catch (error) {
