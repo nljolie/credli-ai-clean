@@ -32,10 +32,20 @@ console.log(`📋 PayPal Client ID: ${PAYPAL_CLIENT_ID_PUBLIC.substring(0, 20)}.
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5ef3Y0JmumLEtc7qDWf_jMekLy-od-YI';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
-// ChatGPT API removed for cost control
+// Secured OpenAI API - Two-tier system
+const OPENAI_FREE_KEY = process.env.OPENAI_FREE_KEY;
+const OPENAI_PREMIUM_KEY = process.env.OPENAI_PREMIUM_KEY; // For paying customers (to be created)
+const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+
+// IP-based usage tracking for free demos
+const freeUsageTracker = new Map(); // IP -> { count, lastUsed }
+
+// Rate limiting tracker
+const rateLimitTracker = new Map(); // IP -> { requests: [], lastCleanup }
 
 console.log('✅ Gemini API configured');
-console.log('⚠️  OpenAI ChatGPT API disabled - removed for cost control');
+console.log('✅ OpenAI Free API configured (restricted permissions)');
+console.log(OPENAI_PREMIUM_KEY ? '✅ OpenAI Premium API configured' : '⚠️  OpenAI Premium API not configured');
 
 const app = express();
 app.use(express.json());
@@ -763,7 +773,164 @@ async function queryGeminiAPI(prompt) {
   }
 }
 
-// ChatGPT API function removed for cost control
+// IP-based usage tracking functions
+function getClientIP(req) {
+  return req.ip || req.connection.remoteAddress || req.socket.remoteAddress || 
+         (req.connection.socket ? req.connection.socket.remoteAddress : null) ||
+         req.headers['x-forwarded-for']?.split(',')[0] || 'unknown';
+}
+
+function canUseFreeTrial(ip) {
+  const usage = freeUsageTracker.get(ip);
+  if (!usage) return true; // First time user
+  
+  // Allow 1 free scan per IP
+  return usage.count < 1;
+}
+
+function recordFreeUsage(ip) {
+  const now = Date.now();
+  const existing = freeUsageTracker.get(ip);
+  
+  if (existing) {
+    existing.count += 1;
+    existing.lastUsed = now;
+  } else {
+    freeUsageTracker.set(ip, { count: 1, lastUsed: now });
+  }
+  
+  // Clean up old entries (older than 24 hours)
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  for (const [key, value] of freeUsageTracker.entries()) {
+    if (now - value.lastUsed > DAY_MS) {
+      freeUsageTracker.delete(key);
+    }
+  }
+}
+
+// Rate limiting functions
+function isRateLimited(ip, maxRequests = 10, windowMs = 60000) {
+  const now = Date.now();
+  const windowStart = now - windowMs;
+  
+  let ipData = rateLimitTracker.get(ip);
+  if (!ipData) {
+    ipData = { requests: [], lastCleanup: now };
+    rateLimitTracker.set(ip, ipData);
+  }
+  
+  // Clean old requests
+  ipData.requests = ipData.requests.filter(timestamp => timestamp > windowStart);
+  
+  // Check if over limit
+  if (ipData.requests.length >= maxRequests) {
+    return true;
+  }
+  
+  // Record this request
+  ipData.requests.push(now);
+  
+  // Cleanup old IPs occasionally
+  if (now - ipData.lastCleanup > 300000) { // 5 minutes
+    for (const [key, value] of rateLimitTracker.entries()) {
+      if (now - Math.max(...value.requests) > windowMs) {
+        rateLimitTracker.delete(key);
+      }
+    }
+    ipData.lastCleanup = now;
+  }
+  
+  return false;
+}
+
+// Rate limiting middleware
+function rateLimitMiddleware(req, res, next) {
+  const ip = getClientIP(req);
+  
+  if (isRateLimited(ip, 20, 60000)) { // 20 requests per minute
+    return res.status(429).json({
+      error: 'Rate limit exceeded',
+      message: 'Too many requests. Please slow down.',
+      retryAfter: 60
+    });
+  }
+  
+  next();
+}
+
+// Secured ChatGPT API function - Free tier only
+async function queryChatGPTAPIFree(prompt) {
+  if (!OPENAI_FREE_KEY) {
+    console.log('OpenAI Free API key not available');
+    return null;
+  }
+
+  try {
+    const response = await fetch(OPENAI_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_FREE_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [{
+          role: 'user',
+          content: prompt
+        }],
+        max_tokens: 500, // Reduced for cost control
+        temperature: 0.7
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (error) {
+    console.error('OpenAI Free API error:', error);
+    return null;
+  }
+}
+
+// Premium ChatGPT API function - For paying customers
+async function queryChatGPTAPIPremium(prompt) {
+  if (!OPENAI_PREMIUM_KEY) {
+    console.log('OpenAI Premium API key not available');
+    return null;
+  }
+
+  try {
+    const response = await fetch(OPENAI_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_PREMIUM_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [{
+          role: 'user',
+          content: prompt
+        }],
+        max_tokens: 800, // Higher limits for paying customers
+        temperature: 0.7
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenAI Premium API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (error) {
+    console.error('OpenAI Premium API error:', error);
+    return null;
+  }
+}
 
 // Real AI engine answer using API calls
 async function getRealEngineAnswer(engine, prompt, name) {
@@ -779,8 +946,11 @@ If "${name}" is not a recognized authority in this specific field, do not force 
   
   if (engine === 'gemini') {
     response = await queryGeminiAPI(aiPrompt);
+  } else if (engine === 'chatgpt-free') {
+    response = await queryChatGPTAPIFree(aiPrompt);
+  } else if (engine === 'chatgpt-premium') {
+    response = await queryChatGPTAPIPremium(aiPrompt);
   }
-  // ChatGPT engine removed for cost control
   
   if (response) {
     // Parse the AI response to determine if the user appeared and at what position
@@ -945,7 +1115,7 @@ function calculateTrustFactor(matrix, name) {
 // ——— Routes ———
 
 // POST /api/scan  { name, keywords[], competitors[], engines[] }
-app.post('/api/scan', async (req, res) => {
+app.post('/api/scan', rateLimitMiddleware, async (req, res) => {
   const { name, keywords = [], competitors = [], engines = ['perplexity','gemini','google-ai'] } = req.body;
   const prompts = DEFAULT_PROMPTS(keywords);
 
@@ -989,14 +1159,30 @@ app.post('/api/scan', async (req, res) => {
   });
 });
 
-// POST /api/free-scan - Limited free scan using only ChatGPT
-app.post('/api/free-scan', async (req, res) => {
+// POST /api/free-scan - Limited free scan with 1-try limit
+app.post('/api/free-scan', rateLimitMiddleware, async (req, res) => {
   const { name, keywords = [], captcha } = req.body;
+  
+  // Get client IP for usage tracking
+  const clientIP = getClientIP(req);
+  
+  // Check if user has already used their free trial
+  if (!canUseFreeTrial(clientIP)) {
+    return res.status(429).json({ 
+      error: 'Free trial used',
+      message: 'You have already used your free trial. Upgrade to Professional for unlimited scans.',
+      redirectTo: '#pricing',
+      upgradeUrl: 'https://www.paypal.com/ncp/payment/9HEAPSZK3L592'
+    });
+  }
   
   // Verify CAPTCHA (in production, verify with Google's API)
   if (!captcha) {
     return res.status(400).json({ error: 'CAPTCHA verification required' });
   }
+  
+  // Record usage for this IP
+  recordFreeUsage(clientIP);
   
   // Limited prompts for free scan (only 3 queries to save API costs)
   const freePrompts = [
@@ -1007,16 +1193,16 @@ app.post('/api/free-scan', async (req, res) => {
   
   const matrix = [];
   
-  // Use Gemini for free scans (ChatGPT removed for cost control)
+  // Use restricted ChatGPT for free scans (limited to 1 try per IP)
   for (const prompt of freePrompts) {
-    console.log(`🔍 Free Scan - Querying Gemini: ${prompt}`);
-    const ans = await getRealEngineAnswer('gemini', prompt, name);
+    console.log(`🔍 Free Scan - Querying ChatGPT (Restricted): ${prompt}`);
+    const ans = await getRealEngineAnswer('chatgpt-free', prompt, name);
     
     const mentioned = ans?.names || [];
     const youAppear = mentioned.map(s => s.toLowerCase()).includes((name||'').toLowerCase());
     
     matrix.push({
-      engine: 'gemini',
+      engine: 'ChatGPT (Free Trial)',
       prompt,
       youAppear,
       mentioned,
@@ -1500,7 +1686,7 @@ function serverSideProtection(req, res, next) {
 app.use('/api/free-cred-score', serverSideProtection);
 
 // Free Cred Score endpoint with comprehensive protection
-app.post('/api/free-cred-score', async (req, res) => {
+app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
   try {
     const { name, email, company, askphrases, fingerprint, trustScore, sessionData } = req.body;
     
