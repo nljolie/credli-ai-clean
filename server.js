@@ -1686,6 +1686,86 @@ function serverSideProtection(req, res, next) {
 app.use('/api/free-cred-score', serverSideProtection);
 
 // Free Cred Score endpoint with comprehensive protection
+// ===== NEWSLETTER SIGNUP ENDPOINT =====
+app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
+  try {
+    const { email, name, newsletter, betaWaitlist, annual, source } = req.body;
+    
+    // Basic validation
+    if (!email || !name) {
+      return res.status(400).json({
+        success: false,
+        error: 'Email and name are required'
+      });
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid email address'
+      });
+    }
+    
+    // Prepare data for Google Apps Script
+    const signupData = {
+      email: email.trim().toLowerCase(),
+      name: name.trim(),
+      newsletter: newsletter === true || newsletter === 'true',
+      betaWaitlist: betaWaitlist === true || betaWaitlist === 'true',
+      annual: annual === true || annual === 'true',
+      source: source || 'Unknown'
+    };
+    
+    console.log('📧 Newsletter signup attempt:', signupData);
+    
+    // Send to Google Apps Script
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxVugdTB_NV1rqH8Z2X3z1hz_lSt8aA0IqDZUc7v3duMCKLiO1Dma9I5zpu2BWzPG-4OA/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signupData)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Google Apps Script error: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Google Apps Script failed');
+    }
+    
+    console.log('✅ Newsletter signup successful:', email);
+    
+    // Check if this is a purchase flow (from results page)
+    if (source === 'results' && annual) {
+      return res.json({
+        success: true,
+        message: 'Newsletter signup successful',
+        redirectToPayPal: true,
+        paypalUrl: '/purchase' // This would redirect to PayPal checkout
+      });
+    }
+    
+    // Regular newsletter signup
+    res.json({
+      success: true,
+      message: 'Newsletter signup successful! Check your email for confirmation.'
+    });
+    
+  } catch (error) {
+    console.error('❌ Newsletter signup error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error. Please try again.'
+    });
+  }
+});
+
 app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
   try {
     const { name, email, company, askphrases, fingerprint, trustScore, sessionData } = req.body;
