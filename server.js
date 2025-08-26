@@ -32,16 +32,10 @@ console.log(`📋 PayPal Client ID: ${PAYPAL_CLIENT_ID_PUBLIC.substring(0, 20)}.
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5ef3Y0JmumLEtc7qDWf_jMekLy-od-YI';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
-// Initialize ChatGPT API
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+// ChatGPT API removed for cost control
 
 console.log('✅ Gemini API configured');
-if (OPENAI_API_KEY) {
-  console.log('✅ OpenAI ChatGPT API configured');
-} else {
-  console.log('⚠️  OpenAI ChatGPT API disabled - no API key found');
-}
+console.log('⚠️  OpenAI ChatGPT API disabled - removed for cost control');
 
 const app = express();
 app.use(express.json());
@@ -769,42 +763,7 @@ async function queryGeminiAPI(prompt) {
   }
 }
 
-// ChatGPT API function
-async function queryChatGPTAPI(prompt) {
-  if (!OPENAI_API_KEY) {
-    console.log('ChatGPT API key not available, falling back to simulation');
-    return null;
-  }
-
-  try {
-    const response = await fetch(OPENAI_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [{
-          role: 'user',
-          content: prompt
-        }],
-        max_tokens: 800,
-        temperature: 0.7
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`ChatGPT API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0].message.content;
-  } catch (error) {
-    console.error('ChatGPT API error:', error);
-    return null;
-  }
-}
+// ChatGPT API function removed for cost control
 
 // Real AI engine answer using API calls
 async function getRealEngineAnswer(engine, prompt, name) {
@@ -820,9 +779,8 @@ If "${name}" is not a recognized authority in this specific field, do not force 
   
   if (engine === 'gemini') {
     response = await queryGeminiAPI(aiPrompt);
-  } else if (engine === 'chatgpt') {
-    response = await queryChatGPTAPI(aiPrompt);
   }
+  // ChatGPT engine removed for cost control
   
   if (response) {
     // Parse the AI response to determine if the user appeared and at what position
@@ -988,7 +946,7 @@ function calculateTrustFactor(matrix, name) {
 
 // POST /api/scan  { name, keywords[], competitors[], engines[] }
 app.post('/api/scan', async (req, res) => {
-  const { name, keywords = [], competitors = [], engines = ['perplexity','chatgpt','gemini','google-ai'] } = req.body;
+  const { name, keywords = [], competitors = [], engines = ['perplexity','gemini','google-ai'] } = req.body;
   const prompts = DEFAULT_PROMPTS(keywords);
 
   const matrix = [];
@@ -1049,16 +1007,16 @@ app.post('/api/free-scan', async (req, res) => {
   
   const matrix = [];
   
-  // Only use ChatGPT for free scans
+  // Use Gemini for free scans (ChatGPT removed for cost control)
   for (const prompt of freePrompts) {
-    console.log(`🔍 Free Scan - Querying ChatGPT: ${prompt}`);
-    const ans = await getRealEngineAnswer('chatgpt', prompt, name);
+    console.log(`🔍 Free Scan - Querying Gemini: ${prompt}`);
+    const ans = await getRealEngineAnswer('gemini', prompt, name);
     
     const mentioned = ans?.names || [];
     const youAppear = mentioned.map(s => s.toLowerCase()).includes((name||'').toLowerCase());
     
     matrix.push({
-      engine: 'chatgpt',
+      engine: 'gemini',
       prompt,
       youAppear,
       mentioned,
@@ -1180,7 +1138,7 @@ app.post('/api/impersonators', (req, res) => {
 
 // POST /api/compare  { name, competitor, keywords[], engines[] }
 app.post('/api/compare', async (req, res) => {
-  const { name, competitor, keywords = [], engines = ['perplexity','chatgpt','gemini'] } = req.body;
+  const { name, competitor, keywords = [], engines = ['perplexity','gemini'] } = req.body;
   
   // Mock comparison data
   const comparison = {
@@ -1200,7 +1158,7 @@ app.post('/api/content-strategy', (req, res) => {
   
   // AI-specific trending topics and queries by engine
   const aiQueries = {
-    chatgpt: [
+    gemini: [
       "How to implement AI in business operations?",
       "What are the best AI consulting frameworks?",
       "How to lead AI transformation projects?",
