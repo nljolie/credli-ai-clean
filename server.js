@@ -1720,11 +1720,24 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
     
     console.log('📧 Newsletter signup attempt:', signupData);
     
-    // For now, just log the signup data (replace with actual email service later)
-    console.log('📧 Newsletter signup data collected:', signupData);
+    // Send to Google Apps Script
+    const response = await fetch('https://script.google.com/macros/s/AKfycbzKtt3m8H76CQeCBW-MdquzZkdoaRs3TB0WhemcBYSvhK401yfx-eolAdNxWrZEQ_2NnQ/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signupData)
+    });
     
-    // Simulate successful signup
-    const result = { success: true, message: 'Signup recorded successfully' };
+    if (!response.ok) {
+      throw new Error(`Google Apps Script error: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.error || 'Google Apps Script failed');
+    }
     
     console.log('✅ Newsletter signup successful:', email);
     
