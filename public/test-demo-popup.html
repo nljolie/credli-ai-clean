@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Demo Popup - Direct Access</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f5f5f5;
+    }
+    .test-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .test-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    .test-btn:hover {
+      background: #1e40af;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      display: none;
+    }
+    .success { background: #d1fae5; color: #065f46; }
+    .error { background: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🧪 Demo Popup Test Page</h1>
+    <p>Direct access to test the demo page popup without triggering exit intent.</p>
+    
+    <button class="test-btn" onclick="showDemoPopup()">Show Demo Popup</button>
+    <button class="test-btn" onclick="testAPI()">Test API Direct</button>
+    <button class="test-btn" onclick="clearStorage()">Clear Storage</button>
+    
+    <div id="status" class="status"></div>
+    <div id="apiResults" class="status"></div>
+  </div>
+
+  <!-- Demo Popup (copied from demo.html) -->
+  <div id="trustPopup" class="trust-popup-overlay" style="display: none;">
+    <div class="trust-popup-container">
+      <button class="trust-popup-close" onclick="closeTrustPopup()">&times;</button>
+      
+      <div class="trust-popup-header">
+        <h2>Wait! Before You Go...</h2>
+        <p>Get a Sneak Peek of What You Almost Had</p>
+      </div>
+
+      <div class="trust-popup-content">
+        <div class="trust-value-proposition">
+          <p style="margin-bottom: 25px; color: #333; line-height: 1.6;">You were seconds away from seeing your AI Credibility Score. Why leave empty-handed?</p>
+          <p style="font-weight: 600; margin-bottom: 20px; color: #333;">Let us send you what you came for:</p>
+        </div>
+
+        <div class="trust-benefits-list">
+          <div class="trust-benefit-item">
+            <span class="trust-benefit-icon">✓</span>
+            <span><strong>Your Personal Trust Assessment:</strong> We'll show you the 3 biggest risks hurting your visibility in AI search.</span>
+          </div>
+          <div class="trust-benefit-item">
+            <span class="trust-benefit-icon">✓</span>
+            <span><strong>Proprietary GEO Intelligence:</strong> Weekly breakdowns of AI search trends</span>
+          </div>
+          <div class="trust-benefit-item">
+            <span class="trust-benefit-icon">✓</span>
+            <span><strong>The Credli.ai Build in Public:</strong> Exclusive access to the strategy, metrics, and lessons from scaling to a 7-figure AI authority platform.</span>
+          </div>
+          <div class="trust-benefit-item">
+            <span class="trust-benefit-icon">✓</span>
+            <span><strong>Playbooks That Work:</strong> Step-by-step frameworks for generating expert positioning that AI engines reward with top rankings.</span>
+          </div>
+          <div class="trust-benefit-item">
+            <span class="trust-benefit-icon">✓</span>
+            <span><strong>Beta Invitation:</strong> Exclusive access to secure founding membership - $497 annually just $1.38 a day</span>
+          </div>
+        </div>
+
+        <div class="trust-signup-form">
+          <form id="trustPopupForm" onsubmit="submitTrustPopup(event)">
+            <div class="trust-form-group">
+              <label for="trustEmail">Email Address</label>
+              <input type="email" id="trustEmail" name="email" required placeholder="your@email.com">
+            </div>
+            
+            <div class="trust-form-group">
+              <label for="trustName">First Name</label>
+              <input type="text" id="trustName" name="name" required placeholder="Your first name">
+            </div>
+
+            <div class="trust-signup-options">
+              <div class="trust-option-item">
+                <input type="checkbox" id="trustNewsletter" name="newsletter" checked>
+                <div class="trust-option-content">
+                  <h4>📰 Trust Economy Insights (FREE)</h4>
+                  <p>Weekly strategies for building authority in the AI-first world</p>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="trust-submit-button">
+              Get My Free Assessment →
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="trust-popup-footer">
+        <p><a href="/privacy-policy.html">Privacy Policy</a></p>
+        <p style="margin-top: 15px; font-style: italic; color: #666;">P.S. 78% of companies use AI daily to find experts. This is your chance to see if you're being recommended or replaced.</p>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Trust Economy Popup Styles */
+    .trust-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      backdrop-filter: blur(5px);
+    }
+
+    .trust-popup-container {
+      background: white;
+      border-radius: 16px;
+      max-width: 520px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      position: relative;
+      animation: trustPopupSlideIn 0.3s ease-out;
+    }
+
+    @keyframes trustPopupSlideIn {
+      from {
+        transform: scale(0.9) translateY(-10px);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .trust-popup-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #666;
+      z-index: 10001;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .trust-popup-close:hover {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .trust-popup-header {
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .trust-popup-header h2 {
+      margin: 0 0 8px 0;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .trust-popup-header p {
+      margin: 0;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .trust-popup-content {
+      padding: 30px;
+    }
+
+    .trust-value-proposition {
+      margin-bottom: 25px;
+    }
+
+    .trust-benefits-list {
+      margin-bottom: 30px;
+    }
+
+    .trust-benefit-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border-left: 4px solid #2563eb;
+    }
+
+    .trust-benefit-icon {
+      background: #2563eb;
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .trust-form-group {
+      margin-bottom: 20px;
+    }
+
+    .trust-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .trust-form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.2s ease;
+    }
+
+    .trust-form-group input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .trust-signup-options {
+      margin-bottom: 25px;
+    }
+
+    .trust-option-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      background: #f9fafb;
+    }
+
+    .trust-option-item input[type="checkbox"] {
+      margin-right: 12px;
+      margin-top: 4px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .trust-option-content h4 {
+      margin: 0 0 5px 0;
+      font-size: 16px;
+      color: #1f2937;
+    }
+
+    .trust-option-content p {
+      margin: 0;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .trust-submit-button {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: none;
+    }
+
+    .trust-submit-button:hover {
+      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .trust-popup-footer {
+      padding: 20px 30px 30px;
+      text-align: center;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .trust-popup-footer p {
+      margin: 0;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .trust-popup-footer a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .trust-popup-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .trust-popup-container {
+        margin: 20px;
+        max-width: none;
+        width: calc(100% - 40px);
+      }
+
+      .trust-popup-header {
+        padding: 25px 20px;
+      }
+
+      .trust-popup-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .trust-popup-content {
+        padding: 25px 20px;
+      }
+
+      .trust-popup-footer {
+        padding: 20px;
+      }
+    }
+  </style>
+
+  <script>
+    // Test functions
+    function showDemoPopup() {
+      document.getElementById('trustPopup').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      showStatus('Demo popup opened for testing', 'success');
+    }
+
+    function closeTrustPopup() {
+      document.getElementById('trustPopup').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      showStatus('Demo popup closed', 'success');
+    }
+
+    function clearStorage() {
+      localStorage.removeItem('trustPopupShown_demo');
+      showStatus('Local storage cleared - popup can show again', 'success');
+    }
+
+    function showStatus(message, type) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.className = `status ${type}`;
+      status.style.display = 'block';
+      setTimeout(() => {
+        status.style.display = 'none';
+      }, 3000);
+    }
+
+    // API Test
+    async function testAPI() {
+      const results = document.getElementById('apiResults');
+      results.textContent = 'Testing API...';
+      results.className = 'status';
+      results.style.display = 'block';
+
+      try {
+        const response = await fetch('https://www.credli.ai/api/trust-signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: 'test@example.com',
+            name: 'Test User',
+            source: 'demo'
+          })
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+          results.textContent = '✅ API Working: ' + result.message;
+          results.className = 'status success';
+        } else {
+          results.textContent = '❌ API Error: ' + (result.error || 'Unknown error');
+          results.className = 'status error';
+        }
+      } catch (error) {
+        results.textContent = '💥 Network Error: ' + error.message;
+        results.className = 'status error';
+      }
+    }
+
+    // Submit popup form (same as demo.html)
+    async function submitTrustPopup(event) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const submitBtn = form.querySelector('.trust-submit-button');
+      const originalText = submitBtn.textContent;
+      
+      // Get form data
+      const formData = {
+        email: document.getElementById('trustEmail').value.trim(),
+        name: document.getElementById('trustName').value.trim(),
+        newsletter: document.getElementById('trustNewsletter').checked,
+        betaWaitlist: true,
+        annual: false,
+        source: 'demo-test'
+      };
+      
+      // Validate
+      if (!formData.email || !formData.name) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+      
+      // Show loading
+      submitBtn.textContent = 'Joining...';
+      submitBtn.disabled = true;
+      
+      try {
+        const response = await fetch('https://www.credli.ai/api/trust-signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          // Success!
+          submitBtn.textContent = '✓ Success!';
+          submitBtn.style.background = '#10b981';
+          
+          setTimeout(() => {
+            closeTrustPopup();
+            showStatus('✅ Form submission successful! Check your Google Sheet.', 'success');
+          }, 1500);
+          
+          console.log('✅ Demo popup test successful:', formData.email);
+          
+        } else {
+          throw new Error(result.error || 'Signup failed');
+        }
+        
+      } catch (error) {
+        console.error('Demo popup test error:', error);
+        
+        // Show error
+        submitBtn.textContent = 'Try Again';
+        submitBtn.disabled = false;
+        submitBtn.style.background = '';
+        
+        showStatus('❌ Error: ' + error.message, 'error');
+      }
+    }
+
+    // Close popup when clicking outside
+    document.getElementById('trustPopup').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeTrustPopup();
+      }
+    });
+
+    // Close popup on ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && document.getElementById('trustPopup').style.display === 'flex') {
+        closeTrustPopup();
+      }
+    });
+  </script>
+</body>
+</html>
