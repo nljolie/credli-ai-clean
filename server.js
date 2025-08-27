@@ -1720,8 +1720,17 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
     
     console.log('📧 Newsletter signup attempt:', signupData);
     
-    // Send to Google Apps Script
-    const response = await fetch('https://script.google.com/macros/s/AKfycbzKtt3m8H76CQeCBW-MdquzZkdoaRs3TB0WhemcBYSvhK401yfx-eolAdNxWrZEQ_2NnQ/exec', {
+    // Send to appropriate Google Apps Script based on source
+    const scriptUrls = {
+      'landing': 'https://script.google.com/macros/s/AKfycbzKtt3m8H76CQeCBW-MdquzZkdoaRs3TB0WhemcBYSvhK401yfx-eolAdNxWrZEQ_2NnQ/exec',
+      'demo': 'https://script.google.com/macros/s/AKfycbzF1NBKDmJ7nkRM8qzYxAQoofHS6-4E9riiF7TdllY3ueW_9Y53CkD6OSYAdxZlHJC9TQ/exec',
+      'demo-test': 'https://script.google.com/macros/s/AKfycbzF1NBKDmJ7nkRM8qzYxAQoofHS6-4E9riiF7TdllY3ueW_9Y53CkD6OSYAdxZlHJC9TQ/exec'
+    };
+    
+    const scriptUrl = scriptUrls[source] || scriptUrls['landing']; // Default to landing if source not recognized
+    console.log(`🎯 Routing ${source} signup to:`, scriptUrl);
+    
+    const response = await fetch(scriptUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
