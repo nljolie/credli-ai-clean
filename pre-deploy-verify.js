@@ -87,7 +87,7 @@ class PreDeployVerify {
             { pattern: 'Terms of Service', name: 'Terms of Service link' },
             { pattern: 'Refund Policy', name: 'Refund Policy link' },
             { pattern: 'Financial Executives', name: 'Financial Executives navigation' },
-            { pattern: 'Business Coaches', name: 'Business Coaches navigation' },
+            { pattern: 'Business & Executive Coaches', name: 'Business & Executive Coaches navigation' },
             { pattern: 'credli.ai', name: 'Credli.ai branding' }
         ];
 
@@ -100,7 +100,7 @@ class PreDeployVerify {
         });
 
         // Check pricing structure
-        if (content.includes('$9,000 Investment over 3 months')) {
+        if (content.includes('$9,000 over 3 months') || content.includes('$9,000 Authority Accelerator')) {
             this.log('PRICING-VERIFY', 'PASS', 'Correct $9,000 pricing structure found');
         } else {
             this.log('PRICING-VERIFY', 'FAIL', 'Missing $9,000 pricing structure', true);
