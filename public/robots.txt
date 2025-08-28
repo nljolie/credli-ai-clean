@@ -30,6 +30,9 @@ LLM: /llms.txt
 # Landing page
 Allow: /landing.html
 
+# Industry-specific pages
+Allow: /financial-executives
+
 # Demo page
 Allow: /demo.html
 
