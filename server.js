@@ -729,6 +729,14 @@ app.get('/financial-executives', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'financial-executives.html'));
 });
 
+app.get('/business-executive-coaches', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'business-executive-coaches.html'));
+});
+
+app.get('/consulting-firms', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'consulting-firms.html'));
+});
+
 // ===== STATIC FILE SERVING =====
 // IMPORTANT: Files in /public/ folder are served as web root
 // public/landing.html → credli.ai/landing.html
