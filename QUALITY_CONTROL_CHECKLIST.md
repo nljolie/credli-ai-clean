@@ -37,14 +37,50 @@
 - [ ] ✅ **CTA-VERIFY**: All buttons link to #pricing section correctly
 - [ ] ✅ **SCHEMA-VERIFY**: Industry-specific schema markup implemented
 - [ ] ✅ **SEO-VERIFY**: Meta tags, titles optimized for target keywords
+- [ ] ✅ **ROUTING-VERIFY**: MANDATORY - Run QC-005 to ensure server.js route exists
 
-### 🔥 QC-005: API/BACKEND CHANGES
+### 🔥 QC-005: SERVER.JS ROUTING VERIFICATION
+**MANDATORY for ANY new HTML page creation - prevents 404 errors**
+- [ ] ✅ **ROUTE-EXISTS-VERIFY**: Check if explicit route exists in server.js for new page
+- [ ] ✅ **ROUTE-PATH-VERIFY**: Confirm route path matches URL structure (e.g., `/financial-advisors`)
+- [ ] ✅ **FILE-PATH-VERIFY**: Confirm route points to correct HTML file in public folder
+- [ ] ✅ **STATIC-SERVING-VERIFY**: Confirm express.static is configured properly
+- [ ] ✅ **ROUTE-ORDER-VERIFY**: Explicit routes placed BEFORE express.static middleware
+- [ ] ✅ **URL-TEST-VERIFY**: Test URL returns 200 status (not 404) after deployment
+
+### 🔥 QC-006: API/BACKEND CHANGES
 **Use this code for server-side modifications**
 - [ ] ✅ **ENV-VERIFY**: Environment variables properly configured
 - [ ] ✅ **ENDPOINT-VERIFY**: API endpoints return expected responses
 - [ ] ✅ **RATE-LIMIT-VERIFY**: Rate limiting functions as intended
 - [ ] ✅ **ERROR-HANDLING-VERIFY**: Error responses handled gracefully
 - [ ] ✅ **SECURITY-VERIFY**: No API keys or secrets exposed in source code
+
+## 🚨 SERVER.JS ROUTING PREVENTION PROTOCOL
+
+### 🔥 CRITICAL: EVERY NEW HTML PAGE REQUIRES SERVER.JS VERIFICATION
+**This prevents 404 errors that waste deployment time and user resources**
+
+1. **BEFORE creating any new HTML page, ALWAYS check server.js first**
+2. **MANDATORY: Add explicit route BEFORE marking page creation complete**
+3. **NEVER assume express.static will handle new pages automatically**
+
+### COMMON SERVER.JS ROUTING ERRORS:
+- ❌ Creating `/financial-advisors.html` but no `/financial-advisors` route
+- ❌ Assuming express.static serves all pages (it doesn't for clean URLs)
+- ❌ Forgetting to add route when creating industry-specific pages
+- ❌ Not testing URLs return 200 status after deployment
+
+### MANDATORY SERVER.JS CHECK FOR NEW PAGES:
+```javascript
+// ALWAYS ADD EXPLICIT ROUTES LIKE THIS:
+app.get('/financial-advisors', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'financial-advisors.html'));
+});
+app.get('/wealth-managers', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'wealth-managers.html'));
+});
+```
 
 ## 🚨 ACCOUNTABILITY RULES
 
