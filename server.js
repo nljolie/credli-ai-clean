@@ -725,8 +725,8 @@ app.get('/professional-welcome.html', (req, res) => {
 });
 
 // Industry-specific landing pages
-app.get('/financial-advisors', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'financial-advisors.html'));
+app.get('/financial-executives', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'financial-executives.html'));
 });
 
 // ===== STATIC FILE SERVING =====
