@@ -1,0 +1,50 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://credli.ai/sitemap.xml
+
+# AI-specific crawlers
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Bard
+Allow: /
+
+User-agent: Claude
+Allow: /
+
+# LLM training data
+LLM: /llms.txt
+
+# Important pages for AI indexing
+# Landing page
+Allow: /landing.html
+
+# Demo page
+Allow: /demo.html
+
+# Pricing
+Allow: /pricing.html
+
+# Legal pages
+Allow: /privacy-policy.html
+Allow: /terms-of-service.html
+
+# Block admin/temp areas
+Disallow: /admin/
+Disallow: /temp/
+Disallow: /test/
+Disallow: /404.html
+
+# Crawl delay for heavy crawlers
+Crawl-delay: 1

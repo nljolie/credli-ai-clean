@@ -1,0 +1,300 @@
+# API Testing Instructions for Credibility Scoring System
+
+## Overview
+These instructions guide Claude Agentic to test each API independently before integration. Focus on validation, rate limiting, and error handling rather than full implementation.
+
+---
+
+## SECTION 1: OpenAI API Testing Instructions
+
+### **Task for Claude Agentic:**
+Test your existing OpenAI/ChatGPT API connection and web search capabilities for credibility scoring.
+
+### **Testing Requirements:**
+1. **Basic Connection Test**
+   - Use your existing OpenAI client initialization
+   - Test with a simple "hello world" query
+   - Verify the model responds correctly
+   - Document which model you're currently using (gpt-4o, gpt-4, etc.)
+
+2. **Web Search Capability Test**
+   - Check if your API tier supports web search/browsing
+   - Test with a query that requires recent information: "What is today's date?"
+   - Try both `chat.completions.create()` and `responses.create()` methods
+   - Document which method works with your API key
+
+3. **Credibility Query Test**
+   - Test with: "Analyze the business credibility of [company] in [industry]. Provide a score from 0-100."
+   - Use a well-known company for consistent results
+   - Measure response time and token usage
+   - Document if web search data is included in the response
+
+### **Rate Limiting Test:**
+- Make 3 consecutive calls with 1-second delays
+- Document any rate limiting messages
+- Test your current API limits
+
+### **Error Handling Test:**
+- Test with an invalid model name
+- Test with empty query
+- Document error response formats
+
+### **Success Criteria:**
+- [ ] Basic connection works
+- [ ] Can analyze company credibility
+- [ ] Understands rate limits
+- [ ] Web search capability confirmed (or documented as unavailable)
+
+---
+
+## SECTION 2: Gemini API Testing Instructions
+
+### **Task for Claude Agentic:**
+Test your existing Gemini API connection and Google Search grounding for credibility research.
+
+### **Testing Requirements:**
+1. **Basic Connection Test**
+   - Use your existing Gemini API initialization
+   - Test with a simple query
+   - Verify which model you're using (gemini-2.5-flash, gemini-pro, etc.)
+   - Confirm basic text generation works
+
+2. **Google Search Grounding Test**
+   - Test if your API tier supports Google Search grounding
+   - Use query: "Research recent news about [company] credibility"
+   - Check if grounding tools are available: `tools=[{"google_search": {}}]`
+   - Document if grounded responses include citations
+
+3. **Credibility Analysis Test**
+   - Test with: "Research and score the credibility of [company] in [industry] from 0-100"
+   - Compare responses with and without Google Search grounding
+   - Measure response quality difference
+   - Document response time and any usage limits
+
+### **Cost Monitoring Test:**
+- Document if grounding incurs additional costs
+- Test 2-3 queries to understand pricing impact
+- Note any cost warnings from Gemini
+
+### **Error Handling Test:**
+- Test with grounding disabled vs enabled
+- Test with malformed tool parameters
+- Document fallback behavior
+
+### **Success Criteria:**
+- [ ] Basic Gemini connection works
+- [ ] Google Search grounding confirmed (or documented as unavailable)
+- [ ] Can research company credibility
+- [ ] Cost implications understood
+
+---
+
+## SECTION 3: Perplexity API Testing Instructions (Optional)
+
+### **Task for Claude Agentic:**
+Test Perplexity Sonar API for real-time web research and credibility scoring.
+
+### **Testing Requirements:**
+1. **Basic Connection Test**
+   - Initialize Perplexity client with base_url: "https://api.perplexity.ai"
+   - Test with basic model: "sonar"
+   - Verify API key works and returns responses
+
+2. **Sonar Pro Model Test**
+   - Test if your account has access to "sonar-pro" model
+   - Document tier requirements (minimum spend, etc.)
+   - Compare response quality between "sonar" and "sonar-pro"
+
+3. **Real-time Research Test**
+   - Test query: "Research current credibility and reputation of [company] in [industry]"
+   - Verify responses include recent web sources
+   - Check if citations/sources are provided
+   - Document search recency (how recent are sources?)
+
+4. **Structured Output Test**
+   - Test if your tier supports JSON Schema responses
+   - Attempt structured credibility scoring output
+   - Document if this requires higher tier access
+
+### **Usage Monitoring:**
+- Track token usage per query
+- Document search context size options
+- Test rate limiting behavior
+
+### **Success Criteria:**
+- [ ] Basic Perplexity connection works
+- [ ] Real-time web research confirmed
+- [ ] Structured output capability confirmed (or documented as unavailable)
+- [ ] Usage costs and limits understood
+
+---
+
+## SECTION 4: SerpApi Google AI Overview Testing Instructions
+
+### **Task for Claude Agentic:**
+Test SerpApi's Google Search API specifically for AI Overview results and credibility research.
+
+### **Testing Requirements:**
+1. **Basic SerpApi Connection Test**
+   - Initialize SerpApi client
+   - Test basic Google search with simple query
+   - Verify organic results are returned
+   - Check API credits and usage limits
+
+2. **AI Overview Detection Test**
+   - Search for: "company credibility assessment best practices"
+   - Check if response includes 'ai_overview' field
+   - Document when AI Overview appears vs when it doesn't
+   - Test multiple credibility-related queries
+
+3. **Company Research Test**
+   - Search for: "[company name] [industry] credibility reviews"
+   - Extract AI Overview text if present
+   - Collect "People Also Ask" questions
+   - Gather related searches
+   - Document organic results quality
+
+4. **Data Extraction Test**
+   - Test parsing of AI Overview sources
+   - Verify People Also Ask question extraction
+   - Check related searches relevance
+   - Document data structure returned
+
+### **Cost and Usage Test:**
+- Understand cost per search
+- Test multiple searches for rate limiting
+- Document search result quotas
+
+### **Success Criteria:**
+- [ ] SerpApi connection works
+- [ ] Can detect AI Overview presence
+- [ ] Successfully extracts credibility-related data
+- [ ] Cost and usage limits understood
+
+---
+
+## SECTION 5: Integration Testing Instructions
+
+### **Task for Claude Agentic:**
+Test all working APIs together for comprehensive credibility scoring.
+
+### **Testing Requirements:**
+1. **Sequential API Testing**
+   - Use each working API to research the same company
+   - Document response time for each
+   - Compare information quality between APIs
+   - Note any contradictory information
+
+2. **Data Synthesis Test**
+   - Collect outputs from all working APIs
+   - Identify overlapping credibility indicators
+   - Test combining insights from multiple sources
+   - Document which APIs provide the most valuable data
+
+3. **Error Handling Integration**
+   - Test behavior when one API fails
+   - Implement graceful degradation
+   - Document fallback strategies
+   - Test partial success scenarios
+
+4. **Performance Testing**
+   - Time complete credibility assessment process
+   - Document total token/credit usage across all APIs
+   - Test with 3-5 different companies
+   - Calculate cost per assessment
+
+### **Success Criteria:**
+- [ ] Multiple APIs work together without conflicts
+- [ ] Can gracefully handle API failures
+- [ ] Performance is acceptable for production use
+- [ ] Cost per assessment is reasonable
+
+---
+
+## SECTION 6: Production Readiness Testing
+
+### **Task for Claude Agentic:**
+Validate system is ready for SaaS integration.
+
+### **Testing Requirements:**
+1. **Database Integration Test**
+   - Create simple SQLite test database
+   - Store assessment results from API tests
+   - Test data retrieval and caching
+   - Verify data persistence
+
+2. **Rate Limiting Strategy Test**
+   - Implement delays between API calls
+   - Test bulk assessment scenarios (5+ companies)
+   - Document optimal request spacing
+   - Test error recovery from rate limiting
+
+3. **Cost Monitoring Test**
+   - Track total costs across all APIs for 10 test assessments
+   - Calculate cost per credibility score
+   - Project monthly costs for different usage levels
+   - Document most cost-effective API combination
+
+4. **Error Recovery Test**
+   - Test network timeout scenarios
+   - Test invalid company names
+   - Test API key expiration
+   - Document graceful degradation strategies
+
+### **Success Criteria:**
+- [ ] System handles production-level usage
+- [ ] Cost projections are within budget
+- [ ] Error handling is robust
+- [ ] Data persistence works correctly
+
+---
+
+## Final Testing Report Template
+
+### **For Claude Agentic to Complete:**
+
+```
+CREDIBILITY SCORING API TESTING REPORT
+
+Date: [Current Date]
+Tester: Claude Agentic
+
+API AVAILABILITY:
+- OpenAI/ChatGPT: [ ] Working / [ ] Failed - Notes: ___
+- Gemini API: [ ] Working / [ ] Failed - Notes: ___
+- Perplexity API: [ ] Working / [ ] Failed - Notes: ___  
+- SerpApi: [ ] Working / [ ] Failed - Notes: ___
+
+CAPABILITIES CONFIRMED:
+- Web Search Integration: [ ] Yes / [ ] No - Which APIs: ___
+- Real-time Data: [ ] Yes / [ ] No - Which APIs: ___
+- Structured Output: [ ] Yes / [ ] No - Which APIs: ___
+- Cost Monitoring: [ ] Implemented / [ ] Needs Work
+
+RECOMMENDED IMPLEMENTATION:
+- Primary API: ___
+- Secondary API: ___
+- Optional API: ___
+- Estimated cost per assessment: $___
+
+PRODUCTION READINESS:
+- [ ] Ready for production
+- [ ] Needs optimization
+- [ ] Requires additional development
+
+NEXT STEPS:
+1. ___
+2. ___
+3. ___
+```
+
+## Instructions Summary
+
+**Claude Agentic should:**
+1. Test each API section independently
+2. Document actual capabilities vs theoretical features
+3. Focus on rate limits, costs, and error handling
+4. Provide working vs non-working API summary
+5. Recommend optimal implementation strategy based on actual test results
+
+**Do NOT proceed to next section until current section testing is complete and documented.**

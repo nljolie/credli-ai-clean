@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trust Economy Popup Demo - Credli.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text: #070707;
+      --bg: #FFFFFF;
+      --paper: #FAFAFA;
+      --brand: #3454D1;
+      --header: #F77F00;
+      --btn: #BBE1C3;
+      --btn-hover: #A9D6B9;
+      --line: #E3E6EC;
+      --warning: #DC3545;
+      --success: #28A745;
+      --gradient-primary: linear-gradient(135deg, #3454D1 0%, #5B73E8 100%);
+      --gradient-accent: linear-gradient(135deg, #F77F00 0%, #FF8C42 100%);
+      --shadow-light: 0 2px 8px rgba(52, 84, 209, 0.1);
+      --shadow-medium: 0 8px 32px rgba(52, 84, 209, 0.15);
+      --shadow-heavy: 0 16px 48px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      padding: 40px 20px;
+    }
+
+    .demo-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .demo-header {
+      margin-bottom: 40px;
+    }
+
+    .demo-header h1 {
+      color: var(--brand);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .demo-header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .demo-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .demo-btn {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .demo-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .demo-btn.accent {
+      background: var(--gradient-accent);
+    }
+
+    /* Popup Overlay */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 10000;
+      backdrop-filter: blur(5px);
+      animation: overlayFadeIn 0.3s ease-out;
+    }
+
+    @keyframes overlayFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Popup Container */
+    .popup-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 20px;
+      box-shadow: var(--shadow-heavy);
+      max-width: 580px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: popupSlideIn 0.4s ease-out;
+    }
+
+    @keyframes popupSlideIn {
+      from {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+      }
+    }
+
+    /* Close Button */
+    .popup-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #666;
+      cursor: pointer;
+      z-index: 1;
+      transition: color 0.2s ease;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .popup-close:hover {
+      color: #333;
+    }
+
+    /* Header Section */
+    .popup-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 40px 30px 35px;
+      border-radius: 20px 20px 0 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .popup-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .popup-header p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 0;
+    }
+
+    /* Content Section */
+    .popup-content {
+      padding: 35px 30px;
+    }
+
+    .value-proposition {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .urgency-badge {
+      display: inline-block;
+      background: var(--gradient-accent);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .value-proposition h3 {
+      color: var(--text);
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .value-proposition p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    /* Benefits List */
+    .benefits-list {
+      margin: 25px 0;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+      color: #333;
+      text-align: left;
+    }
+
+    .benefit-icon {
+      font-size: 1.1rem;
+      margin-right: 12px;
+      margin-top: 2px;
+      min-width: 24px;
+    }
+
+    /* Form Section */
+    .signup-form {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      border-color: var(--brand);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(52, 84, 209, 0.1);
+    }
+
+    /* Checkbox Options */
+    .signup-options {
+      margin: 20px 0;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      border: 2px solid var(--line);
+      transition: border-color 0.2s ease;
+      text-align: left;
+    }
+
+    .option-item:hover {
+      border-color: var(--brand);
+    }
+
+    .option-item input[type="checkbox"] {
+      margin-right: 12px;
+      margin-top: 3px;
+      transform: scale(1.2);
+      accent-color: var(--brand);
+    }
+
+    .option-content h4 {
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .option-content p {
+      color: #666;
+      font-size: 0.85rem;
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
+
+    .option-price {
+      color: var(--warning);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* Submit Button */
+    .submit-button {
+      background: var(--gradient-accent);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      font-family: inherit;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(247, 127, 0, 0.3);
+    }
+
+    .submit-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Footer */
+    .popup-footer {
+      text-align: center;
+      padding: 20px 30px 30px;
+      font-size: 0.8rem;
+      color: #666;
+      border-top: 1px solid var(--line);
+    }
+
+    .popup-footer a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    .popup-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .popup-container {
+        width: 95%;
+        margin: 10px;
+      }
+      
+      .popup-header {
+        padding: 30px 20px 25px;
+      }
+      
+      .popup-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .popup-content {
+        padding: 25px 20px;
+      }
+      
+      .signup-form {
+        padding: 20px;
+      }
+
+      .demo-header h1 {
+        font-size: 2rem;
+      }
+
+      .demo-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .demo-btn {
+        width: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .popup-header h2 {
+        font-size: 1.3rem;
+      }
+
+      .value-proposition h3 {
+        font-size: 1.2rem;
+      }
+
+      .benefit-item {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <div class="demo-header">
+      <h1>Trust Economy Popup Demo</h1>
+      <p>Preview how the popup will look on different pages with Credli.ai branding</p>
+    </div>
+
+    <div class="demo-buttons">
+      <button class="demo-btn" onclick="showPopup('landing')">Landing Page Popup</button>
+      <button class="demo-btn" onclick="showPopup('demo')">Demo Page Popup</button>
+      <button class="demo-btn accent" onclick="showPopup('results')">Results Page (First Mover)</button>
+    </div>
+
+    <!-- Landing Page Popup -->
+    <div id="landingPopup" class="popup-overlay">
+      <div class="popup-container">
+        <button class="popup-close" onclick="closePopup('landingPopup')">&times;</button>
+        
+        <div class="popup-header">
+          <h2>The Trust Economy is Here: Claim Your Spot or Get Left Behind</h2>
+          <p>78% of companies are already using AI daily—and your clients are using it to find experts like you. Are you the one being recommended? [¹]</p>
+        </div>
+
+        <div class="popup-content">
+          <div class="value-proposition">
+            <div class="urgency-badge">Founders Price is $497 annually just $1.38 a day</div>
+            <h3>Join Forward Thinking Leaders</h3>
+            <p>While others are still debating AI search, our members are already being surfaced as trusted authorities in ChatGPT, Perplexity, and Gemini.</p>
+          </div>
+
+          <div class="benefits-list">
+            <p style="font-weight: 600; margin-bottom: 20px; color: var(--text);">As a Trust Economy Insider, You'll Get:</p>
+            <div class="benefit-item">
+              <span class="benefit-icon">📊</span>
+              <span><strong>Proprietary GEO Intelligence:</strong> Weekly breakdowns of AI search trends and algorithm shifts, helping you stay ahead of the curve.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">🚀</span>
+              <span><strong>The Credli.ai Build in Public:</strong> Exclusive access to the strategy, metrics, and lessons from scaling to a 7-figure AI authority platform.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">📋</span>
+              <span><strong>Playbooks That Work:</strong> Step-by-step frameworks for generating expert positioning that AI engines reward with top rankings.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">📈</span>
+              <span><strong>Real-World Case Studies:</strong> See how consultants and executives like you are leveraging AI authority to close high-value clients.</span>
+            </div>
+          </div>
+
+          <div class="signup-form">
+            <form onsubmit="submitForm(event)">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+              </div>
+              
+              <div class="form-group">
+                <label for="name">First Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your first name">
+              </div>
+
+              <div class="signup-options">
+                <div class="option-item">
+                  <input type="checkbox" id="newsletter" name="newsletter" checked>
+                  <div class="option-content">
+                    <h4>📰 Trust Economy Newsletter (FREE)</h4>
+                    <p>Weekly insights on AI search trends, authority building, and the trust economy shift</p>
+                  </div>
+                </div>
+                
+                <div class="option-item">
+                  <input type="checkbox" id="betaWaitlist" name="betaWaitlist">
+                  <div class="option-content">
+                    <h4>🎯 Credli.ai Launch Notification</h4>
+                    <p>Be among the first to know when beta ends and secure founding member access <span class="option-price">(Founders Price is $497 annually just $1.38 a day)</span></p>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="submit-button">
+                Join the Trust Economy Revolution
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <p>🔒 <a href="/privacy-policy.html">Privacy Policy</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Page Popup -->
+    <div id="demoPopup" class="popup-overlay">
+      <div class="popup-container">
+        <button class="popup-close" onclick="closePopup('demoPopup')">&times;</button>
+        
+        <div class="popup-header">
+          <h2>Wait! Before You Go...</h2>
+          <p>Get a Sneak Peek of What You Almost Had</p>
+        </div>
+
+        <div class="popup-content">
+          <div class="value-proposition">
+            <p style="margin-bottom: 25px; color: var(--text); line-height: 1.6;">You were seconds away from seeing your AI Credibility Score. Why leave empty-handed?</p>
+            <p style="font-weight: 600; margin-bottom: 20px; color: var(--text);">Let us send you what you came for:</p>
+          </div>
+
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span><strong>Your Personal Trust Assessment:</strong> We'll show you the 3 biggest risks hurting your visibility in AI search.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span><strong>Proprietary GEO Intelligence:</strong> Weekly breakdowns of AI search trends</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span><strong>The Credli.ai Build in Public:</strong> Exclusive access to the strategy, metrics, and lessons from scaling to a 7-figure AI authority platform.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span><strong>Playbooks That Work:</strong> Step-by-step frameworks for generating expert positioning that AI engines reward with top rankings.</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">✓</span>
+              <span><strong>Beta Invitation:</strong> Exclusive access to secure founding membership - $497 annually just $1.38 a day</span>
+            </div>
+          </div>
+
+          <div class="signup-form">
+            <form onsubmit="submitForm(event)">
+              <div class="form-group">
+                <label for="demoEmail">Email Address</label>
+                <input type="email" id="demoEmail" name="email" required placeholder="your@email.com">
+              </div>
+              
+              <div class="form-group">
+                <label for="demoName">First Name</label>
+                <input type="text" id="demoName" name="name" required placeholder="Your first name">
+              </div>
+
+              <div class="signup-options">
+                <div class="option-item">
+                  <input type="checkbox" id="demoNewsletter" name="newsletter" checked>
+                  <div class="option-content">
+                    <h4>📰 Trust Economy Insights (FREE)</h4>
+                    <p>Weekly strategies for building authority in the AI-first world</p>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="submit-button">
+                Get My Free Assessment →
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <p><a href="/privacy-policy.html">Privacy Policy</a></p>
+          <p style="margin-top: 15px; font-style: italic; color: #666;">P.S. 78% of companies use AI daily to find experts. This is your chance to see if you're being recommended or replaced.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Page (First Mover) Popup -->
+    <div id="resultsPopup" class="popup-overlay">
+      <div class="popup-container">
+        <button class="popup-close" onclick="closePopup('resultsPopup')">&times;</button>
+        
+        <div class="popup-header">
+          <h2>🏆 First Mover Advantage</h2>
+          <p>You're clearly serious about trust and credibility</p>
+        </div>
+
+        <div class="popup-content">
+          <div class="value-proposition">
+            <div class="urgency-badge">Founders Price is $497 annually just $1.38 a day</div>
+            <h3>Secure Your First Mover Position</h3>
+            <p>Since you just ran a trust analysis, you understand the value of credibility. Join our annual founding members program and secure first mover pricing.</p>
+          </div>
+
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <span class="benefit-icon">💎</span>
+              <span><strong>Founding Member Price:</strong> $497 annually just $1.38 a day</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">🔒</span>
+              <span><strong>Founding Member Pricing:</strong> Secure preferred rates as a founding member</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">⚡</span>
+              <span><strong>First Mover Benefits:</strong> Priority access to new features, direct feedback line</span>
+            </div>
+            <div class="benefit-item">
+              <span class="benefit-icon">🎯</span>
+              <span><strong>Annual Commitment:</strong> Shows you're serious about building long-term trust & authority</span>
+            </div>
+          </div>
+
+          <div class="signup-form">
+            <form onsubmit="submitForm(event)">
+              <div class="form-group">
+                <label for="resultsEmail">Email Address</label>
+                <input type="email" id="resultsEmail" name="email" required placeholder="your@email.com">
+              </div>
+              
+              <div class="form-group">
+                <label for="resultsName">First Name</label>
+                <input type="text" id="resultsName" name="name" required placeholder="Your first name">
+              </div>
+
+              <div class="signup-options">
+                <div class="option-item">
+                  <input type="checkbox" id="resultsAnnual" name="annual" checked>
+                  <div class="option-content">
+                    <h4>🏆 Founding Member Annual Program</h4>
+                    <p>Secure founding member pricing <span class="option-price">(Founders Price is $497 annually just $1.38 a day)</span></p>
+                  </div>
+                </div>
+                
+                <div class="option-item">
+                  <input type="checkbox" id="resultsNewsletter" name="newsletter" checked>
+                  <div class="option-content">
+                    <h4>📰 Trust Economy Newsletter</h4>
+                    <p>Weekly insights on AI authority and trust building</p>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="submit-button" onclick="handlePurchaseFlow(event)">
+                Secure First Mover Advantage - Purchase Now
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <p>🔒 <a href="/privacy-policy.html">Privacy Policy</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showPopup(type) {
+      const popups = {
+        'landing': 'landingPopup',
+        'demo': 'demoPopup',
+        'results': 'resultsPopup'
+      };
+      
+      document.getElementById(popups[type]).style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePopup(popupId) {
+      document.getElementById(popupId).style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    async function submitForm(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const data = {
+        email: formData.get('email'),
+        name: formData.get('name'),
+        newsletter: formData.get('newsletter') === 'on',
+        betaWaitlist: formData.get('betaWaitlist') === 'on',
+        source: 'landing'
+      };
+      
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxVugdTB_NV1rqH8Z2X3z1hz_lSt8aA0IqDZUc7v3duMCKLiO1Dma9I5zpu2BWzPG-4OA/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          alert('Success! Check your email for confirmation with social media links.');
+        } else {
+          alert('Error: ' + result.error);
+        }
+      } catch (error) {
+        alert('Network error. Please try again.');
+      }
+    }
+
+    async function handlePurchaseFlow(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const data = {
+        email: formData.get('email'),
+        name: formData.get('name'),
+        newsletter: formData.get('newsletter') === 'on',
+        annual: formData.get('annual') === 'on',
+        source: 'results'
+      };
+      
+      try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxVugdTB_NV1rqH8Z2X3z1hz_lSt8aA0IqDZUc7v3duMCKLiO1Dma9I5zpu2BWzPG-4OA/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success && result.redirectToPayPal) {
+          alert('Signup successful! Redirecting to PayPal...');
+          // In production: window.location.href = result.paypalUrl;
+        } else if (result.success) {
+          alert('Success! Check your email for confirmation.');
+        } else {
+          alert('Error: ' + result.error);
+        }
+      } catch (error) {
+        alert('Network error. Please try again.');
+      }
+    }
+
+    // Close popup when clicking overlay
+    document.querySelectorAll('.popup-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+          closePopup(this.id);
+        }
+      });
+    });
+
+    // Close popup on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.popup-overlay').forEach(popup => {
+          if (popup.style.display === 'block') {
+            closePopup(popup.id);
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
