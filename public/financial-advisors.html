@@ -95,352 +95,296 @@
     ]
   }
   </script>
-  <style>
-    /* Footer Quote Styling */
-    .footer-quote {
-      text-align: center;
-      padding: 2rem 0;
-      border-top: 1px solid #e0e0e0;
-      margin-top: 2rem;
-    }
-    
-    .footer-quote p:first-child {
-      font-size: 1.1rem;
-      font-style: italic;
-      color: #333;
-      margin-bottom: 0.5rem;
-      line-height: 1.5;
-    }
-    
-    .footer-quote p:last-child {
-      font-size: 0.95rem;
-      color: #666;
-      font-weight: 500;
-      margin: 0;
-    }
-    
-    @media (max-width: 768px) {
-      .footer-quote {
-        padding: 1.5rem 0;
-      }
-      
-      .footer-quote p:first-child {
-        font-size: 1rem;
-      }
-      
-      .footer-quote p:last-child {
-        font-size: 0.9rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .footer-quote {
-        padding: 1rem 0;
-      }
-      
-      .footer-quote p:first-child {
-        font-size: 0.95rem;
-      }
-      
-      .footer-quote p:last-child {
-        font-size: 0.85rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
   <!-- Navigation -->
   <nav class="nav-header">
-    <div class="container">
-      <div class="nav-content">
-        <div class="logo">
-          <a href="/">
-            <strong>Credli.ai</strong>
-          </a>
-        </div>
-        <div class="nav-links">
-          <a href="/#how-it-works" class="nav-link">How It Works</a>
-          <a href="/#pricing" class="nav-link">Pricing</a>
-          <a href="/financial-advisors" class="nav-link active">Financial Advisors</a>
-          <a href="/business-coaches" class="nav-link">Business Coaches</a>
-        </div>
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Credli.ai</h2>
+        <span class="tagline">AI Trust Consultant</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/index.html" class="nav-link" target="_blank">Home</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="/financial-advisors" class="nav-link active">Financial Advisors</a>
+        <a href="cred-score.html" class="nav-link cta-nav" target="_blank">Get Your Cred Score</a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero" style="padding-top: 120px;">
-    <div class="container">
+  <section id="home" class="hero">
+    <div class="hero-container">
       <div class="hero-content">
-        <div class="unfair-advantage-quote">
-          <p>When prospects ask AI "Who is the best financial advisor in my area?" — Are you the one being recommended?</p>
-        </div>
+        <h1 style="color: #070707;">When Prospects Ask AI "Who is the Best Financial Advisor?" — Are You the One Being Recommended?</h1>
+        <p class="hero-subtitle" style="color: #070707;">78% of Your Prospects Use AI to Find Financial Advisors. Get Recommended by ChatGPT, Perplexity, and Gemini When They Ask Who to Trust.</p>
+        <p style="color: #070707; margin-top: 1.5rem;">Your prospects aren't googling "financial advisors near me" anymore. They're asking AI: "Who should I trust with my retirement?" "Which financial advisor has the best track record?" "Who are the top wealth managers in [city]?"
+
+The shift has already happened. AI engines are now the new referral network — and most financial advisors are completely invisible to them.</p>
         
-        <h1 class="hero-title">Build AI Authority as a Financial Advisor</h1>
-        <p class="hero-subtitle">
-          Get recommended when prospects ask ChatGPT, Perplexity, and Gemini who they should trust with their financial future. Professional AI credibility optimization for financial advisors.
-        </p>
-        
-        <div class="demo-header-quote">
-          78% of companies are already using AI daily — and your prospects are using it to find trusted financial advisors
-        </div>
-        
-        <div class="hero-buttons">
+        <div class="hero-cta" style="margin-top: 3rem;">
+          <h3 style="color: #070707; font-size: 1.5rem; margin-bottom: 1rem;">Build Your AI Authority for Financial Advisors</h3>
+          <p style="color: #070707; font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6;">Professional AI credibility optimization designed specifically for financial advisors. Get full access for a year at the special beta price of $497.</p>
           <a href="#pricing" class="btn-primary">Build My AI Authority</a>
-          <a href="#how-it-works" class="btn-outline">See How It Works</a>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="trust-score-demo">
+          <div class="demo-header">Financial Advisor AI Authority Score</div>
+          <div class="score-circle">
+            <div class="score-number">43</div>
+            <div class="score-label">AI Trust Score</div>
+          </div>
+          <div class="breakdown">
+            <div class="breakdown-item">
+              <span>ChatGPT Visibility</span>
+              <div class="bar"><div class="fill" style="width: 35%"></div></div>
+              <span>35%</span>
+            </div>
+            <div class="breakdown-item">
+              <span>Perplexity Authority</span>
+              <div class="bar"><div class="fill" style="width: 50%"></div></div>
+              <span>50%</span>
+            </div>
+            <div class="breakdown-item">
+              <span>Gemini Trust Signals</span>
+              <div class="bar"><div class="fill" style="width: 45%"></div></div>
+              <span>45%</span>
+            </div>
+            <div class="breakdown-item warning">
+              <span>Compliance Risk</span>
+              <div class="warning-text">2 issues detected</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Problem Section -->
-  <section id="problem" class="section">
+  <!-- What We Do -->
+  <section class="what-we-do">
     <div class="container">
-      <h2 class="section-title">The Problem Every Financial Advisor Faces</h2>
+      <h2>The Problem Every Financial Advisor Faces</h2>
+      <p class="section-subtitle">When prospects ask AI "who is the best financial advisor near me," you don't appear in the recommendations — even if you're the most qualified advisor in your area. Traditional marketing doesn't help when clients are asking AI engines for financial advice recommendations.</p>
       
-      <div class="problem-grid">
-        <div class="problem-item">
-          <div class="problem-icon">🔍</div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🔍</div>
           <h3>Invisible to AI Search</h3>
           <p>When prospects ask AI "who is the best financial advisor near me," you don't appear in the recommendations — even if you're the most qualified advisor in your area.</p>
         </div>
-        
-        <div class="problem-item">
-          <div class="problem-icon">❌</div>
+        <div class="service-card">
+          <div class="service-icon">❌</div>
           <h3>Traditional Marketing Fails</h3>
           <p>Your website SEO, LinkedIn posts, and referral network don't help when clients are asking AI engines for financial advice recommendations.</p>
         </div>
-        
-        <div class="problem-item">
-          <div class="problem-icon">💼</div>
+        <div class="service-card">
+          <div class="service-icon">💼</div>
           <h3>Losing High-Value Clients</h3>
           <p>Prospects who use AI to research financial advisors are typically more engaged and ready to commit to professional financial planning services.</p>
         </div>
-      </div>
-      
-      <div class="stats-section">
-        <div class="stat-item">
-          <div class="stat-number">78%</div>
-          <div class="stat-label">Companies using AI daily</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">65%</div>
-          <div class="stat-label">Consumers trust AI recommendations</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">3x</div>
-          <div class="stat-label">Higher conversion from AI-sourced leads</div>
+        <div class="service-card">
+          <div class="service-icon">📈</div>
+          <h3>Missing AI Opportunity</h3>
+          <p>3x higher conversion rates from AI-sourced leads, but only if you're being recommended by the AI engines prospects are using.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- How It Works -->
-  <section id="how-it-works" class="section bg-light">
+  <!-- Why Now -->
+  <section class="why-now">
     <div class="container">
-      <h2 class="section-title">How We Build Your AI Authority</h2>
-      <p class="section-subtitle">
-        Our AEO (Ask Engine Optimization) and GEO (Generative Engine Optimization) process ensures AI engines recognize you as a trusted financial advisor.
-      </p>
-      
-      <div class="process-grid">
-        <div class="process-step">
-          <div class="step-number">1</div>
-          <h3>AI Trust Assessment</h3>
-          <p>We analyze how AI engines currently perceive your financial advisory practice and identify gaps in your digital authority.</p>
+      <h2>How We Build Your AI Authority</h2>
+      <div class="urgency-content">
+        <div class="urgency-text">
+          <p>Our AEO (Ask Engine Optimization) and GEO (Generative Engine Optimization) process ensures AI engines recognize you as a trusted financial advisor when prospects ask who to trust with their financial future.</p>
+          
+          <div class="stat-callouts">
+            <div class="stat">
+              <div class="stat-number">1</div>
+              <div class="stat-label">AI Trust Assessment</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">2</div>
+              <div class="stat-label">Credibility Optimization</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">3</div>
+              <div class="stat-label">AI Authority Monitoring</div>
+            </div>
+          </div>
         </div>
         
-        <div class="process-step">
-          <div class="step-number">2</div>
-          <h3>Credibility Optimization</h3>
-          <p>Build authoritative content that AI engines recognize, including compliance-approved expertise demonstrations and client success indicators.</p>
-        </div>
-        
-        <div class="process-step">
-          <div class="step-number">3</div>
-          <h3>AI Authority Monitoring</h3>
-          <p>Track your AI recommendation score and adjust strategy based on how ChatGPT, Perplexity, and Gemini respond to financial advisor queries in your area.</p>
+        <div class="urgency-visual">
+          <div class="timeline-graphic">
+            <h4>Specifically for Financial Advisors</h4>
+            <div class="timeline-item">
+              <div class="timeline-dot early"></div>
+              <div class="timeline-content">
+                <strong>Compliance-First Approach</strong>
+                <p>All AI authority building maintains full compliance with SEC regulations, FINRA guidelines, and state licensing requirements.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot late"></div>
+              <div class="timeline-content">
+                <strong>Target High-Value Clients</strong>
+                <p>Get recommended to prospects asking AI about retirement planning, wealth management, and comprehensive financial advice.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Industry-Specific Benefits -->
-  <section class="section">
+  <!-- New Dual Pricing Structure -->
+  <section id="pricing" class="dual-pricing-section">
     <div class="container">
-      <h2 class="section-title">Specifically Designed for Financial Advisors</h2>
+      <div class="pricing-header">
+        <h2 style="color: #070707;">Founding Beta Access</h2>
+        <p style="color: #070707; font-size: 1.2rem; margin-bottom: 2rem;">Join the first financial advisors building AI authority</p>
+      </div>
       
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <div class="benefit-icon">📋</div>
-          <h3>Compliance-First Approach</h3>
-          <p>All AI authority building maintains full compliance with SEC regulations, FINRA guidelines, and state licensing requirements.</p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">🎯</div>
-          <h3>Target High-Value Clients</h3>
-          <p>Get recommended to prospects asking AI about retirement planning, wealth management, and comprehensive financial advice.</p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">🔒</div>
-          <h3>Trust & Credibility Focus</h3>
-          <p>Build authority around fiduciary responsibility, credentials (CFP, ChFC, CFA), and client testimonials that AI engines value.</p>
-        </div>
-        
-        <div class="benefit-card">
-          <div class="benefit-icon">📈</div>
-          <h3>Practice Growth Metrics</h3>
-          <p>Track how AI recommendations translate to consultation requests, AUM growth, and new client acquisition.</p>
+      <div class="pricing-containers">
+        <!-- Single Pricing Card for Financial Advisors -->
+        <div id="beta-signup" class="pricing-container professional">
+          <div class="pricing-header-box">
+            <h3>AI Authority for Financial Advisors: $497/yr</h3>
+            <div class="pricing-amount">$497<br><span class="special-beta-text">Just $1.38 per day</span></div>
+            <p class="pricing-limit"><em>Professional AI credibility optimization designed for financial advisors.</em></p>
+          </div>
+          
+          <div class="pricing-description">
+            <p><strong>Get recommended when prospects ask AI who they should trust with their financial future.</strong></p>
+            <p>Our AEO and GEO process ensures AI engines like ChatGPT, Perplexity, and Gemini recognize you as a credible financial advisor.</p>
+            <p><strong>What's included:</strong></p>
+          </div>
+          
+          <div class="pricing-features">
+            <div class="feature-item">
+              <span class="feature-bullet">•</span>
+              <span><strong>Monthly AI Authority Reports:</strong> Track how often you're mentioned in AI responses to financial advisor queries and your recommendation ranking.</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-bullet">•</span>
+              <span><strong>AEO & GEO Optimization:</strong> Ask Engine and Generative Engine optimization specifically for financial advisory services.</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-bullet">•</span>
+              <span><strong>Compliance-Approved Content Strategy:</strong> All optimization maintains SEC, FINRA, and state licensing compliance.</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-bullet">•</span>
+              <span><strong>AI Recommendation Tracking:</strong> Monitor ChatGPT, Perplexity, and Gemini responses to financial advisor queries in your area.</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-bullet">•</span>
+              <span><strong>Competitor Analysis:</strong> See how you rank against other financial advisors in AI search results.</span>
+            </div>
+          </div>
+          
+          <div class="pricing-note">
+            <span class="note-icon">🎯</span>
+            <span><strong>Perfect for:</strong> Financial advisors ready to build AI authority and get recommended by AI when prospects ask who to trust with their financial future.</span>
+          </div>
+          
+          <div class="pricing-cta">
+            <span style="background-color: #10B981; color: white; padding: 0.75rem 2rem; font-weight: bold; border-radius: 6px; display: inline-block; text-decoration: none;" onclick="window.open('https://www.paypal.com/ncp/payment/9HEAPSZK3L592', '_blank')">Join Founding Beta → $497/yr</span>
+            <p class="pricing-disclaimer"><span style="color: #6B7280; font-size: 0.9rem;">Cancel anytime. 30-day money-back guarantee.</span></p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-        <!-- Urgency Section -->
-        <div class="urgency-section">
-          <h2>The 12-Month Window is Closing</h2>
-          <div class="timeline">
-            <div class="timeline-item current">
-              <div class="timeline-dot"></div>
-              <h4>Right Now (2024-2025)</h4>
-              <p>Early adopter window. Most advisors still don't know AI search exists. Massive first-mover advantage available.</p>
-            </div>
-            <div class="timeline-item future">
-              <div class="timeline-dot"></div>
-              <h4>12-18 Months</h4>
-              <p>AI search becomes mainstream knowledge. Competition increases dramatically. Harder to establish authority.</p>
-            </div>
-            <div class="timeline-item late">
-              <div class="timeline-dot"></div>
-              <h4>24+ Months</h4>
-              <p>AI authority positions are established. Newcomers face entrenched competition. Much more expensive to build authority.</p>
-            </div>
-          </div>
-          <div class="urgency-cta">
-            <p><strong>The question isn't whether AI search will dominate client discovery - it's whether you'll be established as an authority before everyone else figures it out.</strong></p>
-          </div>
+  <!-- FAQ Section -->
+  <section class="section bg-light">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>How do I get AI to recommend me as a financial advisor?</h3>
+          <p>Build AI authority through AEO (Ask Engine Optimization) and GEO (Generative Engine Optimization). This involves optimizing your digital presence so AI engines like ChatGPT, Perplexity, and Gemini recognize you as a credible financial advisor when prospects ask who to trust.</p>
         </div>
+        
+        <div class="faq-item">
+          <h3>What compliance considerations exist for financial advisor AI optimization?</h3>
+          <p>All AI authority building must comply with SEC regulations, FINRA guidelines, and state licensing requirements. We ensure your AI optimization maintains regulatory compliance while building credible authority.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>How long does it take to see AI recommendations?</h3>
+          <p>Most financial advisors see initial AI mentions within 4-6 weeks, with strong recommendation positioning typically achieved within 3 months of consistent optimization.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Can I track my AI authority score?</h3>
+          <p>Yes, we provide monthly reports showing how often you're mentioned in AI responses to financial advisor queries, your recommendation ranking, and competitive positioning.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>What makes this different from SEO for financial advisors?</h3>
+          <p>Traditional SEO optimizes for Google search. AI authority optimization focuses on how ChatGPT, Perplexity, and Gemini recommend professionals when asked direct questions about financial advice.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>Do you work with fee-only financial advisors?</h3>
+          <p>Yes, we work with all types of financial advisors including fee-only planners, commission-based advisors, and hybrid models while maintaining appropriate compliance standards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Authority vs Competition -->
-        <div class="competition-section">
-          <h2>Your Competition Isn't Other Advisors - It's AI Algorithms</h2>
-          <div class="competition-scenario">
-            <div class="scenario-card">
-              <h3>The Old Way</h3>
-              <p>Prospect googles "financial advisors near me" → Sees 10 websites → Calls 2-3 firms → Compares services</p>
-              <span class="outcome">Outcome: Price shopping, long sales cycle</span>
-            </div>
-            <div class="scenario-arrow">↓</div>
-            <div class="scenario-card highlight">
-              <h3>The New Way</h3>
-              <p>Prospect asks ChatGPT "Who should I hire as my financial advisor?" → Gets 3 specific recommendations → Calls the first one</p>
-              <span class="outcome">Outcome: Pre-sold on your expertise, short sales cycle</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Commitment Section -->
-        <div class="commitment-section">
-          <h2>Why This Requires a 12-Month Commitment</h2>
-          <p class="commitment-intro">This isn't marketing - it's authority building. Like academic reputation, it takes time to establish but lasts for decades once built.</p>
-          
-          <div class="commitment-timeline">
-            <div class="timeline-stage">
-              <h4>Months 1-3: Foundation</h4>
-              <p>Establish baseline Trust Factor, identify content gaps, develop AI-specific content strategy</p>
-            </div>
-            <div class="timeline-stage">
-              <h4>Months 4-8: Authority Building</h4>
-              <p>AI engines begin recognizing expertise patterns, authority signals strengthen across platforms</p>
-            </div>
-            <div class="timeline-stage">
-              <h4>Months 9-12: Market Leadership</h4>
-              <p>Measurable Trust Factor improvement, established competitive advantage, consistent AI recommendations</p>
-            </div>
-          </div>
-          
-          <div class="commitment-warning">
-            <p><strong>Companies that try this for 3-6 months get frustrated and quit. Companies that commit to 12+ months dominate their industries.</strong></p>
-            <p>Which type of advisory firm are you?</p>
-          </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="final-cta">
-          <h2>Ready to Dominate AI Search Before Your Competitors Figure It Out?</h2>
-          <p>I'm accepting exactly 10 forward-thinking financial advisors who want to establish AI authority in the next 12 months.</p>
-          
-          <div class="cta-steps">
-            <div class="cta-step">
-              <span class="step-number">1</span>
-              <span class="step-text">Take the free Trust Factor scan to see where you stand</span>
-            </div>
-            <div class="cta-step">
-              <span class="step-number">2</span>
-              <span class="step-text">Review your AI authority gaps and opportunities</span>
-            </div>
-            <div class="cta-step">
-              <span class="step-number">3</span>
-              <span class="step-text">Commit to 12-month authority building program</span>
-            </div>
-          </div>
-          
-          <div class="cta-buttons">
-            <button class="btn primary large" onclick="window.location='index.html'">Start My Trust Factor Scan</button>
-            <button class="btn secondary" onclick="window.location='pricing.html'">View Investment Options</button>
-          </div>
-          
-          <p class="cta-note">⚠️ <strong>Warning:</strong> This only works for advisors willing to commit 12+ months to building permanent AI authority. If you're looking for quick marketing wins, this isn't for you.</p>
-        </div>
-      </section>
-    </main>
-  </div>
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
           <h3>Credli.ai</h3>
-          <p>The AI Trust Consultant</p>
+          <p>AI Authority Building for Financial Professionals</p>
         </div>
         <div class="footer-links">
-          <a href="/landing.html">Home</a>
-          <a href="/landing.html#who-this-is-for">Who This Is For</a>
-          <a href="/landing.html#timeline">Timeline</a>
-          <a href="/landing.html#pricing">Pricing</a>
-          <a href="/index.html">Get Cred Score</a>
+          <a href="/index.html">Home</a>
+          <a href="/financial-advisors">Financial Advisors</a>
+          <a href="/business-coaches">Business Coaches</a>
+          <a href="#pricing">Pricing</a>
+          <a href="/cred-score.html" target="_blank">Get Cred Score</a>
         </div>
       </div>
       <div class="footer-legal">
         <div class="legal-links">
-          <a href="/privacy-policy.html" class="legal-link">Privacy Policy</a>
-          <a href="/terms-of-service.html" class="legal-link">Terms of Service</a>
-          <a href="/gdpr-ccpa-policy.html" class="legal-link">GDPR & CCPA Policy</a>
-          <a href="/affiliate-disclaimer.html" class="legal-link">Affiliate Disclaimer</a>
-          <a href="/anti-class-action-provision.html" class="legal-link">Anti-Class Action Provision</a>
-          <a href="/dmca-policy.html" class="legal-link">DMCA Policy</a>
-          <a href="/earnings-results-disclaimer.html" class="legal-link">Earnings & Results Disclaimer</a>
-          <a href="/legal-disclaimer.html" class="legal-link">Legal Disclaimer</a>
-          <a href="/optin-agreement.html" class="legal-link">Optin Agreement</a>
-          <a href="/refund-policy.html" class="legal-link">Refund Policy</a>
-          <a href="/testimonialist-disclaimer.html" class="legal-link">Testimonialist Disclaimer</a>
+          <a href="/privacy-policy.html" class="legal-link" target="_blank">Privacy Policy</a>
+          <a href="/terms-of-service.html" class="legal-link" target="_blank">Terms of Service</a>
+          <a href="/refund-policy.html" class="legal-link" target="_blank">Refund Policy</a>
         </div>
       </div>
+      
       <div class="footer-quote">
-        <p><em>"I'm offering an unfair advantage to high-integrity professionals who want to dominate the next wave of digital trust."</em></p>
-        <p>— Nicole Jolie, AI Trust Consultant</p>
-      </div>
-      <div class="footer-legal-disclaimer">
-        <p>LEGAL DISCLAIMER: Credli.ai provides collaborative consulting services with NO GUARANTEES of results, earnings, or Cred Score improvements. All results are the user's responsibility. This information is for educational purposes only. You are responsible for all content creation, posting, and implementation. We are NOT a posting service or social media management company. Individual success depends entirely on your own efforts, consistency, and market factors beyond our control.</p>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025-2026 Credli.ai. All rights reserved.</p>
-        <p>Worthy of Success, LLC</p>
+        <p>"The future belongs to professionals who are visible when AI is asked who to trust."</p>
+        <p>— Nicole Jolie, Founder of Credli.ai</p>
       </div>
     </div>
   </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Optimized smooth scrolling
+    document.addEventListener('click', function(e) {
+      if (e.target.matches('a[href^="#"]')) {
+        e.preventDefault();
+        const target = document.querySelector(e.target.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  </script>
 </body>
 </html>
