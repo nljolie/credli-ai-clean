@@ -724,6 +724,11 @@ app.get('/professional-welcome.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'professional-welcome.html'));
 });
 
+// Industry-specific landing pages
+app.get('/financial-advisors', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'financial-advisors.html'));
+});
+
 // ===== STATIC FILE SERVING =====
 // IMPORTANT: Files in /public/ folder are served as web root
 // public/landing.html → credli.ai/landing.html
