@@ -168,20 +168,26 @@ class PreDeployVerify {
         this.log('COMMIT-READY', 'CHECK', 'Verifying commit readiness...');
         
         try {
-            // Check if there are staged changes
-            const stagedFiles = execSync('git diff --cached --name-only').toString().trim();
-            if (!stagedFiles) {
-                this.log('COMMIT-READY', 'FAIL', 'No files staged for commit', true);
+            // Check if we have commits to push
+            const unpushedCommits = execSync('git log origin/main..HEAD --oneline').toString().trim();
+            if (!unpushedCommits) {
+                this.log('COMMIT-READY', 'FAIL', 'No commits to push', true);
                 return false;
             }
 
-            // Check commit message would be descriptive
-            const changedFiles = execSync('git diff --cached --name-only').toString().split('\n').filter(f => f.trim());
-            this.log('COMMIT-READY', 'PASS', `${changedFiles.length} files staged for commit`);
+            // Check if there are any uncommitted changes
+            const uncommittedChanges = execSync('git status --porcelain').toString().trim();
+            if (uncommittedChanges) {
+                this.log('COMMIT-READY', 'FAIL', 'Uncommitted changes detected - commit them first', true);
+                return false;
+            }
+            
+            const commitCount = unpushedCommits.split('\n').length;
+            this.log('COMMIT-READY', 'PASS', `${commitCount} commit(s) ready to push`);
             
             return true;
         } catch (error) {
-            this.log('COMMIT-READY', 'FAIL', `Git staging verification failed: ${error.message}`, true);
+            this.log('COMMIT-READY', 'FAIL', `Git commit verification failed: ${error.message}`, true);
             return false;
         }
     }
