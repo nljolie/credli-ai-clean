@@ -524,6 +524,49 @@ h2 {
   margin-top: 0.5rem;
 }
 
+/* Process Steps - 3 column horizontal layout */
+.process-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.step-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow-light);
+  transition: transform 0.2s ease;
+}
+
+.step-item:hover {
+  transform: translateY(-2px);
+}
+
+.step-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--brand);
+  display: block;
+}
+
+.step-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+/* Mobile responsive for process steps */
+@media (max-width: 768px) {
+  .process-steps {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 .timeline-graphic {
   background: white;
   padding: 2rem;
