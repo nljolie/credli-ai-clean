@@ -34,6 +34,34 @@ body {
   background: var(--bg);
 }
 
+/* UNIVERSAL FONT STANDARDIZATION - 100% CONSISTENT */
+h1, h2, .what-we-do h2 {
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  color: var(--text) !important;
+  text-align: left !important;
+  margin-bottom: 1rem !important;
+}
+
+h3, h4 {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  color: var(--header) !important;
+  text-align: left !important;
+  margin-bottom: 1rem !important;
+}
+
+p, li {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: var(--text) !important;
+  text-align: left !important;
+  margin-bottom: 1rem !important;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
