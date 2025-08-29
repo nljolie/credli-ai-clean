@@ -709,6 +709,21 @@ h2 {
   background: #f8f9fa;
 }
 
+.credli-highlight {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-medium);
+  border-left: 4px solid var(--brand);
+  margin: 2rem 0;
+  transform: translateX(8px);
+}
+
+.credli-highlight p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
 .benefits-stack {
   margin: 2rem 0;
 }
