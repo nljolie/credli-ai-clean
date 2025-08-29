@@ -56,7 +56,8 @@
 - [ ] No console errors in browser
 
 ### ✅ 8. TECHNICAL FUNCTIONALITY
-- [ ] Server runs on correct port (5050 locally, 10000 on Render)
+- [ ] **PORT CONFIG**: Local=5050, Render=10000 (auto-assigned) - BOTH CORRECT
+- [ ] Server starts without errors in both environments
 - [ ] PayPal SDK initialized properly
 - [ ] OpenAI API configured
 - [ ] Gemini API working
@@ -71,6 +72,7 @@
 
 ### ✅ 10. FINAL DEPLOYMENT VERIFICATION
 - [ ] Git status clean
+- [ ] **CHECK GIT HOOKS:** Verify .git/hooks/pre-push doesn't call deleted scripts
 - [ ] All changes committed
 - [ ] Pushed to GitHub successfully
 - [ ] Render.com deployment successful

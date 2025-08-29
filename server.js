@@ -1909,5 +1909,9 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
-  console.log(`Credli server running on http://localhost:${PORT}`);
+  if (process.env.PORT) {
+    console.log(`Credli server running on PRODUCTION port ${PORT} (assigned by hosting platform)`);
+  } else {
+    console.log(`Credli server running on LOCAL port ${PORT}`);
+  }
 });
