@@ -86,8 +86,7 @@ class PreDeployVerify {
             { pattern: 'Privacy Policy', name: 'Privacy Policy link' },
             { pattern: 'Terms of Service', name: 'Terms of Service link' },
             { pattern: 'Refund Policy', name: 'Refund Policy link' },
-            { pattern: 'Financial Executives', name: 'Financial Executives navigation' },
-            { pattern: 'Business & Executive Coaches', name: 'Business & Executive Coaches navigation' },
+            { pattern: 'Who We Serve', name: 'Who We Serve navigation' },
             { pattern: 'credli.ai', name: 'Credli.ai branding' }
         ];
 
