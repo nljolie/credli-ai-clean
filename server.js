@@ -666,7 +666,7 @@ app.post('/api/logout', (req, res) => {
 // Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
   console.log('Root route hit - serving homepage');
-  res.sendFile(path.join(__dirname, 'public', 'landing.html'));
+  res.sendFile(path.join(__dirname, 'landing.html'));
 });
 
 // ===== DASHBOARD ACCESS CONTROL =====
@@ -679,7 +679,7 @@ app.get('/dashboard.html', (req, res) => {
   }
   
   console.log('✅ Dashboard access - TESTING MODE (login disabled)');
-  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+  res.sendFile(path.join(__dirname, 'dashboard.html'));
 });
 
 // Authentication pages (served from root level)
@@ -715,34 +715,31 @@ app.get('/dashboard-new.html', (req, res) => {
     req.session.paid = true;
   }
   
-  res.sendFile(path.join(__dirname, 'public', 'dashboard-new.html'));
+  res.sendFile(path.join(__dirname, 'dashboard-new.html'));
 });
 
 // Professional welcome page (accessible after payment)
 app.get('/professional-welcome.html', (req, res) => {
   // Allow access to welcome page - no restrictions
-  res.sendFile(path.join(__dirname, 'public', 'professional-welcome.html'));
+  res.sendFile(path.join(__dirname, 'professional-welcome.html'));
 });
 
 // Industry-specific landing pages
 app.get('/financial-executives', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'financial-executives.html'));
+  res.sendFile(path.join(__dirname, 'financial-executives.html'));
 });
 
 app.get('/business-executive-coaches', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'business-executive-coaches.html'));
+  res.sendFile(path.join(__dirname, 'business-executive-coaches.html'));
 });
 
-app.get('/consulting-firms', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'consulting-firms.html'));
-});
 
 // ===== STATIC FILE SERVING =====
 // IMPORTANT: Files in /public/ folder are served as web root
 // public/landing.html → credli.ai/landing.html
 // public/dashboard.html → credli.ai/dashboard.html
 // public/temporary/landing-temporary.html → credli.ai/temporary/landing-temporary.html
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 
 // —— Helpers ——
 const DEFAULT_PROMPTS = (keywords) => {

@@ -1,4 +1,4 @@
-/* ===== Credli.ai Landing Page Styles ===== */
+/* ===== Credli.ai Landing Page - Consolidated Single CSS File ===== */
 :root {
   --text: #070707;
   --bg: #FFFFFF;
@@ -557,6 +557,51 @@ h2 {
 .what-we-do {
   background: var(--paper);
   padding: 60px 0;
+}
+
+.section-subheading {
+  font-size: 1.8rem;
+  color: var(--header);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.harsh-reality {
+  background: rgba(247, 127, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid var(--header);
+  margin: 2rem 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.what-we-do h2:nth-of-type(2) {
+  font-size: 2.2rem;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.what-we-do ul {
+  max-width: 800px;
+  margin: 2rem auto;
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.what-we-do ul li {
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.what-we-do p {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.7;
 }
 
 .services-grid {
@@ -1252,100 +1297,6 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.pricing-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.pricing-btn:hover {
-  background: #3454D1;
-  border-color: #3454D1;
-  box-shadow: var(--shadow-medium);
-  transform: translateY(-2px);
-}
-
-.pricing-btn:hover .period,
-.pricing-btn:hover .discount,
-.pricing-btn:hover .total {
-  color: #EFEFEF;
-}
-
-/* Focus and active states for better button feedback */
-.pricing-btn:focus {
-  outline: 3px solid #3454D1;
-  outline-offset: 2px;
-}
-
-.pricing-btn:active {
-  background: #2a4397;
-  transform: translateY(0px) scale(0.98);
-}
-
-.pricing-btn:active .period,
-.pricing-btn:active .discount,
-.pricing-btn:active .total {
-  color: #EFEFEF;
-}
-
-.pricing-btn .period {
-  font-weight: 600;
-  color: var(--header);
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
-}
-
-.pricing-btn .discount {
-  font-size: 0.8rem;
-  color: #10B981;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.pricing-btn .total {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--brand);
-}
-
-/* Highlight annual option */
-.pricing-btn.annual {
-  border-color: var(--brand);
-  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
-}
-
-/* Annual button hover state - match other buttons */
-.pricing-btn.annual:hover {
-  background: #3454D1;
-  border-color: #3454D1;
-  box-shadow: var(--shadow-medium);
-  transform: translateY(-2px);
-}
-
-.pricing-btn.annual:hover .period,
-.pricing-btn.annual:hover .discount,
-.pricing-btn.annual:hover .total {
-  color: #EFEFEF;
-}
-
-/* Annual button active state */
-.pricing-btn.annual:active {
-  background: #2a4397;
-  transform: translateY(0px) scale(0.98);
-}
-
-.pricing-btn.annual:active .period,
-.pricing-btn.annual:active .discount,
-.pricing-btn.annual:active .total {
-  color: #EFEFEF;
-}
 
 /* Commitment Incentives */
 .commitment-incentives {
@@ -1631,9 +1582,6 @@ h2 {
     margin-bottom: 2rem;
   }
   
-  .pricing-btn.annual {
-    margin-top: 1rem;
-  }
   
 }
 
@@ -2739,486 +2687,7 @@ h2 {
   }
 }
 
-/* ===== Dual Pricing Section ===== */
-.dual-pricing-section {
-  padding: 4rem 0;
-  background: var(--paper);
-}
 
-.pricing-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.pricing-header h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--brand);
-  margin-bottom: 1rem;
-}
-
-/* Beta Announcement Box */
-.beta-announcement-box {
-  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #FFD23F 50%, #F7931E 75%, #FF6B35 100%);
-  border: 3px solid #FF6B35;
-  border-radius: 20px;
-  padding: 2.5rem;
-  margin: 2rem auto 3rem auto;
-  max-width: 800px;
-  box-shadow: 0 15px 35px rgba(255, 107, 53, 0.3);
-  position: relative;
-  transform: translateY(-5px);
-  animation: pulse-glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 15px 35px rgba(255, 107, 53, 0.3);
-  }
-  100% {
-    box-shadow: 0 20px 45px rgba(255, 107, 53, 0.5);
-  }
-}
-
-.beta-announcement-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  justify-content: center;
-}
-
-.beta-rocket {
-  font-size: 2rem;
-  animation: bounce 2s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
-}
-
-.beta-announcement-header h3 {
-  color: black;
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 0;
-  text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
-}
-
-.beta-announcement-content {
-  text-align: center;
-  color: black;
-}
-
-.beta-announcement-content h4 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: black;
-  text-shadow: 1px 1px 3px rgba(255,255,255,0.5);
-}
-
-.beta-main-text {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: black;
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-}
-
-.beta-deadline {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.95;
-  font-weight: 500;
-  color: black;
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-}
-
-.beta-cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  background: rgba(255,255,255,0.2);
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  border: 2px solid rgba(255,255,255,0.3);
-  backdrop-filter: blur(10px);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.beta-cta:hover {
-  background: rgba(255,255,255,0.3);
-  border-color: rgba(255,255,255,0.5);
-  transform: translateY(-2px);
-}
-
-.beta-pointer {
-  font-size: 1.5rem;
-  animation: wiggle 2s ease-in-out infinite;
-}
-
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  75% { transform: rotate(-5deg); }
-}
-
-.beta-cta-text {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: black;
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-}
-
-.pricing-containers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.pricing-container {
-  background: white;
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: var(--shadow-medium);
-  position: relative;
-  transform: translateY(-10px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.pricing-container:hover {
-  transform: translateY(-15px);
-  box-shadow: var(--shadow-heavy);
-}
-
-.pricing-container.executive {
-  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
-  border: 2px solid var(--brand);
-}
-
-.pricing-header-box {
-  text-align: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.pricing-header-box h3 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 1rem;
-}
-
-.pricing-amount {
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--brand);
-  margin-bottom: 0.5rem;
-}
-
-.pricing-period {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--text);
-  opacity: 0.7;
-}
-
-.pricing-limit {
-  font-size: 1rem;
-  color: var(--text);
-  opacity: 0.8;
-  margin-bottom: 0;
-}
-
-.pricing-description {
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.pricing-description p {
-  margin-bottom: 1rem;
-}
-
-.not-list {
-  background: #f8f9fa;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.not-list p {
-  margin-bottom: 0.5rem;
-  color: var(--text);
-  opacity: 0.8;
-  font-size: 0.95rem;
-}
-
-.not-list p:last-child {
-  margin-bottom: 0;
-}
-
-.pricing-features {
-  margin: 2rem 0;
-}
-
-.feature-item {
-  display: flex;
-  align-items: flex-start;
-  margin: 1rem 0;
-  gap: 0.75rem;
-  line-height: 1.5;
-}
-
-.feature-bullet {
-  color: var(--brand);
-  font-weight: bold;
-  font-size: 1.2rem;
-  min-width: 15px;
-  margin-top: 2px;
-}
-
-.feature-item span:not(.feature-bullet) {
-  flex: 1;
-  color: var(--text);
-}
-
-.pricing-commitment {
-  background: var(--brand);
-  color: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  text-align: center;
-  margin: 2rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.commitment-icon {
-  font-size: 1.5rem;
-}
-
-.pricing-note {
-  background: #e8f5e8;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin: 1.5rem 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.note-icon {
-  font-size: 1.5rem;
-  min-width: 30px;
-}
-
-.pricing-note span:not(.note-icon) {
-  flex: 1;
-  line-height: 1.5;
-  color: var(--text);
-}
-
-.pricing-note p {
-  margin: 0;
-  line-height: 1.5;
-  color: var(--text);
-}
-
-.pricing-cta {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.pricing-btn {
-  background: var(--gradient-primary);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-size: 1.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.pricing-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(52, 84, 209, 0.3);
-}
-
-.executive-btn {
-  background: var(--gradient-accent);
-}
-
-.executive-btn:hover {
-  box-shadow: 0 8px 25px rgba(247, 127, 0, 0.3);
-}
-
-.pricing-disclaimer {
-  font-size: 0.9rem;
-  color: var(--text);
-  opacity: 0.7;
-  margin: 0;
-  font-style: italic;
-}
-
-@media (max-width: 768px) {
-  .pricing-containers {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
-  .pricing-container {
-    padding: 2rem;
-    margin: 0 1rem;
-  }
-  
-  .pricing-header h2 {
-    font-size: 2rem;
-  }
-  
-  .pricing-amount {
-    font-size: 2.5rem;
-  }
-  
-  .pricing-header-box h3 {
-    font-size: 1.5rem;
-  }
-  
-  .feature-item {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-/* ===== Executive Application Section ===== */
-.executive-application-section {
-  background: linear-gradient(135deg, #3454D1 0%, #5B73E8 100%);
-  color: white;
-  padding: 3rem;
-  border-radius: 16px;
-  margin-top: 3rem;
-  text-align: center;
-  box-shadow: var(--shadow-medium);
-}
-
-.application-info {
-  margin-bottom: 2rem;
-}
-
-.application-info p {
-  font-size: 1.8rem;
-  line-height: 1.6;
-  margin: 0;
-  font-style: italic;
-  opacity: 0.95;
-}
-
-.application-cta {
-  margin-top: 2rem;
-}
-
-.executive-apply-btn {
-  background: white;
-  color: var(--brand);
-  text-decoration: none;
-  padding: 1.25rem 3rem;
-  border-radius: 50px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  display: inline-block;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.executive-apply-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  color: var(--brand);
-  text-decoration: none;
-}
-
-@media (max-width: 768px) {
-  .executive-application-section {
-    padding: 2rem;
-    margin: 2rem 1rem 0 1rem;
-  }
-  
-  .application-info p {
-    font-size: 1rem;
-  }
-  
-  .executive-apply-btn {
-    padding: 1rem 2rem;
-    font-size: 1.8rem;
-  }
-  
-  /* Mobile responsiveness for beta announcement */
-  .beta-announcement-box {
-    margin: 1.5rem 1rem 2rem 1rem;
-    padding: 1.5rem;
-    max-width: none;
-  }
-  
-  .beta-announcement-header {
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .beta-rocket {
-    font-size: 1.5rem;
-  }
-  
-  .beta-announcement-header h3 {
-    font-size: 1.4rem;
-  }
-  
-  .beta-announcement-content h4 {
-    font-size: 1.3rem;
-  }
-  
-  .beta-main-text {
-    font-size: 1rem;
-  }
-  
-  .beta-deadline {
-    font-size: 0.9rem;
-  }
-  
-  .beta-cta {
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-  }
-  
-  .beta-pointer {
-    font-size: 1.2rem;
-  }
-  
-  .beta-cta-text {
-    font-size: 1rem;
-  }
-}
 
 /* Footer Quote Styling - White text on all pages */
 .footer-quote {
@@ -3324,16 +2793,6 @@ h2 {
   right: -1rem;
   bottom: -1rem;
   font-family: Georgia, serif;
-}
-
-/* Special Beta Pricing Text */
-.special-beta-text {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #F77F00;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 0.5rem;
 }
 
 /* Demo Header Quote Styling */
