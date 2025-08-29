@@ -363,15 +363,6 @@ p {
   margin-right: auto;
 }
 
-.harsh-reality {
-  background: rgba(247, 127, 0, 0.1);
-  padding: 1.5rem;
-  border-radius: 12px;
-  border-left: 4px solid var(--header);
-  margin: 2rem 0;
-  font-size: 1.1rem;
-  font-weight: 500;
-}
 
 .credli-highlight {
   background: rgba(52, 84, 209, 0.1);
