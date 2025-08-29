@@ -605,17 +605,29 @@ h2 {
 
 .pricing-block {
   background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin: 1.5rem 0;
-  box-shadow: var(--shadow-light);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  border: 1px solid #e1e5e9;
 }
 
 .price-main {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: var(--brand);
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+.pricing-block h4 {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.pricing-details {
+  font-size: 1.1rem;
 }
 
 .pricing-details {
@@ -667,6 +679,38 @@ h2 {
 
 .comparison-table tr:nth-child(even) {
   background: #f8f9fa;
+}
+
+.benefits-stack {
+  margin: 2rem 0;
+}
+
+.benefit-card {
+  background: white;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-light);
+  border-left: 4px solid var(--brand);
+  transition: transform 0.2s ease;
+}
+
+.benefit-card:hover {
+  transform: translateX(8px);
+}
+
+.benefit-card h4 {
+  color: var(--brand);
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.benefit-card p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .final-cta-section {
