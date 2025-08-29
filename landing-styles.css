@@ -560,7 +560,7 @@ h2 {
 }
 
 .section-subheading {
-  font-size: 1.8rem;
+  font-size: 1.1rem;
   color: var(--header);
   text-align: center;
   margin-bottom: 2rem;
@@ -578,9 +578,119 @@ h2 {
 }
 
 .what-we-do h2:nth-of-type(2) {
-  font-size: 2.2rem;
+  font-size: 1.1rem;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
+}
+
+.executive-accelerator {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid var(--brand);
+  margin: 2rem 0;
+}
+
+.executive-accelerator h3 {
+  color: var(--brand);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.executive-accelerator h4 {
+  color: var(--header);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.pricing-block {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  box-shadow: var(--shadow-light);
+}
+
+.price-main {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--brand);
+  margin-bottom: 1rem;
+}
+
+.pricing-details {
+  list-style: none;
+  padding: 0;
+}
+
+.pricing-details li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.pricing-details li:last-child {
+  border-bottom: none;
+}
+
+.cta-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.benefits-grid .benefit-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-light);
+  border-left: 4px solid var(--brand);
+}
+
+.benefits-grid .benefit-item h4 {
+  color: var(--brand);
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.benefits-grid .benefit-item p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.final-cta-section {
+  text-align: center;
+  margin: 3rem 0;
+  padding: 2rem;
+  background: rgba(52, 84, 209, 0.05);
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .executive-accelerator {
+    padding: 1rem;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .pricing-block {
+    padding: 1rem;
+  }
+  
+  .btn-primary, .btn-secondary {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+  }
 }
 
 .what-we-do ul {

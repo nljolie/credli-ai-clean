@@ -2,14 +2,13 @@
 
 ## BEFORE ANY GIT COMMIT OR DEPLOYMENT - ALWAYS RUN THIS CHECKLIST:
 
-### ✅ 1. VERIFY CURRENT WORKING DIRECTORY
-- [ ] Confirm I'm in `/Users/besociallysmashinghome/claude-sandbox/lesson-01/trustsource`
-- [ ] NOT in `/public` or `/lesson-01` 
+### ✅ 1. VERIFY CURRENT WORKING DIRECTORY  
+- [ ] Working in trustsource directory
 
 ### ✅ 2. FILE STRUCTURE CHECK
-- [ ] All HTML files in trustsource root (no public/ folder)
-- [ ] Only ONE CSS file: landing-styles.css
-- [ ] server.js serves from __dirname (not public/)
+- [ ] All HTML files in trustsource root
+- [ ] Only ONE CSS file: landing-styles.css  
+- [ ] server.js serves from __dirname
 
 ### ✅ 3. CONTENT VERIFICATION
 - [ ] Text formatting correct (no overlaps)
@@ -35,6 +34,5 @@
 
 ## CRITICAL REMINDER: 
 - Server runs on PORT 5050
-- Use absolute paths from trustsource root
+- All files in trustsource root
 - ONE CSS file only
-- NO public/ directory
