@@ -3,7 +3,7 @@ class CredliChatbot {
     constructor() {
         this.isOpen = false;
         this.sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        this.googleSheetUrl = 'https://script.google.com/macros/s/AKfycbxPfhVTohKLiZJXMcUUb_QIp3tabEaErh1Bk_5VelX83GZU0KlOwtKlXSGAdKE03kWJ/exec';
+        this.googleSheetUrl = 'https://script.google.com/macros/s/AKfycbxGXqm-GWggu_pKa0zmBRokjmbB5MzvtiG2feLHoLlHe6a1rfnFJw8KMhu626oEyDX7/exec';
         this.userName = '';
         this.userEmail = '';
         this.isInfoCollected = false;
