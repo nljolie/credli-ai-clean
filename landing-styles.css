@@ -399,10 +399,6 @@ p {
   border-bottom: 1px solid var(--line);
 }
 
-.cta-section {
-  text-align: center;
-  margin: 2rem 0;
-}
 
 /* ===== COMPARISON TABLE ===== */
 .comparison-table {
