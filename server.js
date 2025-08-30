@@ -671,7 +671,7 @@ app.post('/api/logout', (req, res) => {
 // Serve main homepage at root BEFORE static middleware
 app.get('/', (req, res) => {
   console.log('Root route hit - serving homepage');
-  res.sendFile(path.join(__dirname, 'landing.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // ===== DASHBOARD ACCESS CONTROL =====
