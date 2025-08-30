@@ -228,12 +228,6 @@
                   </select>
                 </div>
                 
-                <div class="form-group">
-                  <label>Card Information</label>
-                  <div id="card-element">
-                  </div>
-                  <div id="card-errors" role="alert"></div>
-                </div>
                 
                 <div class="form-group">
                   <label class="checkbox-label">
@@ -315,88 +309,6 @@
       document.getElementById('payment-modal').style.display = 'none';
     }
     
-    const STRIPE_PUBLISHABLE_KEY = 'pk_test_your_publishable_key'; // Replace with your key
-    
-    // Create card element
-    const cardElement = elements.create('card', {
-      style: {
-        base: {
-          fontSize: '16px',
-          color: '#424770',
-          '::placeholder': {
-            color: '#aab7c4',
-          },
-        },
-      },
-    });
-    cardElement.mount('#card-element');
-    
-    // Handle real-time validation errors from the card Element
-    cardElement.on('change', ({error}) => {
-      const displayError = document.getElementById('card-errors');
-      if (error) {
-        displayError.textContent = error.message;
-      } else {
-        displayError.textContent = '';
-      }
-    });
-    
-    // Payment form submission
-    document.getElementById('payment-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const submitButton = document.getElementById('submit-payment');
-      submitButton.disabled = true;
-      submitButton.textContent = 'Processing...';
-      
-      try {
-        // Create payment method
-          type: 'card',
-          card: cardElement,
-          billing_details: {
-            name: document.getElementById('company').value,
-            email: document.getElementById('email').value,
-          },
-        });
-        
-        if (error) {
-          throw new Error(error.message);
-        }
-        
-        // Create subscription
-        const response = await fetch('/api/create-subscription', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: document.getElementById('email').value,
-            name: document.getElementById('company').value,
-            company: document.getElementById('company').value,
-            role: document.getElementById('role').value,
-            plan: selectedPlan,
-            paymentMethodId: paymentMethod.id
-          }),
-        });
-        
-        const result = await response.json();
-        
-        if (result.error) {
-          throw new Error(result.error);
-        }
-        
-        // Subscription created successfully
-        alert(`🎉 Welcome to Trust Factor™!\n\nYour ${selectedPlan} subscription is now active.\n\nNext steps:\n• Check your email for welcome information\n• We'll schedule your onboarding call within 24 hours\n• Your first Trust Factor scan will be completed this week`);
-        
-        // Redirect to success page or close modal
-        closePaymentModal();
-        
-      } catch (error) {
-        document.getElementById('card-errors').textContent = error.message;
-        submitButton.disabled = false;
-        submitButton.textContent = 'Start 12-Month Subscription';
-      }
-    });
     
     // Initialize PayPal buttons when page loads
     document.addEventListener('DOMContentLoaded', function() {

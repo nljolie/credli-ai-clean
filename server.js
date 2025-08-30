@@ -1454,99 +1454,6 @@ app.post('/api/content-strategy', (req, res) => {
   });
 });
 
-    // Attach payment method to customer
-      customer: customer.id,
-    });
-
-    // Set as default payment method
-      invoice_settings: {
-        default_payment_method: paymentMethodId,
-      },
-    });
-
-    const priceIds = {
-      professional: 'price_professional_497', // Replace with your actual price ID
-      executive: 'price_executive_997',       // Replace with your actual price ID  
-      enterprise: 'price_enterprise_1997'    // Replace with your actual price ID
-    };
-
-    // Create subscription
-      customer: customer.id,
-      items: [{
-        price: priceIds[plan],
-      }],
-      expand: ['latest_invoice.payment_intent'],
-      metadata: {
-        plan: plan,
-        company: company,
-        role: role
-      }
-    });
-
-    res.json({
-      subscriptionId: subscription.id,
-      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
-      customer: customer.id
-    });
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// PayPal Integration Routes
-app.post('/api/paypal/create-order', async (req, res) => {
-  if (!paypal) {
-    return res.status(503).json({ error: 'PayPal payment processing temporarily unavailable. Please try again later.' });
-  }
-
-  try {
-    const { plan, email, name, company } = req.body;
-    
-    // Define pricing for different plans
-    const planPricing = {
-      professional: { amount: '4.97', description: 'Professional Cred Score Analysis' },
-      executive: { amount: '9.97', description: 'Executive Cred Score Analysis' },
-      enterprise: { amount: '19.97', description: 'Enterprise Cred Score Analysis' }
-    };
-
-    const selectedPlan = planPricing[plan];
-    if (!selectedPlan) {
-      return res.status(400).json({ error: 'Invalid plan selected' });
-    }
-
-    const paypalCheckoutNodeJSSdk = require('@paypal/checkout-server-sdk');
-    const request = new paypalCheckoutNodeJSSdk.orders.OrdersCreateRequest();
-    
-    request.prefer("return=representation");
-    request.requestBody({
-      intent: 'CAPTURE',
-      purchase_units: [{
-        amount: {
-          currency_code: 'USD',
-          value: selectedPlan.amount
-        },
-        description: selectedPlan.description,
-        custom_id: JSON.stringify({ email, name, company, plan })
-      }],
-      application_context: {
-        return_url: `${req.protocol}://${req.get('host')}/success.html`,
-        cancel_url: `${req.protocol}://${req.get('host')}/cred-score.html`
-      }
-    });
-
-    const order = await paypal.execute(request);
-    
-    res.json({
-      orderID: order.result.id,
-      status: order.result.status
-    });
-
-  } catch (error) {
-    console.error('PayPal create order error:', error);
-    res.status(500).json({ error: 'Failed to create PayPal order' });
-  }
-});
 
 app.post('/api/paypal/capture-order', async (req, res) => {
   if (!paypal) {
@@ -1854,35 +1761,6 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
 // Webhook to handle subscription events
 app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
     return res.status(503).json({ error: 'Webhook processing unavailable' });
-  }
-  
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  let event;
-
-  try {
-  } catch (err) {
-    console.log('Webhook signature verification failed.', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
-  }
-
-  // Handle the event
-  switch (event.type) {
-    case 'invoice.payment_succeeded':
-      const invoice = event.data.object;
-      console.log('Payment succeeded for customer:', invoice.customer);
-      // Here you would update your database, send welcome email, etc.
-      break;
-    case 'invoice.payment_failed':
-      const failedInvoice = event.data.object;
-      console.log('Payment failed for customer:', failedInvoice.customer);
-      // Handle failed payment
-      break;
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
-
-  res.json({received: true});
 });
 
 const PORT = process.env.PORT || 5050;
@@ -1893,3 +1771,4 @@ app.listen(PORT, () => {
     console.log(`Credli server running on LOCAL port ${PORT}`);
   }
 });
+
