@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
-// PayPal-only payment processing - Stripe removed
 
 // Initialize PayPal SDK with LIVE credentials
 let paypal;
@@ -1455,39 +1454,16 @@ app.post('/api/content-strategy', (req, res) => {
   });
 });
 
-// Stripe Integration Routes
-app.post('/api/create-subscription', async (req, res) => {
-  if (!stripe) {
-    return res.status(503).json({ error: 'Payment processing temporarily unavailable. Please try again later.' });
-  }
-  
-  try {
-    const { email, name, company, role, plan, paymentMethodId } = req.body;
-    
-    // Create customer
-    const customer = await stripe.customers.create({
-      email: email,
-      name: name,
-      metadata: {
-        company: company,
-        role: role,
-        plan: plan
-      }
-    });
-
     // Attach payment method to customer
-    await stripe.paymentMethods.attach(paymentMethodId, {
       customer: customer.id,
     });
 
     // Set as default payment method
-    await stripe.customers.update(customer.id, {
       invoice_settings: {
         default_payment_method: paymentMethodId,
       },
     });
 
-    // Define price IDs (you'll need to create these in your Stripe dashboard)
     const priceIds = {
       professional: 'price_professional_497', // Replace with your actual price ID
       executive: 'price_executive_997',       // Replace with your actual price ID  
@@ -1495,7 +1471,6 @@ app.post('/api/create-subscription', async (req, res) => {
     };
 
     // Create subscription
-    const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [{
         price: priceIds[plan],
@@ -1515,7 +1490,6 @@ app.post('/api/create-subscription', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Stripe error:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -1879,17 +1853,14 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
 
 // Webhook to handle subscription events
 app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
-  if (!stripe) {
     return res.status(503).json({ error: 'Webhook processing unavailable' });
   }
   
-  const sig = req.headers['stripe-signature'];
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
     console.log('Webhook signature verification failed.', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);

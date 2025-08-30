@@ -760,7 +760,8 @@
           
           console.log(`Selected: ${plan} - ${period}`);
           
-          // Here you would integrate with Stripe checkout
+          // PayPal checkout only
+          window.location.href = `/payment-required.html?plan=${plan}&period=${period}&amount=${amount}`;
           // initiateCheckout(plan, period);
           
           // Visual feedback - show selection
@@ -787,81 +788,16 @@
     });
   </script>
   
-  <!-- Stripe SDK -->
-  <!-- Non-critical scripts deferred for performance -->
-  <script src="https://js.stripe.com/v3/" defer></script>
   <script src="purchase-check.js" defer></script>
   
   <!-- Ask Credli Chatbot -->
   <script src="chatbot.js" defer></script>
   
-  <!-- Stripe Checkout Integration -->
+  <!-- PayPal Checkout Only -->
   <script>
-    // Initialize Stripe (Replace with your publishable key)
-    const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY_HERE'); // Replace with actual key
-    
-    // Price mapping for Stripe
-    const priceMapping = {
-      professional: {
-        monthly: 'price_professional_monthly',
-        sixmonth: 'price_professional_6month', 
-        annual: 'price_professional_annual'
-      },
-      executive: {
-        monthly: 'price_executive_monthly',
-        sixmonth: 'price_executive_6month',
-        annual: 'price_executive_annual'
-      }
-    };
-    
-    // Add click handlers to all pricing buttons
-    document.addEventListener('DOMContentLoaded', function() {
-      const pricingButtons = document.querySelectorAll('.pricing-btn');
-      
-      pricingButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const plan = this.dataset.plan;
-          const period = this.dataset.period;
-          
-          if (plan && period && priceMapping[plan] && priceMapping[plan][period]) {
-            initCheckout(plan, period);
-          }
-        });
-      });
-    });
-    
-    // Stripe checkout function
-    async function initCheckout(plan, period) {
-      // First check if beta limit is reached
-      const canPurchase = await checkPurchaseLimit();
-      if (!canPurchase) {
-        return; // checkPurchaseLimit handles redirect to waitlist
-      }
-      
-      const priceId = priceMapping[plan][period];
-      
-      try {
-        const { error } = await stripe.redirectToCheckout({
-          lineItems: [{ price: priceId, quantity: 1 }],
-          mode: 'subscription',
-          successUrl: `${window.location.origin}/success.html?plan=${plan}&period=${period}`,
-          cancelUrl: `${window.location.origin}/landing.html#pricing`,
-          customerEmail: null,
-          billingAddressCollection: 'required',
-          metadata: {
-            plan: plan,
-            commitment: period
-          }
-        });
-        
-        if (error) {
-          console.error('Stripe checkout error:', error);
-          alert('There was an error processing your request. Please try again.');
-        }
-      } catch (error) {
-        console.error('Checkout initialization failed:', error);
-        alert('Unable to start checkout. Please try again.');
-      }
+    function choosePlan(plan, period, amount) {
+      // PayPal checkout only
+      window.location.href = `/payment-required.html?plan=${plan}&period=${period}&amount=${amount}`;
     }
     
     // Enterprise call scheduling

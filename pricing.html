@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trust Factor™ Pricing - Credli.ai</title>
   <link rel="stylesheet" href="styles.css?v=99">
-  <script src="https://js.stripe.com/v3/"></script>
   <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
   <style>
     /* Footer Quote Styling */
@@ -93,7 +92,7 @@
               </ul>
             </div>
             <div class="payment-buttons">
-              <button class="btn primary" onclick="selectPlan('professional', 4.97)">Pay with Stripe</button>
+              <button class="btn primary" onclick="selectPlan('professional', 4.97)">Join Beta Program</button>
               <div id="paypal-professional" class="paypal-button-container"></div>
             </div>
             <p class="plan-note">Best for individual consultants</p>
@@ -117,7 +116,7 @@
               </ul>
             </div>
             <div class="payment-buttons">
-              <button class="btn primary" onclick="selectPlan('executive', 9.97)">Pay with Stripe</button>
+              <button class="btn primary" onclick="selectPlan('executive', 9.97)">Join Beta Program</button>
               <div id="paypal-executive" class="paypal-button-container"></div>
             </div>
             <p class="plan-note">Best for established experts</p>
@@ -140,7 +139,7 @@
               </ul>
             </div>
             <div class="payment-buttons">
-              <button class="btn primary" onclick="selectPlan('enterprise', 19.97)">Pay with Stripe</button>
+              <button class="btn primary" onclick="selectPlan('enterprise', 19.97)">Join Beta Program</button>
               <div id="paypal-enterprise" class="paypal-button-container"></div>
             </div>
             <p class="plan-note">Best for larger firms</p>
@@ -232,7 +231,6 @@
                 <div class="form-group">
                   <label>Card Information</label>
                   <div id="card-element">
-                    <!-- Stripe Elements will create form elements here -->
                   </div>
                   <div id="card-errors" role="alert"></div>
                 </div>
@@ -250,7 +248,6 @@
               </form>
               
               <div class="payment-security">
-                <p>🔒 Secure payment processing by Stripe. Cancel anytime after 12 months.</p>
               </div>
             </div>
           </div>
@@ -318,10 +315,7 @@
       document.getElementById('payment-modal').style.display = 'none';
     }
     
-    // Stripe integration - ADD YOUR PUBLISHABLE KEY HERE
     const STRIPE_PUBLISHABLE_KEY = 'pk_test_your_publishable_key'; // Replace with your key
-    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-    const elements = stripe.elements();
     
     // Create card element
     const cardElement = elements.create('card', {
@@ -357,7 +351,6 @@
       
       try {
         // Create payment method
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
           type: 'card',
           card: cardElement,
           billing_details: {

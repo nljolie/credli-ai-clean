@@ -17,12 +17,9 @@ async function checkPurchaseLimit() {
     }
 }
 
-// Call this before any Stripe checkout
 function initiatePurchase() {
     checkPurchaseLimit().then(canPurchase => {
         if (canPurchase) {
-            // Proceed with Stripe checkout
-            startStripeCheckout();
         }
     });
 }
