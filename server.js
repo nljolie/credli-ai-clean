@@ -1699,13 +1699,13 @@ app.use('/api/free-cred-score', serverSideProtection);
 // ===== NEWSLETTER SIGNUP ENDPOINT =====
 app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
   try {
-    const { email, name, newsletter, betaWaitlist, annual, source } = req.body;
+    const { email, name, phone, newsletter, betaWaitlist, annual, source } = req.body;
     
     // Basic validation
-    if (!email || !name) {
+    if (!email || !name || !phone) {
       return res.status(400).json({
         success: false,
-        error: 'Email and name are required'
+        error: 'Email, name, and phone are required'
       });
     }
     
@@ -1722,6 +1722,7 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
     const signupData = {
       email: email.trim().toLowerCase(),
       name: name.trim(),
+      phone: phone.trim(),
       newsletter: newsletter === true || newsletter === 'true',
       betaWaitlist: betaWaitlist === true || betaWaitlist === 'true',
       annual: annual === true || annual === 'true',

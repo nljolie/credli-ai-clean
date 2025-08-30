@@ -924,8 +924,9 @@
       const formData = {
         email: document.getElementById('trustEmail').value,
         name: document.getElementById('trustName').value,
-        newsletter: document.getElementById('newsletter').checked,
-        betaWaitlist: document.getElementById('betaWaitlist').checked,
+        phone: document.getElementById('trustPhone').value,
+        newsletter: true,
+        betaWaitlist: true,
         source: 'landing'
       };
       
@@ -983,71 +984,36 @@
       
       <!-- Header -->
       <div class="popup-header">
-        <h2>The Trust Economy is Here: Claim Your Spot or Get Left Behind</h2>
-        <p>78% of companies are already using AI daily<br>and your clients are using it to find experts like you. Are you the one being recommended? [¹]</p>
+        <h2>When AI Decides Who Gets The Next Client Will It Choose You?</h2>
+        <p>Get insider strategies and real-time updates on ranking above your competition in AI-powered search.</p>
       </div>
 
       <!-- Content -->
       <div class="popup-content">
         <div class="value-proposition">
-          <div class="urgency-badge">Founders Price is $497 annually just $1.38 a day</div>
-          <h3>Join Forward Thinking Leaders</h3>
-          <p>While others are still debating AI search, our members are already being surfaced as trusted authorities in ChatGPT, Perplexity, and Gemini.</p>
-        </div>
-
-        <div class="benefits-list">
-          <p style="font-weight: 600; margin-bottom: 20px; color: var(--text);">As a Trust Economy Insider, You'll Get:</p>
-          <div class="benefit-item">
-            <span class="benefit-icon">📊</span>
-            <span><strong>Proprietary GEO Intelligence:</strong> Weekly breakdowns of AI search trends and algorithm shifts, helping you stay ahead of the curve.</span>
-          </div>
-          <div class="benefit-item">
-            <span class="benefit-icon">🚀</span>
-            <span><strong>The Credli.ai Build in Public:</strong> Exclusive access to the strategy, metrics, and lessons from scaling to a 7-figure AI authority platform.</span>
-          </div>
-          <div class="benefit-item">
-            <span class="benefit-icon">📋</span>
-            <span><strong>Playbooks That Work:</strong> Step-by-step frameworks for generating expert positioning that AI engines reward with top rankings.</span>
-          </div>
-          <div class="benefit-item">
-            <span class="benefit-icon">📈</span>
-            <span><strong>Real-World Case Studies:</strong> See how consultants and executives like you are leveraging AI authority to close high-value clients.</span>
-          </div>
+          <p>Stay ahead of the curve. Credli delivers cutting-edge content, proven playbooks, and exclusive updates—so you're always the name AI engines recommend. Enter your name, email, and phone to join our authority-driven network and claim your spot at the top.</p>
         </div>
 
         <!-- Signup Form -->
         <div class="signup-form">
           <form id="trustSignupForm" onsubmit="submitTrustSignup(event)">
             <div class="form-group">
-              <label for="trustEmail">Email Address</label>
-              <input type="email" id="trustEmail" name="email" required placeholder="your@email.com">
+              <label for="trustName">Name</label>
+              <input type="text" id="trustName" name="name" required placeholder="Your full name">
             </div>
             
             <div class="form-group">
-              <label for="trustName">First Name</label>
-              <input type="text" id="trustName" name="name" required placeholder="Your first name">
+              <label for="trustEmail">Email</label>
+              <input type="email" id="trustEmail" name="email" required placeholder="your@email.com">
             </div>
 
-            <div class="signup-options">
-              <div class="option-item">
-                <input type="checkbox" id="newsletter" name="newsletter" checked>
-                <div class="option-content">
-                  <h4>📰 Trust Economy Newsletter (FREE)</h4>
-                  <p>Weekly insights on AI search trends, authority building, and the trust economy shift</p>
-                </div>
-              </div>
-              
-              <div class="option-item">
-                <input type="checkbox" id="betaWaitlist" name="betaWaitlist">
-                <div class="option-content">
-                  <h4>🎯 Credli.ai Launch Notification</h4>
-                  <p>Be among the first to know when beta ends and secure founding member access <span class="option-price">(Founders Price is $497 annually just $1.38 a day)</span></p>
-                </div>
-              </div>
+            <div class="form-group">
+              <label for="trustPhone">Phone</label>
+              <input type="tel" id="trustPhone" name="phone" required placeholder="Your phone number">
             </div>
 
             <button type="submit" class="submit-button" id="trustSubmitBtn">
-              Join the Trust Economy Revolution
+              Join Our Authority Network
             </button>
           </form>
         </div>
