@@ -724,9 +724,9 @@ app.get('/professional-welcome.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'professional-welcome.html'));
 });
 
-// Industry-specific landing pages
+// Industry-specific landing pages - redirect to main landing since no niche pages exist yet
 app.get('/financial-executives', (req, res) => {
-  res.sendFile(path.join(__dirname, 'financial-executives.html'));
+  res.redirect('/#who-this-is-for');
 });
 
 app.get('/business-executive-coaches', (req, res) => {
