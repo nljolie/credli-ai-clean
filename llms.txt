@@ -6,11 +6,10 @@ build AI authority so they get recommended when prospects ask AI who to trust.
 
 ## Key Pages
 - [Home](https://credli.ai/) - Main service overview
-- [Financial Executives](https://credli.ai/financial-executives) - AI authority for financial professionals
-- [Business Coaches](https://credli.ai/business-coaches) - Coaching credibility optimization
-- [Wealth Managers](https://credli.ai/wealth-managers) - Trust building for wealth management
-- [Executive Coaches](https://credli.ai/executive-coaches) - Executive coaching authority building
-- [Pricing](https://credli.ai/pricing) - Service packages and beta pricing
+- [Demo](https://credli.ai/demo.html) - Free AI authority analysis
+- [Results](https://credli.ai/cred-score.html) - Credibility score results
+- [Landing](https://credli.ai/landing.html) - Detailed service information
+- [Privacy Policy](https://credli.ai/privacy-policy.html) - Privacy and data protection
 
 ## Services
 - Ask Engine Optimization (AEO)
