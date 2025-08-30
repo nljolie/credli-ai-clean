@@ -730,7 +730,7 @@ app.get('/financial-executives', (req, res) => {
 });
 
 app.get('/business-executive-coaches', (req, res) => {
-  res.sendFile(path.join(__dirname, 'business-executive-coaches.html'));
+  res.redirect('/#who-this-is-for');
 });
 
 
