@@ -697,20 +697,6 @@ p {
 }
 
 /* ===== FINAL CTA ===== */
-.final-cta {
-  padding: 80px 0;
-  background: var(--paper);
-  text-align: center;
-}
-
-.cta-buttons {
-  margin: 2rem 0;
-}
-
-.btn-primary.large {
-  padding: 1.5rem 3rem;
-  font-size: 1.2rem;
-}
 
 /* ===== CITATIONS ===== */
 .citations {
