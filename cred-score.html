@@ -653,21 +653,39 @@
         // Use user's actual name from form data
         const name = data.name || 'User';
         
-        // Calculate basic metrics
-        const totalQueries = data.askphrases ? data.askphrases.length : 3;
-        const mentions = data.mentions || 0;
-        const credScore = data.credScore || Math.floor(Math.random() * 30) + 60; // 60-90 range
-        
-        // Calculate detailed API metrics (will come from actual API responses)
-        const chatgptScore = data.chatgptScore || Math.floor(Math.random() * 30) + 50;
-        const perplexityScore = data.perplexityScore || Math.floor(Math.random() * 30) + 45;
-        const geminiScore = data.geminiScore || Math.floor(Math.random() * 30) + 40;
-        const googleAIScore = data.googleAIScore || Math.floor(Math.random() * 30) + 55;
-        
-        // Calculate component scores
-        const visibilityScore = Math.round((chatgptScore + geminiScore) / 2);
-        const authorityScore = Math.round((perplexityScore + googleAIScore) / 2);
-        const consistencyScore = Math.round(credScore * 0.7); // Based on overall consistency
+        // Check if this is real API data or fallback to simulation
+        if (data.isRealData && data.apiResults) {
+          // USE REAL API RESULTS
+          const apiData = data.apiResults;
+          const credScore = apiData.trustFactor || 0;
+          const chatgptScore = credScore; // Single ChatGPT analysis
+          const totalQueries = data.askphrases ? data.askphrases.length : 3;
+          const mentions = apiData.matrix ? apiData.matrix.filter(r => r.youAppear).length : 0;
+          
+          // Use real Trust Factor breakdown
+          const visibilityScore = apiData.trustBreakdown?.visibility || 0;
+          const authorityScore = apiData.trustBreakdown?.authority || 0;
+          const consistencyScore = apiData.trustBreakdown?.consistency || 0;
+          
+          var perplexityScore = 0; // Not analyzed
+          var geminiScore = 0; // Not analyzed  
+          var googleAIScore = 0; // Not analyzed
+          
+        } else {
+          // FALLBACK TO SIMULATION (for backward compatibility)
+          const totalQueries = data.askphrases ? data.askphrases.length : 3;
+          const mentions = data.mentions || 0;
+          const credScore = data.credScore || Math.floor(Math.random() * 30) + 60;
+          
+          const chatgptScore = data.chatgptScore || Math.floor(Math.random() * 30) + 50;
+          const perplexityScore = data.perplexityScore || Math.floor(Math.random() * 30) + 45;
+          const geminiScore = data.geminiScore || Math.floor(Math.random() * 30) + 40;
+          const googleAIScore = data.googleAIScore || Math.floor(Math.random() * 30) + 55;
+          
+          const visibilityScore = Math.round((chatgptScore + geminiScore) / 2);
+          const authorityScore = Math.round((perplexityScore + googleAIScore) / 2);
+          const consistencyScore = Math.round(credScore * 0.7);
+        }
         
         // Calculate risks and opportunities
         const imposterRisks = data.imposterRisks || Math.floor(Math.random() * 5) + 2;

@@ -523,23 +523,53 @@
             askphrase3: askphrase3
           });
           
-          // Store form data for results page
-          const resultsData = {
-            name: name,
-            email: email,
-            company: company,
-            askphrases: [askphrase1, askphrase2, askphrase3],
-            timestamp: new Date().getTime()
-          };
-          
-          // Store in sessionStorage for results page
-          sessionStorage.setItem('credScoreData', JSON.stringify(resultsData));
-          
-          // Simulate processing time
-          setTimeout(() => {
-            // Redirect to results page
+          // Call real ChatGPT API for one-time analysis
+          try {
+            const apiResponse = await fetch('/api/free-scan', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                name: name,
+                keywords: [askphrase1, askphrase2, askphrase3],
+                captcha: 'demo-form-submission'
+              })
+            });
+            
+            const apiResult = await apiResponse.json();
+            
+            // Check if user already used their free trial
+            if (apiResponse.status === 429) {
+              alert('You have already used your free analysis. Redirecting to our Professional Beta program...');
+              window.location.href = '/#executive-accelerator';
+              return;
+            }
+            
+            if (!apiResponse.ok) {
+              throw new Error(apiResult.error || 'Analysis failed');
+            }
+            
+            // Store real API results for results page
+            const resultsData = {
+              name: name,
+              email: email,
+              company: company,
+              askphrases: [askphrase1, askphrase2, askphrase3],
+              apiResults: apiResult,
+              timestamp: new Date().getTime(),
+              isRealData: true
+            };
+            
+            sessionStorage.setItem('credScoreData', JSON.stringify(resultsData));
             window.location.href = '/cred-score.html';
-          }, 3000);
+            
+          } catch (apiError) {
+            console.error('Real API analysis failed:', apiError);
+            showError(`Analysis failed: ${apiError.message}. Please try again later.`);
+            hideLoading();
+            return;
+          }
           
         } catch (err) {
           console.error('Cred Score error:', err);

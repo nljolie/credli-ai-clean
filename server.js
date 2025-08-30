@@ -1181,7 +1181,7 @@ app.post('/api/free-scan', rateLimitMiddleware, async (req, res) => {
     return res.status(429).json({ 
       error: 'Free trial used',
       message: 'You have already used your free trial. Upgrade to Professional for unlimited scans.',
-      redirectTo: '#pricing',
+      redirectTo: '/#executive-accelerator',
       upgradeUrl: 'https://www.paypal.com/ncp/payment/9HEAPSZK3L592'
     });
   }
