@@ -1732,7 +1732,7 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
     
     // Send to appropriate Google Apps Script based on source
     const scriptUrls = {
-      'landing': 'https://script.google.com/macros/s/AKfycbzKtt3m8H76CQeCBW-MdquzZkdoaRs3TB0WhemcBYSvhK401yfx-eolAdNxWrZEQ_2NnQ/exec',
+      'landing': 'https://script.google.com/macros/s/1A633qH6eazx2se3JcbNJmhEiTweP4RRQagQus-zb2Ho/exec',
       'demo': 'https://script.google.com/macros/s/AKfycbzF1NBKDmJ7nkRM8qzYxAQoofHS6-4E9riiF7TdllY3ueW_9Y53CkD6OSYAdxZlHJC9TQ/exec',
       'demo-test': 'https://script.google.com/macros/s/AKfycbzF1NBKDmJ7nkRM8qzYxAQoofHS6-4E9riiF7TdllY3ueW_9Y53CkD6OSYAdxZlHJC9TQ/exec'
     };
