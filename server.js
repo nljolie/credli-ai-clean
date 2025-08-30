@@ -32,10 +32,16 @@ console.log(`📋 PayPal Client ID: ${PAYPAL_CLIENT_ID_PUBLIC.substring(0, 20)}.
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyB5ef3Y0JmumLEtc7qDWf_jMekLy-od-YI';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
-// Secured OpenAI API - Two-tier system
-const OPENAI_FREE_KEY = process.env.OPENAI_FREE_KEY;
-const OPENAI_PREMIUM_KEY = process.env.OPENAI_PREMIUM_KEY; // For paying customers (to be created)
+// Two-tier API system: Free demos vs Premium client reports
+const OPENAI_FREE_KEY = process.env.OPENAI_API_KEY; // Using existing key for free tier
+const OPENAI_PREMIUM_KEY = process.env.OPENAI_PREMIUM_KEY; // Higher limits for paying customers
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
+
+// Premium-only APIs for paid client reports
+const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY; // Premium only
+const SERPAPI_KEY = process.env.SERPAPI_KEY; // Google Overview premium only  
+const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY; // Premium only
+const GEMINI_PREMIUM_KEY = process.env.GEMINI_PREMIUM_KEY; // Higher limits for premium
 
 // IP-based usage tracking for free demos
 const freeUsageTracker = new Map(); // IP -> { count, lastUsed }

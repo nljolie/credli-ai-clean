@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popup Debug Test</title>
+    <link rel="stylesheet" href="landing-styles.css">
+</head>
+<body>
+    <h1>Popup Debug Test</h1>
+    <button onclick="showTrustPopup()">Manual Trigger</button>
+    <button onclick="console.log(document.getElementById('trustPopup'))">Check Element</button>
+
+    <script>
+    // Test popup functions
+    let popupShown = false;
+    let popupTimer;
+
+    function showTrustPopup() {
+      console.log('showTrustPopup called');
+      console.log('popupShown:', popupShown);
+      
+      if (popupShown) {
+        console.log('popup already shown, returning');
+        return;
+      }
+      
+      const popup = document.getElementById('trustPopup');
+      console.log('popup element:', popup);
+      
+      if (popup) {
+        popup.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        popupShown = true;
+        console.log('popup should now be visible');
+      } else {
+        console.error('trustPopup element not found');
+      }
+    }
+
+    function closeTrustPopup() {
+      console.log('closeTrustPopup called');
+      const popup = document.getElementById('trustPopup');
+      if (popup) {
+        popup.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    // Automatic trigger after 3 seconds
+    window.addEventListener('load', function() {
+      console.log('page loaded, setting timer');
+      popupTimer = setTimeout(showTrustPopup, 3000);
+    });
+    </script>
+
+    <!-- Trust Economy Newsletter Popup -->
+    <div id="trustPopup" class="trust-popup-overlay">
+        <div class="trust-popup">
+            <button class="popup-close" onclick="closeTrustPopup()">&times;</button>
+            
+            <!-- Header -->
+            <div class="popup-header">
+                <h2>When AI Decides Who Gets The Next Client Will It Choose You?</h2>
+                <p>Test popup content</p>
+            </div>
+
+            <!-- Content -->
+            <div class="popup-content">
+                <p>This is a test popup.</p>
+                <button onclick="closeTrustPopup()">Close</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
