@@ -363,43 +363,6 @@ p {
   margin-right: auto;
 }
 
-
-.credli-highlight {
-  background: rgba(52, 84, 209, 0.1);
-  padding: 2rem;
-  border-radius: 12px;
-  border-left: 4px solid var(--brand);
-  margin: 2rem 0;
-}
-
-/* ===== PRICING ===== */
-.pricing-block {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: var(--shadow-light);
-  margin: 2rem 0;
-  text-align: center;
-}
-
-.price-main {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--brand);
-  margin-bottom: 1rem;
-}
-
-.pricing-details {
-  list-style: none;
-  padding: 0;
-}
-
-.pricing-details li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--line);
-}
-
-
 /* ===== COMPARISON TABLE ===== */
 .comparison-table {
   width: 100%;
@@ -527,22 +490,6 @@ p {
   box-shadow: var(--shadow-medium);
 }
 
-.movement-points {
-  margin: 2rem 0;
-}
-
-.movement-point {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.point-icon {
-  color: var(--brand);
-  font-size: 1.2rem;
-  margin-top: 0.2rem;
-}
 
 .beta-cta {
   text-align: center;
@@ -614,14 +561,6 @@ p {
   background: var(--paper);
 }
 
-.timeline-intro {
-  text-align: center;
-  font-size: 1.1rem;
-  margin-bottom: 3rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 .timeline {
   display: grid;
@@ -689,14 +628,6 @@ p {
   margin-top: 1rem;
 }
 
-.timeline-warning {
-  background: rgba(220, 53, 69, 0.1);
-  padding: 2rem;
-  border-radius: 12px;
-  border-left: 4px solid var(--warning);
-  margin-top: 3rem;
-  text-align: center;
-}
 
 /* ===== SOCIAL PROOF ===== */
 .social-proof {
@@ -726,7 +657,6 @@ p {
   margin-bottom: 1rem;
 }
 
-/* ===== FINAL CTA ===== */
 
 /* ===== CITATIONS ===== */
 .citations {
