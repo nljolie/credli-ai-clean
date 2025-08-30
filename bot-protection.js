@@ -143,7 +143,7 @@ class CredliBotProtection {
 
     showRateLimitMessage() {
         // Redirect directly to pricing after 2 attempts
-        window.location.href = '/landing.html#pricing';
+        window.location.href = '/business_finance.html#pricing';
     }
 
     // Custom Credli.ai Captcha System
