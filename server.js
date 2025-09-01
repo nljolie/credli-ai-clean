@@ -1672,7 +1672,7 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
 
 app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
   try {
-    const { name, email, company, askphrases, fingerprint, trustScore, sessionData } = req.body;
+    const { name, email, company, askphrases, captcha, fingerprint, trustScore, sessionData } = req.body;
     
     // 1. Validate required fields
     if (!name || !email || !company || !askphrases || !Array.isArray(askphrases) || askphrases.length !== 3) {
@@ -1696,7 +1696,14 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
       });
     }
     
-    // 4. Cost Protection - simulate expensive API call
+    // 4. CAPTCHA validation (bot protection)
+    if (!captcha) {
+      return res.status(400).json({ 
+        error: 'CAPTCHA verification required. Please confirm you are not a robot.' 
+      });
+    }
+    
+    // 5. Cost Protection - simulate expensive API call
     const submissionKey = `submission_${req.protection.clientIP}_${email}`;
     const existingSubmission = submissions.get(submissionKey);
     
