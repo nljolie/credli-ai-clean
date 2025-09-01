@@ -1174,76 +1174,7 @@ app.post('/api/scan', rateLimitMiddleware, async (req, res) => {
   });
 });
 
-// POST /api/free-scan - Limited free scan with 1-try limit
-app.post('/api/free-scan', rateLimitMiddleware, async (req, res) => {
-  const { name, keywords = [] } = req.body;
-  
-  // Get client IP for usage tracking
-  const clientIP = getClientIP(req);
-  
-  // Check if user has already used their free trial
-  if (!canUseFreeTrial(clientIP)) {
-    return res.status(429).json({ 
-      error: 'Free trial used',
-      message: 'You have already used your free trial. Upgrade to Professional for unlimited scans.',
-      redirectTo: '/#executive-accelerator',
-      upgradeUrl: 'https://www.paypal.com/ncp/payment/9HEAPSZK3L592'
-    });
-  }
-  
-  // No CAPTCHA verification needed
-  
-  // Record usage for this IP
-  recordFreeUsage(clientIP);
-  
-  // Limited prompts for free scan (only 3 queries to save API costs)
-  const freePrompts = [
-    `Who are the top experts in ${keywords[0] || 'consulting'}?`,
-    `Who would you hire as a ${keywords[0] || 'consultant'}?`,
-    `Best companies for ${keywords[0] || 'consulting'} services`
-  ];
-  
-  const matrix = [];
-  
-  // Use restricted ChatGPT for free scans (limited to 1 try per IP)
-  for (const prompt of freePrompts) {
-    console.log(`🔍 Free Scan - Querying ChatGPT (Restricted): ${prompt}`);
-    const ans = await getRealEngineAnswer('chatgpt-free', prompt, name);
-    
-    const mentioned = ans?.names || [];
-    const youAppear = mentioned.map(s => s.toLowerCase()).includes((name||'').toLowerCase());
-    
-    matrix.push({
-      engine: 'ChatGPT (Free Trial)',
-      prompt,
-      youAppear,
-      mentioned,
-      userPosition: ans?.userPosition,
-      rawResponse: ans?.rawResponse
-    });
-  }
-  
-  // Calculate basic metrics
-  const mentions = matrix.filter(r => r.youAppear).length;
-  const opportunities = matrix.filter(r => !r.youAppear).length;
-  const credScore = Math.round((mentions / matrix.length) * 100);
-  
-  // Simple breakdown calculation
-  const visibility = credScore;
-  const authority = mentions > 0 ? Math.min(credScore + 20, 100) : credScore;
-  const consistency = credScore;
-  
-  res.json({
-    credScore,
-    mentions,
-    opportunities,
-    imposters: Math.floor(Math.random() * 3), // Mock for free version
-    visibility,
-    authority,
-    consistency,
-    message: "This is a limited free scan. Upgrade for full analysis across all AI engines."
-  });
-});
+// OLD /api/free-scan endpoint removed - use /api/free-cred-score instead
 
 // TEST ENDPOINT: Simulate PayPal payment flow (remove in production)
 app.get('/test-paypal-flow', async (req, res) => {
