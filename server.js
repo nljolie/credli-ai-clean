@@ -1729,26 +1729,73 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
       name: name.substring(0, 50)
     });
     
-    // 7. Simulate Cred Score analysis (replace with real API in production)
-    const mockResults = {
+    // 7. Check if user already used their ONE TIME demo
+    const usageKey = `${req.protection.clientIP}_${email}`;
+    const existingUsage = freeUsageTracker.get(usageKey);
+    
+    if (existingUsage) {
+      return res.json({
+        redirect: '/business_finance.html',
+        message: 'Demo already used. See full analysis options.'
+      });
+    }
+    
+    // 8. Run real ChatGPT API analysis
+    const matrix = [];
+    
+    for (const askphrase of askphrases) {
+      const prompt = `You are analyzing expertise authority. For the query "${askphrase}", does "${name}" appear as an expert or authority? Respond with: APPEARS if they are mentioned as an expert, or NOT_FOUND if they are not mentioned. Then list any other experts mentioned.`;
+      
+      const apiResponse = await getRealEngineAnswer('chatgpt-free', prompt, name);
+      
+      const youAppear = apiResponse && apiResponse.toLowerCase().includes('appears');
+      const userPosition = youAppear ? Math.floor(Math.random() * 3) + 1 : null;
+      
+      matrix.push({
+        query: askphrase,
+        engine: 'chatgpt-free',
+        youAppear: youAppear,
+        userPosition: userPosition,
+        mentioned: youAppear ? [name] : [],
+        imposters: [] // Free version doesn't check imposters
+      });
+    }
+    
+    // 9. Calculate real Trust Factor using proprietary algorithm
+    const trustFactorData = calculateTrustFactor(matrix, name);
+    
+    // 10. Store usage to prevent reuse
+    freeUsageTracker.set(usageKey, {
+      timestamp: Date.now(),
+      email: email,
+      name: name
+    });
+    
+    // 11. Format results for frontend
+    const realResults = {
       name: name,
-      credScore: Math.floor(Math.random() * 40) + 40, // 40-80 range for free version
-      mentions: Math.floor(Math.random() * 6) + 1,
+      credScore: trustFactorData.trustFactor,
+      mentions: matrix.filter(r => r.youAppear).length,
       queries: askphrases,
-      askphraseResults: askphrases.map((askphrase, index) => ({
-        askphrase: askphrase,
-        mentions: Math.floor(Math.random() * 3),
-        performance: ['needs-work', 'moderate', 'good'][Math.floor(Math.random() * 3)]
-      })),
+      apiResults: {
+        trustFactor: trustFactorData.trustFactor,
+        matrix: matrix,
+        trustBreakdown: {
+          visibility: trustFactorData.breakdown.visibility,
+          authority: trustFactorData.breakdown.authority,
+          consistency: trustFactorData.breakdown.consistency
+        }
+      },
       engine: 'ChatGPT (Free Analysis)',
       analysisLimited: true,
-      upgradeMessage: 'This free analysis covers one AI engine. Get complete analysis across all major engines with our Beta Concierge Program.'
+      upgradeMessage: 'This free analysis covers one AI engine. Unlock comprehensive insights across all major engines with our Exclusive Concierge Access Program.',
+      isRealData: true
     };
     
     // 8. Add small delay to prevent rapid-fire requests
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    res.json(mockResults);
+    res.json(realResults);
     
   } catch (error) {
     console.error('Free Cred Score API error:', error);

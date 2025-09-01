@@ -2,7 +2,7 @@
 
 ## **How to Track Your 20-Person Beta Limit**
 
-### **When Someone Purchases (via Stripe):**
+### **When Someone Purchases (via PayPal):**
 1. **Immediately update** `/purchase-counter.json`
 2. **Change the number:**
    ```json
@@ -27,7 +27,7 @@ Create a Google Sheet with columns:
 - **Date**
 - **Name**
 - **Email**
-- **Payment Method** (Stripe/PayPal)
+- **Payment Method** (PayPal)
 - **Amount Paid**
 - **Status** (Active/Waitlist)
 
