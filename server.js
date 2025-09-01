@@ -1176,7 +1176,7 @@ app.post('/api/scan', rateLimitMiddleware, async (req, res) => {
 
 // POST /api/free-scan - Limited free scan with 1-try limit
 app.post('/api/free-scan', rateLimitMiddleware, async (req, res) => {
-  const { name, keywords = [], captcha } = req.body;
+  const { name, keywords = [] } = req.body;
   
   // Get client IP for usage tracking
   const clientIP = getClientIP(req);
@@ -1191,10 +1191,7 @@ app.post('/api/free-scan', rateLimitMiddleware, async (req, res) => {
     });
   }
   
-  // Verify CAPTCHA (in production, verify with Google's API)
-  if (!captcha) {
-    return res.status(400).json({ error: 'CAPTCHA verification required' });
-  }
+  // No CAPTCHA verification needed
   
   // Record usage for this IP
   recordFreeUsage(clientIP);
