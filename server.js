@@ -1585,11 +1585,11 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
   try {
     const { email, name, phone, newsletter, betaWaitlist, annual, source } = req.body;
     
-    // Basic validation
-    if (!email || !name || !phone) {
+    // Basic validation (phone optional for demo popups)
+    if (!email || !name || (!phone && source !== 'demo')) {
       return res.status(400).json({
         success: false,
-        error: 'Email, name, and phone are required'
+        error: source === 'demo' ? 'Email and name are required' : 'Email, name, and phone are required'
       });
     }
     
@@ -1606,7 +1606,7 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
     const signupData = {
       email: email.trim().toLowerCase(),
       name: name.trim(),
-      phone: phone.trim(),
+      phone: phone ? phone.trim() : '', // Handle optional phone for demo popups
       newsletter: newsletter === true || newsletter === 'true',
       betaWaitlist: betaWaitlist === true || betaWaitlist === 'true',
       annual: annual === true || annual === 'true',
