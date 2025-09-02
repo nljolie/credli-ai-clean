@@ -80,7 +80,7 @@
   
   <!-- Results Page -->
   <url>
-    <loc>https://credli.ai/cred-score.html</loc>
+    <loc>https://credli.ai/results-score.html</loc>
     <lastmod>2025-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

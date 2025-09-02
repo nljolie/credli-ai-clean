@@ -7,7 +7,7 @@ build AI authority so they get recommended when prospects ask AI who to trust.
 ## Key Pages
 - [Home](https://credli.ai/) - Main service overview
 - [Demo](https://credli.ai/demo.html) - Free AI authority analysis
-- [Results](https://credli.ai/cred-score.html) - Credibility score results
+- [Results](https://credli.ai/results-score.html) - Credibility score results
 - [Landing](https://credli.ai/landing.html) - Detailed service information
 - [Privacy Policy](https://credli.ai/privacy-policy.html) - Privacy and data protection
 
