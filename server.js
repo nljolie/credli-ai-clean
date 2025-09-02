@@ -1706,25 +1706,15 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
       name: name
     });
     
-    // 11. Format results for frontend
+    // 11. Format results to match frontend expectations
     const realResults = {
-      name: name,
-      credScore: trustFactorData.trustFactor,
-      mentions: matrix.filter(r => r.youAppear).length,
-      queries: askphrases,
-      apiResults: {
-        trustFactor: trustFactorData.trustFactor,
-        matrix: matrix,
-        trustBreakdown: {
-          visibility: trustFactorData.breakdown.visibility,
-          authority: trustFactorData.breakdown.authority,
-          consistency: trustFactorData.breakdown.consistency
-        }
-      },
-      engine: 'ChatGPT (Free Analysis)',
-      analysisLimited: true,
-      upgradeMessage: 'This free analysis covers one AI engine. Unlock comprehensive insights across all major engines with our Exclusive Concierge Access Program.',
-      isRealData: true
+      trustFactor: trustFactorData.trustFactor,
+      matrix: matrix,
+      trustBreakdown: {
+        visibility: trustFactorData.breakdown.visibility,
+        authority: trustFactorData.breakdown.authority,
+        consistency: trustFactorData.breakdown.consistency
+      }
     };
     
     // 8. Add small delay to prevent rapid-fire requests
