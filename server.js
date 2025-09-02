@@ -1601,7 +1601,7 @@ app.post('/api/trust-signup', rateLimitMiddleware, async (req, res) => {
   }
 });
 
-app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
+app.post('/api/free-cred-score', async (req, res) => {
   try {
     const { name, email, company, askphrases, captcha, fingerprint, trustScore, sessionData } = req.body;
     
@@ -1664,16 +1664,7 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
       name: name.substring(0, 50)
     });
     
-    // 7. Check if user already used their ONE TIME demo
-    const usageKey = `${req.protection.clientIP}_${email}`;
-    const existingUsage = freeUsageTracker.get(usageKey);
-    
-    if (existingUsage) {
-      return res.json({
-        redirect: '/business_finance.html',
-        message: 'Demo already used. See full analysis options.'
-      });
-    }
+    // 7. REMOVED: Usage tracking for unlimited testing
     
     // 8. Run real ChatGPT API analysis
     const matrix = [];
@@ -1699,12 +1690,7 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
     // 9. Calculate real Trust Factor using proprietary algorithm
     const trustFactorData = calculateTrustFactor(matrix, name);
     
-    // 10. Store usage to prevent reuse
-    freeUsageTracker.set(usageKey, {
-      timestamp: Date.now(),
-      email: email,
-      name: name
-    });
+    // 10. REMOVED: Usage storage for unlimited testing
     
     // 11. Format results to match frontend expectations
     const realResults = {
