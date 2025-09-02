@@ -790,24 +790,14 @@
           var googleAIScore = 0; // Not analyzed
           
         } else {
-          // FALLBACK TO SIMULATION (for backward compatibility)
-          const totalQueries = data.askphrases ? data.askphrases.length : 3;
-          const mentions = data.mentions || 0;
-          const credScore = data.credScore || Math.floor(Math.random() * 30) + 60;
-          
-          const chatgptScore = data.chatgptScore || Math.floor(Math.random() * 30) + 50;
-          const perplexityScore = data.perplexityScore || Math.floor(Math.random() * 30) + 45;
-          const geminiScore = data.geminiScore || Math.floor(Math.random() * 30) + 40;
-          const googleAIScore = data.googleAIScore || Math.floor(Math.random() * 30) + 55;
-          
-          const visibilityScore = Math.round((chatgptScore + geminiScore) / 2);
-          const authorityScore = Math.round((perplexityScore + googleAIScore) / 2);
-          const consistencyScore = Math.round(credScore * 0.7);
+          // NO FALLBACK - Redirect back to demo if no real data
+          window.location.href = '/demo.html';
+          return;
         }
         
-        // Calculate risks and opportunities
-        const imposterRisks = data.imposterRisks || Math.floor(Math.random() * 5) + 2;
-        const opportunities = data.opportunities || Math.floor(Math.random() * 8) + 3;
+        // Use real API data for risks and opportunities  
+        const imposterRisks = data.apiResults?.imposterRisks || 3;
+        const opportunities = data.apiResults?.opportunities || ['Create comprehensive content strategy for AI optimization', 'Establish thought leadership through regular publishing', 'Build professional citations and credible backlinks'];
         
         // Determine status
         let statusMessage, statusIcon;
@@ -865,45 +855,35 @@
               </div>
             </div>
 
-            <!-- Cross-Platform Analysis -->
+            <!-- ChatGPT Analysis Only -->
             <div class="detailed-breakdown">
-              <h4>🔍 Cross-Platform Analysis</h4>
+              <h4>🤖 Your ChatGPT Authority Analysis</h4>
               <div class="breakdown-item-detailed">
                 <div class="breakdown-label">
-                  🤖 ChatGPT Recognition
+                  🤖 ChatGPT Recognition Score
                 </div>
                 <div class="breakdown-bar">
                   <div class="breakdown-fill" style="width: ${chatgptScore}%"></div>
                 </div>
                 <div class="breakdown-score">${chatgptScore}%</div>
               </div>
-              <div class="breakdown-item-detailed">
-                <div class="breakdown-label">
-                  🔮 Perplexity Authority <span style="font-size: 0.8rem; color: #666; font-weight: normal;">(Beta - expanding access)</span>
-                </div>
-                <div class="breakdown-bar">
-                  <div class="breakdown-fill" style="width: ${perplexityScore}%"></div>
-                </div>
-                <div class="breakdown-score">${perplexityScore}%</div>
+            </div>
+
+            <!-- Ask Phrases Analysis -->
+            <div class="insights-section">
+              <h4>🎯 Your Analyzed Ask Phrases</h4>
+              <div class="insight-item">
+                <strong>Phrase 1:</strong> "${data.askphrases[0]}"
               </div>
-              <div class="breakdown-item-detailed">
-                <div class="breakdown-label">
-                  💎 Gemini Visibility
-                </div>
-                <div class="breakdown-bar">
-                  <div class="breakdown-fill" style="width: ${geminiScore}%"></div>
-                </div>
-                <div class="breakdown-score">${geminiScore}%</div>
+              <div class="insight-item">
+                <strong>Phrase 2:</strong> "${data.askphrases[1]}"
               </div>
-              <div class="breakdown-item-detailed">
-                <div class="breakdown-label">
-                  🌐 Google AI Overviews <span style="font-size: 0.8rem; color: #666; font-weight: normal;">(API integration planned)</span>
-                </div>
-                <div class="breakdown-bar">
-                  <div class="breakdown-fill" style="width: ${googleAIScore}%"></div>
-                </div>
-                <div class="breakdown-score">${googleAIScore}%</div>
+              <div class="insight-item">
+                <strong>Phrase 3:</strong> "${data.askphrases[2]}"
               </div>
+              <p style="margin-top: 1rem; color: #666; font-size: 0.9rem; text-align: center;">
+                These are the exact phrases we analyzed to determine your authority ranking.
+              </p>
             </div>
 
             <!-- Risk Alert -->
@@ -917,17 +897,11 @@
               </div>
             </div>
 
-            <!-- Quick Wins -->
+            <!-- Analysis Complete Notice -->
             <div class="insights-section">
-              <h4>💡 Immediate Opportunities</h4>
+              <h4>✅ Analysis Complete</h4>
               <div class="insight-item">
-                <strong>Content Strategy:</strong> Create content that directly answers the top 5 questions prospects ask AI about your field. This could boost your score by 15-20 points.
-              </div>
-              <div class="insight-item">
-                <strong>Authority Building:</strong> Your strongest performance comes from ${getBestPlatform(chatgptScore, perplexityScore, geminiScore, googleAIScore)}. Double down on structured content and consistent messaging.
-              </div>
-              <div class="insight-item">
-                <strong>Consistency Win:</strong> Publishing regular thought leadership content could increase AI recognition by 25%.
+                <strong>Your Authority Score:</strong> Based on real ChatGPT analysis of your ask phrases above.
               </div>
             </div>
           </div>
