@@ -1636,7 +1636,7 @@ app.post('/api/free-cred-score', async (req, res) => {
     }
     
     // 5. Cost Protection - simulate expensive API call
-    const submissionKey = `submission_${req.protection.clientIP}_${email}`;
+    const submissionKey = `submission_${req.ip || req.connection.remoteAddress}_${email}`;
     const existingSubmission = submissions.get(submissionKey);
     
     // TESTING MODE - Temporarily disable 5-minute cooldown
@@ -1649,11 +1649,10 @@ app.post('/api/free-cred-score', async (req, res) => {
     
     // 5. Log submission for monitoring
     console.log(`✅ Free Cred Score request:`, {
-      ip: req.protection.clientIP,
+      ip: req.ip || req.connection.remoteAddress,
       email: email.substring(0, 20) + '...',
       company: company.substring(0, 30),
-      userAgent: req.protection.userAgent,
-      dailyCount: req.protection.dailyCount,
+      userAgent: req.get('User-Agent') || 'unknown',
       trustScore: trustScore || 'unknown'
     });
     
