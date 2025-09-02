@@ -1508,7 +1508,8 @@ function serverSideProtection(req, res, next) {
 }
 
 // Apply protection to sensitive endpoints
-app.use('/api/free-cred-score', serverSideProtection);
+// TEMPORARILY DISABLED: Bot protection was blocking legitimate form submissions
+// app.use('/api/free-cred-score', serverSideProtection);
 
 // Free Cred Score endpoint with comprehensive protection
 // ===== NEWSLETTER SIGNUP ENDPOINT =====
