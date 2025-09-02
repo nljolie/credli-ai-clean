@@ -607,6 +607,12 @@
         loadingState.scrollIntoView({ behavior: 'smooth' });
       }
       
+      function hideLoading() {
+        loadingState.style.display = 'none';
+        form.style.display = 'flex';
+        submitBtn.disabled = false;
+      }
+      
       function showError(message) {
         loadingState.style.display = 'none';
         form.style.display = 'flex';
