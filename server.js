@@ -1683,7 +1683,7 @@ app.post('/api/free-cred-score', rateLimitMiddleware, async (req, res) => {
       
       const apiResponse = await getRealEngineAnswer('chatgpt-free', prompt, name);
       
-      const youAppear = apiResponse && apiResponse.toLowerCase().includes('appears');
+      const youAppear = apiResponse && apiResponse.rawResponse && apiResponse.rawResponse.toLowerCase().includes('appears');
       const userPosition = youAppear ? Math.floor(Math.random() * 3) + 1 : null;
       
       matrix.push({
