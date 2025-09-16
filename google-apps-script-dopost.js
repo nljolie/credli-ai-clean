@@ -226,7 +226,7 @@ function generateCredScore(data) {
 
 function sendCredScoreEmail(userData, results) {
   try {
-    const subject = `🎯 Your Cred Score Results: ${results.overallScore}/100 - ${userData.name}`;
+    const subject = `Your Cred Score Results: ${results.overallScore}/100 - ${userData.name}`;
     
     const htmlBody = `
 <!DOCTYPE html>
@@ -264,7 +264,7 @@ function sendCredScoreEmail(userData, results) {
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎯 Your AI Authority Analysis</h1>
+      <h1>Your AI Authority Analysis</h1>
       <p>Personalized Cred Score Results for ${userData.name}</p>
     </div>
     
@@ -275,24 +275,24 @@ function sendCredScoreEmail(userData, results) {
         <p>${results.statusDescription}</p>
       </div>
       
-      <h2>📊 Your AI Authority Breakdown</h2>
+      <h2>Your AI Authority Breakdown</h2>
       <div class="breakdown">
         <div class="breakdown-item">
-          <div class="breakdown-label">👁️ AI Visibility</div>
+          <div class="breakdown-label">AI Visibility</div>
           <div class="breakdown-bar">
             <div class="breakdown-fill" style="width: ${results.visibilityScore}%"></div>
           </div>
           <div class="breakdown-score">${results.visibilityScore}%</div>
         </div>
         <div class="breakdown-item">
-          <div class="breakdown-label">⚡ Authority Score</div>
+          <div class="breakdown-label">Authority Score</div>
           <div class="breakdown-bar">
             <div class="breakdown-fill" style="width: ${results.authorityScore}%"></div>
           </div>
           <div class="breakdown-score">${results.authorityScore}%</div>
         </div>
         <div class="breakdown-item">
-          <div class="breakdown-label">🔄 Consistency</div>
+          <div class="breakdown-label">Consistency</div>
           <div class="breakdown-bar">
             <div class="breakdown-fill" style="width: ${results.consistencyScore}%"></div>
           </div>
@@ -300,35 +300,23 @@ function sendCredScoreEmail(userData, results) {
         </div>
       </div>
       
-      <h2>🔍 Cross-Platform Analysis</h2>
+      <h2>ChatGPT Analysis</h2>
       <div class="platform-analysis">
         <div class="platform-item">
-          <span>🤖 ChatGPT Recognition</span>
+          <span>ChatGPT Recognition</span>
           <strong>${results.chatgptScore}%</strong>
-        </div>
-        <div class="platform-item">
-          <span>💎 Gemini Visibility</span>
-          <strong>${results.geminiScore}%</strong>
-        </div>
-        <div class="platform-item">
-          <span>🔮 Perplexity Authority</span>
-          <strong>${results.perplexityScore}%</strong>
-        </div>
-        <div class="platform-item">
-          <span>🌐 Google AI Overviews</span>
-          <strong>${results.googleAIScore}%</strong>
         </div>
       </div>
       
       <div class="section">
-        <h3>🚀 Your Growth Opportunities</h3>
+        <h3>Your Growth Opportunities</h3>
         <ul class="opportunity-list">
           ${results.opportunities.map(opp => `<li>${opp}</li>`).join('')}
         </ul>
       </div>
       
       <div class="section">
-        <h3>⚠️ Authority Risks</h3>
+        <h3>Authority Risks</h3>
         <ul class="risk-list">
           ${results.risks.map(risk => `<li>${risk}</li>`).join('')}
         </ul>
@@ -336,7 +324,7 @@ function sendCredScoreEmail(userData, results) {
       </div>
       
       <div class="section">
-        <h3>🎯 Your Analyzed Ask Phrases</h3>
+        <h3>Your Analyzed Ask Phrases</h3>
         <ol>
           <li><em>"${userData.askphrase1}"</em></li>
           <li><em>"${userData.askphrase2}"</em></li>
@@ -346,10 +334,11 @@ function sendCredScoreEmail(userData, results) {
       </div>
       
       <div class="cta-section">
-        <h3>Ready to Dominate AI Search Results?</h3>
-        <p>Your analysis reveals specific opportunities to build AI authority. Our Professional Beta Program provides the strategy, tools, and guidance to ensure AI engines recommend YOU when prospects ask who to trust.</p>
-        <a href="https://credli.ai/business_finance.html#pricing" class="cta-button">View Professional Program →</a>
-        <p style="font-size: 14px; margin-top: 15px;">Limited Beta Access - $497 annually (just $1.38/day)</p>
+        <h3>Take Your Analysis to the Next Level</h3>
+        <p>Take your digital reputation analysis to the next level! While your complimentary report covers a single AI engine, now you can access a one-time, full-spectrum Credli Snapshot for just $497. This comprehensive analysis benchmarks your business across ChatGPT, Gemini, Perplexity, Claude, and Google AI Overview—revealing exactly where you show up in the top 25 most-asked questions on each engine.</p>
+        <p>You'll receive a detailed summary of your visibility for both Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO), empowering you to make smart, data-driven decisions.</p>
+        <p>Ready to see how your business ranks where it matters most? Click the link below to secure your full multi-engine Credli Snapshot and claim this exclusive, in-depth report.</p>
+        <a href="https://www.paypal.com/ncp/payment/W7LPR9DCY8464" class="cta-button">SECURE YOUR FULL MULTI-ENGINE CREDLI SNAPSHOT AND CLAIM THIS EXCLUSIVE IN-DEPTH REPORT</a>
       </div>
     </div>
     
@@ -376,11 +365,8 @@ BREAKDOWN:
 • Authority Score: ${results.authorityScore}%
 • Consistency: ${results.consistencyScore}%
 
-CROSS-PLATFORM ANALYSIS:
+CHATGPT ANALYSIS:
 • ChatGPT Recognition: ${results.chatgptScore}%
-• Gemini Visibility: ${results.geminiScore}%  
-• Perplexity Authority: ${results.perplexityScore}%
-• Google AI Overviews: ${results.googleAIScore}%
 
 YOUR GROWTH OPPORTUNITIES:
 ${results.opportunities.map((opp, i) => `${i+1}. ${opp}`).join('\n')}
@@ -395,13 +381,16 @@ YOUR ANALYZED ASK PHRASES:
 2. "${userData.askphrase2}" 
 3. "${userData.askphrase3}"
 
-Ready to dominate AI search results? Our Professional Beta Program provides the strategy and tools to ensure AI engines recommend YOU.
+Take your digital reputation analysis to the next level! While your complimentary report covers a single AI engine, now you can access a one-time, full-spectrum Credli Snapshot for just $497. This comprehensive analysis benchmarks your business across ChatGPT, Gemini, Perplexity, Claude, and Google AI Overview—revealing exactly where you show up in the top 25 most-asked questions on each engine.
 
-Learn more: https://credli.ai/business_finance.html#pricing
+You'll receive a detailed summary of your visibility for both Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO), empowering you to make smart, data-driven decisions.
 
-Best regards,
-Nicole Jolie
-AI Trust Consultant
+Ready to see how your business ranks where it matters most?
+
+SECURE YOUR FULL MULTI-ENGINE CREDLI SNAPSHOT AND CLAIM THIS EXCLUSIVE IN-DEPTH REPORT: https://www.paypal.com/ncp/payment/W7LPR9DCY8464
+
+Elevate Your Presence. Own Your Reputation.
+
 Credli.ai
 
 ---

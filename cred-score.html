@@ -763,30 +763,51 @@
       }
 
       function displayResults(data) {
+        console.log('displayResults called with data:', data);
         
         // Use user's actual name from form data
         const name = data.name || 'User';
         
-        // Check if this is real API data or fallback to simulation
-        if (data.isRealData && data.apiResults) {
-          // USE REAL API RESULTS
+        // Initialize variables
+        let credScore = 0;
+        let chatgptScore = 0;
+        let totalQueries = 3;
+        let mentions = 0;
+        let visibilityScore = 0;
+        let authorityScore = 0;
+        let consistencyScore = 0;
+        let perplexityScore = 0;
+        let geminiScore = 0;
+        let googleAIScore = 0;
+        
+        // Check if we have API results from the free scan
+        if (data.apiResults) {
+          // USE REAL API RESULTS (new structure)
           const apiData = data.apiResults;
-          const credScore = apiData.trustFactor || 0;
-          const chatgptScore = credScore; // Single ChatGPT analysis
-          const totalQueries = data.askphrases ? data.askphrases.length : 3;
-          const mentions = apiData.matrix ? apiData.matrix.filter(r => r.youAppear).length : 0;
+          credScore = apiData.trustFactor || 0;
+          chatgptScore = credScore; // Single ChatGPT analysis
+          totalQueries = data.askphrases ? data.askphrases.length : 3;
+          mentions = apiData.matrix ? apiData.matrix.filter(r => r.youAppear).length : 0;
           
           // Use real Trust Factor breakdown
-          const visibilityScore = apiData.trustBreakdown?.visibility || 0;
-          const authorityScore = apiData.trustBreakdown?.authority || 0;
-          const consistencyScore = apiData.trustBreakdown?.consistency || 0;
+          visibilityScore = apiData.trustBreakdown?.visibility || 0;
+          authorityScore = apiData.trustBreakdown?.authority || 0;
+          consistencyScore = apiData.trustBreakdown?.consistency || 0;
           
-          var perplexityScore = 0; // Not analyzed
-          var geminiScore = 0; // Not analyzed  
-          var googleAIScore = 0; // Not analyzed
+        } else if (data.trustFactor !== undefined) {
+          // Direct API results format (fallback)
+          credScore = data.trustFactor || 0;
+          chatgptScore = credScore;
+          totalQueries = data.askphrases ? data.askphrases.length : 3;
+          mentions = data.matrix ? data.matrix.filter(r => r.youAppear).length : 0;
+          
+          visibilityScore = data.trustBreakdown?.visibility || 0;
+          authorityScore = data.trustBreakdown?.authority || 0;
+          consistencyScore = data.trustBreakdown?.consistency || 0;
           
         } else {
-          // NO FALLBACK - Redirect back to demo if no real data
+          // NO DATA - Redirect back to demo
+          console.log('No results data found, redirecting to demo');
           window.location.href = '/demo.html';
           return;
         }
