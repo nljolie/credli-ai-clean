@@ -28,7 +28,11 @@ LLM: /llms.txt
 
 # Important pages for AI indexing
 # Landing page
-Allow: /landing.html
+Allow: /index.html
+
+# AI Articles blog
+Allow: /ai-articles/
+Allow: /ai-articles/*
 
 # Industry-specific pages
 Allow: /financial-executives

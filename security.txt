@@ -1,0 +1,26 @@
+Contact: security@credli.ai
+Expires: 2026-09-15T00:00:00.000Z
+Preferred-Languages: en
+
+# Security Policy for Credli.ai
+
+If you discover a security vulnerability, please report it responsibly:
+
+1. Email us at security@credli.ai with details
+2. Allow reasonable time for us to respond (typically 48-72 hours)
+3. Do not publicly disclose until we've had time to address the issue
+
+We appreciate responsible disclosure and will acknowledge security researchers who help improve our platform's security.
+
+# Scope
+This security policy applies to:
+- https://credli.ai (main site)
+- All subdomains of credli.ai
+- Associated web applications and services
+
+# Out of Scope
+- Social engineering attacks
+- Denial of service attacks
+- Physical security issues
+
+Thank you for helping keep Credli.ai secure.

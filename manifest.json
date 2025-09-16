@@ -1,0 +1,25 @@
+{
+  "name": "Credli.ai - AI Trust Consultant",
+  "short_name": "Credli.ai",
+  "description": "AI Trust Consulting platform specializing in Generative Engine Optimization (GEO) for high-trust professionals",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3454D1",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "professional"],
+  "lang": "en",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

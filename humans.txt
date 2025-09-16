@@ -1,0 +1,24 @@
+# Credli.ai - AI Trust Consulting Platform
+
+/* TEAM */
+
+Founder & CEO: Nicole Jolie
+Site: https://credli.ai
+Twitter: @Credli_ai
+Location: USA
+
+AI Trust Consultant and Generative Engine Optimization (GEO) Strategist
+
+/* SITE */
+
+Standards: HTML5, CSS3, JavaScript ES6
+Components: Google Analytics, Google Sheets Integration
+Software: Claude Code, VS Code, Git
+
+/* THANKS */
+
+Thanks to the IP attorney and legal professional community for inspiring this specialized content.
+Thanks to the AI research community for advancing Generative Engine Optimization.
+Thanks to our beta users and newsletter subscribers for valuable feedback.
+
+Last update: September 15, 2025
