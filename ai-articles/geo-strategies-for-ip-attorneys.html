@@ -43,7 +43,7 @@
   <link rel="stylesheet" href="../landing-styles.css?v=082920252330">
   
   <style>
-    .article-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; line-height: 1.6; }
+    .article-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; padding-top: 120px; line-height: 1.6; }
     .article-header { text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e9ecef; }
     .article-date { color: #6c757d; font-size: 0.9rem; margin-bottom: 1rem; }
     .article-title { font-size: 2.5rem; color: #070707; margin-bottom: 1rem; line-height: 1.2; }
@@ -77,7 +77,12 @@
     .references h4 { color: #070707; margin-bottom: 1rem; font-size: 1.1rem; }
     .references ol { margin: 0; padding-left: 1.5rem; }
     .references li { margin-bottom: 0.5rem; color: #666; }
-    @media (max-width: 768px) { .article-title { font-size: 2rem; } .author-bio { flex-direction: column; text-align: center; } .author-image { width: 100px; height: 100px; } .social-links { justify-content: center; } }
+    .newsletter-optin { background: #f8f9fa; padding: 2rem; border-radius: 12px; margin: 3rem 0; text-align: center; border: 1px solid #e9ecef; }
+    .newsletter-headline { font-size: 1.5rem; color: #070707; margin-bottom: 1rem; font-weight: 600; }
+    .newsletter-text { color: #666; margin-bottom: 2rem; line-height: 1.6; }
+    .newsletter-button { background: #3454D1; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+    .newsletter-button:hover { background: #2c4aa8; }
+    @media (max-width: 768px) { .article-container { padding-top: 100px; } .article-title { font-size: 2rem; } .author-bio { flex-direction: column; text-align: center; } .author-image { width: 100px; height: 100px; } .social-links { justify-content: center; } .newsletter-optin { padding: 1.5rem 1rem; margin: 2rem 0; } .newsletter-headline { font-size: 1.3rem; } }
   </style>
   
   <!-- Article Schema -->
@@ -231,10 +236,17 @@
       </div>
     </div>
 
+    <!-- Newsletter Optin -->
+    <div class="newsletter-optin">
+      <h3 class="newsletter-headline">Don't get replaced by your competitors in AI search.</h3>
+      <p class="newsletter-text">AI engines are already recommending businesses like yours. The only question: are they recommending you? Join the newsletter and learn exactly how to guide AI to rank you as the authority.</p>
+      <a href="#" class="newsletter-button">👉 Show me how to rank</a>
+    </div>
+
     <!-- Author Bio -->
     <div class="author-bio">
       <div class="author-image">
-        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5e5?w=300&h=300&fit=crop&crop=face" alt="Nicole Jolie, Founder of Credli.ai" />
+        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5e5?w=120&h=120&fit=crop&crop=face" alt="Nicole Jolie, Founder of Credli.ai" width="120" height="120" />
       </div>
       <div class="author-info">
         <h4>Nicole Jolie</h4>
@@ -243,14 +255,14 @@
           AI Trust Consultant and Generative Engine Optimization (GEO) Strategist, helping high-trust professionals get seen and recommended in AI search.
         </div>
         <div class="social-links">
-          <a href="#" class="social-link">TikTok</a>
-          <a href="#" class="social-link">LinkedIn</a>
-          <a href="#" class="social-link">YouTube</a>
-          <a href="#" class="social-link">Substack</a>
-          <a href="#" class="social-link">Threads</a>
-          <a href="#" class="social-link">Instagram</a>
-          <a href="#" class="social-link">Twitter</a>
-          <a href="#" class="social-link">Bluesky</a>
+          <a href="https://www.tiktok.com/@aitrustconsultant" class="social-link" target="_blank" rel="nofollow">TikTok</a>
+          <a href="https://www.linkedin.com/in/nicolejolie/" class="social-link" target="_blank" rel="nofollow">LinkedIn</a>
+          <a href="https://www.youtube.com/@aitrustconsultant" class="social-link" target="_blank" rel="nofollow">YouTube</a>
+          <a href="https://substack.com/@aitrustconsultant?utm_source=user-menu" class="social-link" target="_blank" rel="nofollow">Substack</a>
+          <a href="https://www.threads.com/@aitrustconsultant?xmt=AQF0jj9dMsVYFV_C7Rr_rnMLPlT5wmLF4j-sOnHwPubySEE" class="social-link" target="_blank" rel="nofollow">Threads</a>
+          <a href="https://www.instagram.com/aitrustconsultant/" class="social-link" target="_blank" rel="nofollow">Instagram</a>
+          <a href="https://x.com/aitrustconsult" class="social-link" target="_blank" rel="nofollow">Twitter</a>
+          <a href="https://bsky.app/profile/aitrustconsultant.bsky.social" class="social-link" target="_blank" rel="nofollow">Bluesky</a>
         </div>
       </div>
     </div>
