@@ -328,55 +328,42 @@
         resultsContainer.innerHTML = `
           <!-- Score Header -->
           <div class="score-header">
-            <div class="status-message">Your Credli Score</div>
+            <div class="status-message">${statusMessage}</div>
             <div class="score-circle">
-              <div class="score-number">62/100</div>
-              <div class="score-label">Digital Presence & AI Visibility Report Score</div>
+              <div class="score-number">${trustFactor}</div>
+              <div class="score-label">Trust Score</div>
             </div>
+            <p style="color: #070707; font-size: 1.1rem; max-width: 500px; margin: 0 auto;">
+              Based on real ChatGPT analysis of your expertise recognition
+            </p>
           </div>
 
-          <!-- AI Engine Breakdown -->
+          <!-- Authority Breakdown -->
           <div class="breakdown-section">
-            <h3 style="color: #070707; margin-bottom: 2rem; text-align: center;">Individual Engine Scores Visibility & Coverage</h3>
+            <h3 style="color: #070707; margin-bottom: 2rem; text-align: center;">📊 Your AI Authority Breakdown</h3>
             
             <div class="breakdown-item">
-              <div class="breakdown-label">CHATGPT</div>
+              <div class="breakdown-label">👁️ AI Visibility</div>
               <div class="breakdown-bar">
-                <div class="breakdown-fill" style="width: 61%"></div>
+                <div class="breakdown-fill" style="width: ${visibilityScore}%"></div>
               </div>
-              <div class="breakdown-score">61 VISIBILITY / 38 COVERAGE</div>
+              <div class="breakdown-score">${visibilityScore}%</div>
             </div>
             
             <div class="breakdown-item">
-              <div class="breakdown-label">PERPLEXITY</div>
+              <div class="breakdown-label">⭐ Authority Signal</div>
               <div class="breakdown-bar">
-                <div class="breakdown-fill" style="width: 78%"></div>
+                <div class="breakdown-fill" style="width: ${authorityScore}%"></div>
               </div>
-              <div class="breakdown-score">78 VISIBILITY / 54 COVERAGE</div>
+              <div class="breakdown-score">${authorityScore}%</div>
             </div>
             
             <div class="breakdown-item">
-              <div class="breakdown-label">GOOGLE AI</div>
+              <div class="breakdown-label">🎯 Consistency</div>
               <div class="breakdown-bar">
-                <div class="breakdown-fill" style="width: 53%"></div>
+                <div class="breakdown-fill" style="width: ${consistencyScore}%"></div>
               </div>
-              <div class="breakdown-score">53 VISIBILITY / 31 COVERAGE</div>
-            </div>
-            
-            <div class="breakdown-item">
-              <div class="breakdown-label">CLAUDE</div>
-              <div class="breakdown-bar">
-                <div class="breakdown-fill" style="width: 68%"></div>
-              </div>
-              <div class="breakdown-score">68 VISIBILITY / 47 COVERAGE</div>
-            </div>
-            
-            <div class="breakdown-item">
-              <div class="breakdown-label">GEMINI</div>
-              <div class="breakdown-bar">
-                <div class="breakdown-fill" style="width: 71%"></div>
-              </div>
-              <div class="breakdown-score">71 VISIBILITY / 49 COVERAGE</div>
+              <div class="breakdown-score">${consistencyScore}%</div>
             </div>
           </div>
 
@@ -405,17 +392,11 @@
             </p>
           </div>
 
-          <!-- Imposter Risk -->
+          <!-- Imposter Alert -->
           <div class="insights-section risk-section">
-            <h4>Imposter Risk</h4>
+            <h4>⚠️ Imposter Alert</h4>
             <div class="insight-item risk-item">
-              <strong>Fake Profiles:</strong> 3
-            </div>
-            <div class="insight-item risk-item">
-              <strong>Near-Name Variants:</strong> 5
-            </div>
-            <div class="insight-item risk-item">
-              <strong>Duplicates:</strong> 1
+              <strong>Fake Profiles Detected:</strong> ${imposterCount} potential imposter profiles found using your name or similar credentials.
             </div>
           </div>
         `;
